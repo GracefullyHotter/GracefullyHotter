@@ -168,4 +168,44 @@ const sauces = [
     SHU: 500000,
     price: 8.95,
   },
+  {
+    name: "Cholula - Green Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/263/cholula_green_pepper_sauce_bottle.jpg",
+    pepper: "Jalapeño",
+    description: "Cholula Green Pepper Hot Sauce adds a robust blend of jalapeño and poblano flavors with a touch of slight sweetness. The burst of zesty heat will be sure to awaken any palette. Cholula Green Pepper sauce is perfect for adding a tangy twist to meat, seafood, vegetables and especially dressings and marinades",
+    userRating: 2.0,
+    SHU: 200,
+    price: 4.00,
+  },
+  {
+    name: "JLD Hot Sauce & Knives - Bhut Jolokia Extra Hot",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/576/jld-bhut-jolokia-extra-hot.jpg",
+    pepper: "Bhut Jolokia (Ghost Chili)",
+    description: "It has double the Bhut Jolokias of the \"Hot\" sauce and gives a good heat with full flavor.",
+    userRating: 3.5,
+    SHU: 20000,
+    price: 12.00,
+  },
+  {
+    name: "Gourmet Hemp Foods - Hemp Hottie Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/570/hemp_hottie_sauce.jpg",
+    pepper: "Habanero, Jalapeño, Serrano, Arbol",
+    description: "With five peppers and domestic hempseed oil our Hemp Hottie Sauce has an unforgettable kick and longlasting flavor. Our peppers are sourced locally from Browntown farms, one of Virginia's oldest black owned farms and our hemp comes from a grower and processor in Pennsylvania. Moreover, Hemp Hottie sauce is fat free, sugar free, and loaded with perfectly balanced Omegas 3,6 & 9!",
+    userRating: 5.0,
+    SHU: 15000,
+    price: 20.00,
+  },
+  {
+    name: "Blair's - 3 A.M. Reserve",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/233/blairs_3am_reserve.jpg",
+    pepper: "Cayenne, Red Savina",
+    description: "The Original-One of the Finest Chile head Gifts In the World with 2,000,000 Scoville units. 3 a.m. Reserve is the Second in the Series of Blair's A.M Items and is always a sought after Chili head Collector Piece... The name Originates from when Blair was in the Bar Biz. 2 a.m. was the closing time and this was the closest thing to legal he could use to get the drunks out of the bar. This always worked...He made 4 Wings with this potion if the patron could eat all four they could hang out all night...Needless to say no one stayed...Feel Alive!",
+    userRating: 4.0,
+    SHU: 2000000,
+    price: 60.00,
+  },
 ];
