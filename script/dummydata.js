@@ -1,4 +1,5 @@
 const users = [
+
 	{
 		name: "Joe Schmo",
 		email: "something@gmail.com",
@@ -96,6 +97,7 @@ const users = [
 		cart: [{ hotSauceId: 32, quantity: 5 }],
 	},
 ]
+
 
 const sauces = [
 	{
