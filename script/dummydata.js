@@ -50,7 +50,7 @@ const users = [
   isAdmin: false,
   orderHistory: [8, 12, 3],
   cart: [
-    { hotSauceId: 35, quantity: 1 },
+    { hotSauceId: 14, quantity: 1 },
     { hotSauceId: 23, quantity: 4 },
   ],
 },
@@ -73,9 +73,9 @@ const users = [
   isAdmin: true,
   orderHistory: [21, 14, 15, 11, 19],
   cart: [
-    { hotSauceId: 57, quantity: 3 },
-    { hotSauceId: 63, quantity: 2 },
-    { hotSauceId: 18, quantity: 1 },
+    { hotSauceId: 13, quantity: 3 },
+    { hotSauceId: 16, quantity: 2 },
+    { hotSauceId: 23, quantity: 1 },
     { hotSauceId: 5, quantity: 5 },
   ],
 },
@@ -84,9 +84,9 @@ const users = [
   name: "Mike Tyson",
   password: "earBiter1",
   isAdmin: false,
-  orderHistory: [65, 35, 15, 14, 18],
+  orderHistory: [15, 19, 15, 14, 18],
   cart: [
-    { hotSauceId: 57, quantity: 3 },
+    { hotSauceId: 13, quantity: 3 },
   ],
 },
 {
@@ -96,7 +96,7 @@ const users = [
   isAdmin: true,
   orderHistory: [4, 5, 6, 17],
   cart: [
-    { hotSauceId: 32, quantity: 5 },
+    { hotSauceId: 24, quantity: 5 },
   ],
 },
 ],
