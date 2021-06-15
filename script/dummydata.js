@@ -21,7 +21,29 @@ const users = [
         { hotSauceId: 2, quantity: 1 },
     ],
 },
+  {
+    name: "Adam Sandler",
+    email: "sandman@gmail.com",
+    password: "password3",
+    isAdmin: false,
+    orderHistory: [1, 3],
+    cart: [
+        { hotSauceId: 7, quantity: 2 },
+        { hotSauceId: 6, quantity: 1 },
       ],
+  },
+  {
+  name: "John Cena",
+  email: "cenaman@gmail.com",
+  password: "password4",
+  isAdmin: false,
+  orderHistory: [3, 2, 9],
+  cart: [
+      { hotSauceId: 5, quantity: 1 },
+      { hotSauceId: 8, quantity: 1 },
+  ],
+},
+],
 
 
 const sauces = [
