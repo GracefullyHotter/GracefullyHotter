@@ -43,6 +43,62 @@ const users = [
       { hotSauceId: 8, quantity: 1 },
   ],
 },
+{
+  email: "iceicebaby@onehitwonder.com",
+  name: "Vanilla Ice",
+  password: "1fakerapper",
+  isAdmin: false,
+  orderHistory: [8, 12, 3],
+  cart: [
+    { hotSauceId: 35, quantity: 1 },
+    { hotSauceId: 23, quantity: 4 },
+  ],
+},
+{
+  email: "babybabybabyoh@bielieber.com",
+  name: "Justin Bieber",
+  password: "canada15",
+  isAdmin: false,
+  orderHistory: [1, 13, 16],
+  cart: [
+    { hotSauceId: 8, quantity: 3 },
+    { hotSauceId: 4, quantity: 2 },
+    { hotSauceId: 9, quantity: 4 },
+  ],
+},
+{
+  email: "kimk@richerthanyou.com",
+  name: "Kim Kardashian",
+  password: "gucci21",
+  isAdmin: true,
+  orderHistory: [21, 14, 15, 11, 19],
+  cart: [
+    { hotSauceId: 57, quantity: 3 },
+    { hotSauceId: 63, quantity: 2 },
+    { hotSauceId: 18, quantity: 1 },
+    { hotSauceId: 5, quantity: 5 },
+  ],
+},
+{
+  email: "mike@tython.com",
+  name: "Mike Tyson",
+  password: "earBiter1",
+  isAdmin: false,
+  orderHistory: [65, 35, 15, 14, 18],
+  cart: [
+    { hotSauceId: 57, quantity: 3 },
+  ],
+},
+{
+  email: "neo@thematrix.com",
+  name: "Keanu Reeves",
+  password: "thisisnotreal",
+  isAdmin: true,
+  orderHistory: [4, 5, 6, 17],
+  cart: [
+    { hotSauceId: 32, quantity: 5 },
+  ],
+},
 ],
 
 
@@ -230,4 +286,114 @@ const sauces = [
     SHU: 2000000,
     price: 60.00,
   },
+  {
+		name: "Tropical Pepper Co. - Scorpion Pepper Hot Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/274/tropical_pepper_scorpion.jpg",
+		pepper: "Trinidad Scorpion",
+		description:
+			"Unforgiving as the scorpion's sting, this deadly pepper sauce will ignite the fire of your senses.",
+		userRating: 5.0,
+		SHU: 780000,
+		price: 8.93,
+	},
+	{
+		name: "Feisty Tiger - Fruity Fire Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/543/feisty-tiger-fruity-fire-sauce.jpg",
+		pepper: "Naga Morich",
+		description:
+			"This arranged marriage of pineapple and naga morich is a solid one. We start by fermenting roasted Naga chilies from Sylhet with roasted red chilies from Chittagong, and roasted pineapple from Gazipur. As always, we finish off this well-loved sauce with our raw apple cider vinegar.",
+		userRating: 5.0,
+		SHU: 350000,
+		price: 4.45,
+	},
+	{
+		name: "Professor Phardtpounder's Colon Cleaner",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/197/professor_phardtpounders.jpg",
+		pepper: "Cayenne",
+		description:
+			"Elixir of Capsaicin Extremus. People say our new & improved all natural Colon Cleaner Hot Sauce works better than the original formula.",
+		userRating: 3.4,
+		SHU: 320000,
+		price: 12.99,
+	},
+	{
+		name: "Louisiana Fish Fry - Cravin' Cajun Hot Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/539/cravin_cajun_hot_sauce.jpg",
+		pepper: "Cayenne",
+		description:
+			"Bring the taste of Louisiana home",
+		userRating: 4.3,
+		SHU: 100000,
+		price: 7.95,
+	},
+	{
+		name: "South Devon Chilli Farm - Scorpion Chilli Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/379/south_devon_scorpion_chilli.jpg",
+		pepper: "Trinidad Scorpion",
+		description:
+			"The Scorpion Chilli Sauce is one of our new range of Super chilli sauces. (launched in Dec 2015). Like its namesake this sauce will Sting you! ",
+		userRating: 4.2,
+		SHU: 700000,
+		price: 9.95,
+	},
+	{
+		name: "Elijah's Xtreme - Ghost Pepper Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/210/elijahs_xtreme_hotsauce_bottle.jpg",
+		pepper: "Habanero, Bhut Jolokia (Ghost Chili)",
+		description:
+			"A perfect balance of heat and great flavor... and delicious on just about everything! Elijah’s Xtreme was born from a father and son’s love of hot peppers and passion to create a more flavorful, thicker, hotter, hot sauce.",
+		userRating: 3.8,
+		SHU: 500000,
+		price: 10.98,
+	},
+	{
+		name: "Cholula - Chipotle Hot Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/11/cholula_chipotle_bottle_chili.jpg",
+		pepper: "Chipotle, Piquin, Arbol, Guajillo",
+		description:
+			"Cholula Chipotle Hot Sauce...featuring a savory blend of Cholula's original 'Flavorful Fire' and the smokey and slightly sweet flavor notes or real Chipotle peppers. It brings sensational new flavor to soups, ranch dressing, steaks, chicken and more.",
+		userRating: 3.5,
+		SHU: 500000,
+		price: 4.99,
+	},
+	{
+		name: "Marie Sharp's Belizean Heat - Habanero Pepper Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/42/marie_sharp_belizean_heat_habanero_pepper_sauce.jpg",
+		pepper: "Habanero",
+		description:
+			"Marie Sharp's Belizean Heat Habanero Pepper Sauce is great for cooking. Flavor Soups, Sauces and Stir Fries or add to boiling water for rice, pasta or broiled seafood",
+		userRating: 4.5,
+		SHU: 17000,
+		price: 9.83,
+	},
+	{
+		name: "Mia's Kitchen - Calabrian Pepper Hot Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/554/mias_kitchen_calabrian_chili_pepper_sauce.jpg",
+		pepper: "Calabrian Chili Peppers",
+		description:
+			"Italian foods' favorite hot sauce! This tomato based hot sauce is rich and meaty with just the perfect amount of spice from authentic Calabrian chili peppers.",
+		userRating: 4.3,
+		SHU: 180000,
+		price: 11.25,
+	},
+	{
+		name: "Endorphin Rush Beyond Hot Sauce",
+		imageURL:
+			"https://hotsaucefever.com/images/sauces/14/endorphin_rush_beyond_hot_sauce_bottle.jpg",
+		pepper: "Pepper Extract",
+		description:
+			"Powerful heat here. A few drops will do the trick. Fine smoky taste as well.",
+		userRating: 4.1,
+		SHU: 190000,
+		price: 14.95,
+	},
 ];
