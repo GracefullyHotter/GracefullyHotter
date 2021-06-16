@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 import { fetchSauces } from "../store/sauces";
 import SauceCard from "./SauceCard";
 
@@ -29,7 +30,11 @@ export class AllSauces extends React.Component {
         {sauces.length > 0 ? (
           <div className="columns is-multiline">
             {sauces.map((sauce) => (
-              <SauceCard key={sauce.id} sauce={sauce} />
+              <SauceCard
+                key={sauce.id}
+                sauce={sauce}
+                history={this.props.history}
+              />
             ))}
           </div>
         ) : (

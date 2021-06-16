@@ -1,8 +1,11 @@
 import React from "react";
 
-const SauceCard = ({ sauce }) => {
+const SauceCard = ({ sauce, history }) => {
   return (
-    <div className="column is-3">
+    <div
+      className="column is-3"
+      onClick={() => history.push(`/shop/${sauce.id}`)}
+    >
       <figure className="media-center">
         <p>
           <img src={sauce.imageURL} className="sauceCardImg" />
