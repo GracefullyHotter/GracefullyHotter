@@ -1,3 +1,5 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css";
+
 body {
   font-family: sans-serif;
 }
@@ -18,4 +20,9 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.sauceCardImg {
+  width: 150px;
+  height: auto;
 }
