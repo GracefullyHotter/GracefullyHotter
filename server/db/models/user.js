@@ -32,6 +32,10 @@ const User = db.define("user", {
     type: Sequelize.JSON,
     defaultValue: {},
   },
+  orderHistory: {
+    type: Sequelize.JSON,
+    defaultValue: {},
+  },
 });
 
 /* const User = db.define("user", {

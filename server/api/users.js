@@ -19,11 +19,15 @@ router.get("/", async (req, res, next) => {
 });
 
 //ignore this api route, this is just to see how to review cart data out of postgres
-router.get("/carts/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const { cart } = await User.findByPk(req.params.id, {
       attributes: ["cart"],
     });
+    let keys = Object.keys(cart);
+    for (let i = 0; i < keys.length; i++) {
+      console.log(cart[i]);
+    }
     res.json(cart);
   } catch (err) {
     next(err);
