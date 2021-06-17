@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { deleteUser, putUser } from "../store/users";
+import { Link } from "react-router-dom";
 
 class UserCard extends React.Component {
   constructor(props) {
@@ -24,11 +25,11 @@ class UserCard extends React.Component {
           </div>
           <nav className="level">
             <div className="level-right">
-              <a className="level-item">
+              <Link to="/users/edit" className="level-item">
                 <span className="icon is-small">
                   <i className="far fa-edit"></i>
                 </span>
-              </a>
+              </Link>
               <a className="level-item" onClick={() => removeUser(user.id)}>
                 <span className="icon is-small">
                   <i className="far fa-trash-alt"></i>
