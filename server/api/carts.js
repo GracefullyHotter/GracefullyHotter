@@ -64,6 +64,27 @@ router.get("/orders/:userId", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+// POST /api/carts
+router.post("/", async (req, res, next) => {
+  try {
+    const { userId, sauces } = req.body;
+    const cart = await Cart.create({ userId: userId });
+
+    sauces.forEach(async (sauce) => {
+      await CartItem.create({
+        cartId: cart.id,
+        sauceId: sauce.id,
+        quantity: sauce.quantity,
+        price: sauce.price,
+      });
+    });
+
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
 })
 
 module.exports = router;
