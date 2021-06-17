@@ -25,7 +25,7 @@ class UserCard extends React.Component {
           </div>
           <nav className="level">
             <div className="level-right">
-              <Link to="/users/edit" className="level-item">
+              <Link to={`/users/${user.id}/edit`} className="level-item">
                 <span className="icon is-small">
                   <i className="far fa-edit"></i>
                 </span>

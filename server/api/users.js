@@ -16,6 +16,16 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const users = await User.findByPk(id);
+    res.send(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
 //PUT /api/users/:id
 router.put("/:id", async (req, res, next) => {
   try {

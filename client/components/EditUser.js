@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchUsers } from "../store/users";
+import { putUser } from "../store/users";
+import { fetchSingleUser } from "../store/user";
 
 class EditUser extends React.Component {
   constructor(props) {
@@ -11,13 +12,39 @@ class EditUser extends React.Component {
       isAdmin: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleAdmin = this.handleAdmin.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.loadUser(+this.props.match.params.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user !== this.props.user) {
+      this.setState({
+        name: this.props.user.name,
+        email: this.props.user.email,
+        isAdmin: this.props.user.isAdmin,
+      });
+    }
   }
 
   handleChange(event) {
-    event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value,
     });
+  }
+
+  handleAdmin(event) {
+    let value = event.target.value;
+    if (value === "true") this.setState({ isAdmin: true });
+    else this.setState({ isAdmin: false });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.updateUser({ ...this.state });
   }
 
   render() {
@@ -68,27 +95,45 @@ class EditUser extends React.Component {
               <div className="field is-narrow">
                 <div className="control">
                   <label className="radio">
-                    <input type="radio" name="isAdmin" value={true} />
+                    <input
+                      type="radio"
+                      name="isAdmin"
+                      value={true}
+                      onChange={this.handleAdmin}
+                    />
                     Yes
                   </label>
                   <label className="radio">
-                    <input type="radio" name="isAdmin" value={false} />
+                    <input
+                      type="radio"
+                      name="isAdmin"
+                      value={false}
+                      onChange={this.handleAdmin}
+                    />
                     No
                   </label>
                 </div>
               </div>
             </div>
           </div>
+          <button type="submit">Update User</button>
         </form>
       </React.Fragment>
     );
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapState = (state) => {
   return {
-    getUsers: () => dispatch(fetchUsers()),
+    user: state.user,
   };
 };
 
-export default connect(null, mapDispatch)(EditUser);
+const mapDispatch = (dispatch) => {
+  return {
+    loadUser: (id) => dispatch(fetchSingleUser(id)),
+    updateUser: (user) => dispatch(putUser(user)),
+  };
+};
+
+export default connect(mapState, mapDispatch)(EditUser);
