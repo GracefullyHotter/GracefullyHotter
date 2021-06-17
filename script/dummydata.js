@@ -354,4 +354,47 @@ const sauces = [
   },
 ];
 
-module.exports = { users, sauces };
+const carts = [
+  {
+    isCompleted: true,
+    userId: 1,
+  },
+  {
+    isCompleted: false,
+    userId: 1,
+  },
+  {
+    isCompleted: false,
+    userId: 2,
+  },
+];
+
+const cartItems = [
+  {
+    cartId: 1,
+    sauceId: 1,
+    quantity: 2,
+    price: 642,
+  },
+  {
+    cartId: 1,
+    sauceId: 2,
+    quantity: 3,
+    price: 795,
+  },
+  {
+    cartId: 2,
+    sauceId: 2,
+    quantity: 2,
+    price: 795,
+  },
+  {
+    cartId: 3,
+    sauceId: 2,
+    quantity: 12,
+    price: 795,
+  },
+];
+
+
+module.exports = { users, sauces, carts, cartItems };
