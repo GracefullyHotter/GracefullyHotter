@@ -356,15 +356,15 @@ const sauces = [
 
 const carts = [
   {
-    isComplete: true,
+    isCompleted: true,
     userId: 1,
   },
   {
-    isComplete: false,
+    isCompleted: false,
     userId: 1,
   },
   {
-    isComplete: false,
+    isCompleted: false,
     userId: 2,
   },
 ];
