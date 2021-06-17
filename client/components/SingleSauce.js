@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { fetchSauce } from '../store/sauce';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { connect } from "react-redux";
+import { fetchSauce } from "../store/sauce";
+import { Link } from "react-router-dom";
 
 class SingleSauce extends React.Component {
   constructor() {
@@ -18,7 +18,7 @@ class SingleSauce extends React.Component {
   }
 
   render() {
-    const { sauce } = this.props;
+    const { sauce, isAdmin } = this.props;
     const { loading } = this.state;
 
     if (loading) {
@@ -26,7 +26,7 @@ class SingleSauce extends React.Component {
     }
 
     return (
-      <div style={{display: 'flex'}}>
+      <div style={{ display: "flex" }}>
         <div>
           <h1>{sauce.name}</h1>
           <p>
@@ -41,6 +41,16 @@ class SingleSauce extends React.Component {
           <h3>Price: ${sauce.price}</h3>
           <Link to="/shop">Back to all sauces</Link>
         </div>
+        {isAdmin ? (
+          <Link
+            className="button is-medium is-link"
+            to={`/editsauce/${sauce.id}`}
+          >
+            Edit Sauce
+          </Link>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }
@@ -48,6 +58,7 @@ class SingleSauce extends React.Component {
 
 const mapState = (state) => ({
   sauce: state.sauce,
+  isAdmin: state.auth.isAdmin,
 });
 
 const mapDispatch = (dispatch) => ({

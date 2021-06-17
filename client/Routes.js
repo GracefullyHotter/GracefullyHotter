@@ -6,8 +6,10 @@ import LandingPage from "./components/LandingPage";
 import AllSauces from "./components/AllSauces";
 import Cart from "./components/Cart";
 import SingleSauce from "./components/SingleSauce";
-import CreateSauce from "./components/CreateSauce";
 import { me } from "./store";
+import EditSauce from "./components/EditSauce";
+import CreateSauce from "./components/CreateSauce";
+
 
 /**
  * COMPONENT
@@ -28,6 +30,7 @@ class Routes extends Component {
           <Route exact path="/sauces/create" component={CreateSauce} />
           <Route path="/cart" component={Cart} />
           <Route path="/shop/:id" component={SingleSauce} />
+          <Route path="/editsauce/:id" component={EditSauce} />
         </Switch>
       </div>
     );
