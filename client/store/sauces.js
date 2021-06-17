@@ -1,27 +1,32 @@
-import axios from "axios";
-import history from "../history";
+import axios from "axios"
+import history from "../history"
 
 /**
  * ACTION TYPES
  */
+
 const SET_SAUCES = "SET_SAUCES";
 const CREATE_SAUCE = "CREATE_SAUCE";
 const REMOVE_SAUCE = "REMOVE_SAUCE";
 const UPDATE_SAUCE = "UPDATE_SAUCE";
 
+
 /**
  * ACTION CREATORS
  */
+
 const setSauces = (sauces) => ({ type: SET_SAUCES, sauces });
 const createSauce = (sauce) => ({ type: CREATE_SAUCE, sauce });
 const removeSauce = (id) => ({ type: REMOVE_SAUCE, id });
 const updateSauce = (updatedSauce) => ({ type: UPDATE_SAUCE, updatedSauce });
+
 
 /**
  * THUNK CREATORS
  */
 
 export const fetchSauces = () => {
+
   return async (dispatch) => {
     try {
       const { data: sauces } = await axios.get("/api/sauces");
@@ -71,10 +76,12 @@ export const putSauce = (id, sauce) => {
   };
 };
 
+
 /**
  * REDUCER
  */
 export default function (state = [], action) {
+
   switch (action.type) {
     case SET_SAUCES:
       return action.sauces;
@@ -89,4 +96,5 @@ export default function (state = [], action) {
     default:
       return state;
   }
+
 }

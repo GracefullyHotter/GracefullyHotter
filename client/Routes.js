@@ -9,9 +9,11 @@ import SingleSauce from "./components/SingleSauce";
 import { me } from "./store";
 import EditSauce from "./components/EditSauce";
 import CreateSauce from "./components/CreateSauce";
+
 import Profile from "./components/Profile";
 import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
+
 
 /**
  * COMPONENT
@@ -22,6 +24,7 @@ class Routes extends Component {
   }
 
   render() {
+    const { isAdmin } = this.props;
     return (
       <div>
         <Switch>
@@ -32,10 +35,19 @@ class Routes extends Component {
           <Route exact path="/users" component={AllUsers} />
           <Route exact path="/users/:id/edit" component={EditUser} />
           <Route exact path="/shop" component={AllSauces} />
-          <Route exact path="/sauces/create" component={CreateSauce} />
           <Route path="/cart" component={Cart} />
           <Route path="/shop/:id" component={SingleSauce} />
-          <Route path="/editsauce/:id" component={EditSauce} />
+          {isAdmin ? (
+            <>
+              <Route path="/editsauce/:id" component={EditSauce} />
+              <Route exact path="/sauces/create" component={CreateSauce} />
+            </>
+          ) : (
+            <>
+              <Route path="/editsauce/:id" component={LandingPage} />
+              <Route exact path="/sauces/create" component={LandingPage} />
+            </>
+          )}
         </Switch>
       </div>
     );
@@ -50,6 +62,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 

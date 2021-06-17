@@ -18,7 +18,10 @@ class SingleSauce extends React.Component {
   }
 
   render() {
-    const { sauce, isAdmin } = this.props;
+    const { name, imageURL, description, pepper, userRating, SHU, price, id } =
+      this.props.sauce;
+    const { isAdmin } = this.props;
+
     const { loading } = this.state;
 
     if (loading) {
@@ -28,24 +31,21 @@ class SingleSauce extends React.Component {
     return (
       <div style={{ display: "flex" }}>
         <div>
-          <h1>{sauce.name}</h1>
+          <h1>{name}</h1>
           <p>
-            <img src={sauce.imageURL} />
+            <img src={imageURL} />
           </p>
         </div>
         <div>
-          <p>{sauce.description}</p>
-          <p>Pepper(s): {sauce.pepper}</p>
-          <p>Rating: {sauce.userRating}</p>
-          <p>Heat (SHU): {sauce.SHU}</p>
-          <h3>Price: ${sauce.price}</h3>
+          <p>{description}</p>
+          <p>Pepper(s): {pepper}</p>
+          <p>Rating: {userRating}</p>
+          <p>Heat (SHU): {SHU}</p>
+          <h3>Price: ${price / 100}</h3>
           <Link to="/shop">Back to all sauces</Link>
         </div>
         {isAdmin ? (
-          <Link
-            className="button is-medium is-link"
-            to={`/editsauce/${sauce.id}`}
-          >
+          <Link className="button is-medium is-link" to={`/editsauce/${id}`}>
             Edit Sauce
           </Link>
         ) : (
