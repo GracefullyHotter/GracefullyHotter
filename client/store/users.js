@@ -40,10 +40,13 @@ export const deleteUser = (id) => {
   };
 };
 
-export const putUser = (id, user) => {
+export const putUser = (user) => {
   return async (dispatch) => {
     try {
-      const { data: updatedUser } = await axios.put(`/api/users/${id}`, user);
+      const { data: updatedUser } = await axios.put(
+        `/api/users/${user.id}`,
+        user
+      );
       dispatch(updateUser(updatedUser));
     } catch (error) {
       console.log(error);

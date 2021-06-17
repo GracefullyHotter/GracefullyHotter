@@ -1,36 +1,58 @@
 import React from "react";
+import { connect } from "react-redux";
+import { deleteUser, putUser } from "../store/users";
 
-const UserCard = ({ user }) => {
-  return (
-    <article className="media">
-      <div className="media-content">
-        <div className="content">
-          <p>
-            <strong>Name: {user.name}</strong>
-            <br></br>
-            <strong>Email: {user.email}</strong>
-            <br></br>
-            <strong>Admin: {String(user.isAdmin)}</strong>
-            <br></br>
-          </p>
-        </div>
-        <nav className="level">
-          <div className="level-right">
-            <a className="level-item">
-              <span className="icon is-small">
-                <i className="far fa-edit"></i>
-              </span>
-            </a>
-            <a className="level-item">
-              <span className="icon is-small">
-                <i className="far fa-trash-alt"></i>
-              </span>
-            </a>
+class UserCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete() {
+    const id = this.props.user.id;
+    this.props.removeUser(id);
+  }
+
+  render() {
+    console.log(this.props);
+    return (
+      <article className="media">
+        <div className="media-content">
+          <div className="content">
+            <p>
+              <strong>Name: {user.name}</strong>
+              <br></br>
+              <strong>Email: {user.email}</strong>
+              <br></br>
+              <strong>Admin: {String(user.isAdmin)}</strong>
+              <br></br>
+            </p>
           </div>
-        </nav>
-      </div>
-    </article>
-  );
+          <nav className="level">
+            <div className="level-right">
+              <a className="level-item">
+                <span className="icon is-small">
+                  <i className="far fa-edit"></i>
+                </span>
+              </a>
+              <a className="level-item">
+                <span className="icon is-small">
+                  <i className="far fa-trash-alt"></i>
+                </span>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </article>
+    );
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    removeUser: (id) => dispatch(deleteUser(id)),
+    updateUser: (user) => dispatch(putUser(user)),
+  };
 };
 
-export default UserCard;
+export default connect(null, mapDispatch)(UserCard);
