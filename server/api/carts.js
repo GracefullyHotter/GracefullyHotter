@@ -92,14 +92,10 @@ router.put("/:cartId", async (req, res, next) => {
   try {
     const cartId = req.params.cartId;
     const { id, price, quantity } = req.body;
-    await CartItem.create({
-      cartId: cartId,
-      sauceId: id,
-      quantity: quantity,
-      price: price,
-    });
+    const sauce = await Sauce.findByPk(id);
+    const cart = await Cart.findByPk(cartId);
 
-    const cart = await Cart.findByPk(cartId, { include: Sauce });
+    cart.addSauce(sauce, { through: { quantity: quantity, price: price } });
 
     res.send(cart);
   } catch (error) {
@@ -116,6 +112,6 @@ router.delete("/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 module.exports = router;
