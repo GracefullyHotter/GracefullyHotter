@@ -42,7 +42,9 @@ router.get("/active/:userId", async (req, res, next) => {
         isCompleted: false,
       },
       include: Sauce,
+
     });
+    console.log(cart);
     res.send(cart);
   } catch (error) {
     next(error);

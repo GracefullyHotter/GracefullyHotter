@@ -8,11 +8,14 @@ const ADD_TO_CART = "ADD_TO_CART";
 const setCart = (cart) => ({ type: SET_CART, cart });
 const _addToCart = (item) => ({ type: ADD_TO_CART, item });
 
+
 // THUNK CREATORS
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     try {
       const { data: cart } = await axios.get(`/api/carts/active/${userId}`);
+
+      console.log("cart in redux store -->", cart);
 
       const cleanCart = cart.sauces.map((sauce) => {
         return {
@@ -31,12 +34,25 @@ export const fetchCart = (userId) => {
   };
 };
 
+export const addToCart = (item) => {
+  return async (dispatch) => {
+    try {
+      if (window.localStorage.token) {
+        // DO THIS
+      } else {
+
+      }
+    } catch (error) {
+      console.error("error in addItemToCart Thunk!");
+    }
+  }
+}
 
 // REDUCER
 const initialState = {
   id: 0,
   sauces: [],
-}
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
