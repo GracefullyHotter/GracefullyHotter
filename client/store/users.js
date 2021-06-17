@@ -6,14 +6,14 @@ import history from "../history";
  */
 const SET_USERS = "SET_USERS";
 const REMOVE_USERS = "REMOVE_USERS";
-const UPDATE_USERS = "UPDATE_USERS";
+const UPDATE_USER = "UPDATE_USER";
 
 /**
  * ACTION CREATORS
  */
 const setUsers = (users) => ({ type: SET_USERS, users });
 const removeUser = (id) => ({ type: REMOVE_USERS, id });
-const updateUser = (user) => ({ type: UPDATE_USERS, user });
+const updateUser = (user) => ({ type: UPDATE_USER, user });
 
 /**
  * THUNK CREATORS
@@ -50,6 +50,7 @@ export const putUser = (user) => {
         user
       );
       dispatch(updateUser(updatedUser));
+      history.push("/users");
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +66,7 @@ export default function (state = [], action) {
       return action.users;
     case REMOVE_USERS:
       return state.filter((user) => user.id !== action.id);
-    case UPDATE_USERS:
+    case UPDATE_USER:
       return state.map((user) => {
         return user.id === action.user.id ? action.user : user;
       });

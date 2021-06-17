@@ -7,6 +7,7 @@ class EditUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
       name: "",
       email: "",
       isAdmin: false,
@@ -23,6 +24,7 @@ class EditUser extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.user !== this.props.user) {
       this.setState({
+        id: this.props.user.id,
         name: this.props.user.name,
         email: this.props.user.email,
         isAdmin: this.props.user.isAdmin,
@@ -48,13 +50,12 @@ class EditUser extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const { name, email, isAdmin } = this.state;
     return (
       <React.Fragment>
         <h1>EDIT USER FORM</h1>
 
-        <form name="edit-user">
+        <form name="edit-user" onSubmit={this.handleSubmit}>
           <div className="field">
             <label htmlFor="name" className="label">
               Name *
