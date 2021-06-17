@@ -6,12 +6,14 @@ import history from "../history";
  */
 const SET_SAUCES = "SET_SAUCES";
 const REMOVE_SAUCE = "REMOVE_SAUCE";
+const UPDATE_SAUCE = "UPDATE_SAUCE";
 
 /**
  * ACTION CREATORS
  */
 const setSauces = (sauces) => ({ type: SET_SAUCES, sauces });
 const removeSauce = (id) => ({ type: REMOVE_SAUCE, id });
+const updateSauce = (updatedSauce) => ({ type: UPDATE_SAUCE, updatedSauce });
 
 /**
  * THUNK CREATORS
@@ -29,6 +31,14 @@ export const deleteSauce = (id) => {
     await axios.delete(`/api/sauces/${id}`);
     dispatch(removeSauce(id));
     history.push("/shop");
+  };
+};
+
+export const putSauce = (id, obj) => {
+  return async (dispatch) => {
+    const { data: updatedSauce } = await axios.put(`/api/sauces/${id}`, obj);
+    dispatch(updateSauce(updatedSauce));
+    history.push(`/shop/${id}`);
   };
 };
 

@@ -36,4 +36,15 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+//PUT /api/sauces/${id}
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const sauceToUpdate = await Sauce.findByPk(id);
+    res.send(await sauceToUpdate.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

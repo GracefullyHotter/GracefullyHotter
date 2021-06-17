@@ -2,14 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSauce } from "../store/sauce";
 import { Link } from "react-router-dom";
-import { deleteSauce } from "../store/sauces";
+import { deleteSauce, putSauce } from "../store/sauces";
 
 class EditSauce extends React.Component {
   constructor() {
     super();
     this.state = {};
     this.handleDelete = this.handleDelete.bind(this);
-    //this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -25,11 +25,11 @@ class EditSauce extends React.Component {
     this.props.removeSauce(id);
   }
 
-  /* handleUpdate(event) {
+  handleUpdate(event) {
     event.preventDefault();
-    const { id } = this.state;
-    this.props.updateStudent(id, this.state);
-  } */
+    const id = this.props.match.params.id;
+    this.props.updateSauce(id, this.state);
+  }
 
   handleChange(event) {
     event.preventDefault();
@@ -40,7 +40,7 @@ class EditSauce extends React.Component {
 
   render() {
     const { sauce } = this.props;
-    const { handleDelete, handleChange } = this;
+    const { handleDelete, handleChange, handleUpdate } = this;
     const { name, imageURL, pepper, description, userRating, price, SHU } =
       this.state;
 
@@ -67,7 +67,7 @@ class EditSauce extends React.Component {
           Back to sauce view
         </Link>
 
-        <form>
+        <form onSubmit={handleUpdate}>
           <label htmlFor="name">Sauce Name:</label>
           <input name="name" onChange={handleChange} value={name} />
 
@@ -119,6 +119,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   getSauce: (id) => dispatch(fetchSauce(id)),
   removeSauce: (id) => dispatch(deleteSauce(id)),
+  updateSauce: (id, obj) => dispatch(putSauce(id, obj)),
 });
 
 export default connect(mapState, mapDispatch)(EditSauce);
