@@ -7,32 +7,42 @@ import { deleteSauce } from "../store/sauces";
 class EditSauce extends React.Component {
   constructor() {
     super();
-    this.state = {
-      loading: true,
-    };
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {};
+    this.handleDelete = this.handleDelete.bind(this);
+    //this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
     this.props.getSauce(id);
-    this.setState({ loading: false });
+    this.setState(this.props.sauce);
   }
 
-  handleClick(e) {
+  handleDelete(e) {
     e.preventDefault();
     const id = this.props.match.params.id;
     this.props.removeSauce(id);
   }
 
+  /* handleUpdate(event) {
+    event.preventDefault();
+    const { id } = this.state;
+    this.props.updateStudent(id, this.state);
+  } */
+
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
   render() {
     const { sauce } = this.props;
-    const { loading } = this.state;
-    const { handleClick } = this;
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+    const { handleDelete, handleChange } = this;
+    const { name, imageURL, pepper, description, userRating, price, SHU } =
+      this.state;
 
     return (
       <div style={{ display: "flex" }}>
@@ -50,12 +60,53 @@ class EditSauce extends React.Component {
           <h3>Price: ${sauce.price}</h3>
           <Link to="/shop">Back to all sauces</Link>
         </div>
-        <button className="button is-medium is-danger" onClick={handleClick}>
+        <button className="button is-medium is-danger" onClick={handleDelete}>
           Delete
         </button>
         <Link className="button is-medium is-link" to={`/shop/${sauce.id}`}>
           Back to sauce view
         </Link>
+
+        <form>
+          <label htmlFor="name">Sauce Name:</label>
+          <input name="name" onChange={handleChange} value={name} />
+
+          <br />
+
+          <label htmlFor="imageURL">Image Url:</label>
+          <input name="imageURL" onChange={handleChange} value={imageURL} />
+
+          <br />
+
+          <label htmlFor="pepper">Pepper:</label>
+          <input name="pepper" onChange={handleChange} value={pepper} />
+
+          <br />
+
+          <label htmlFor="description">Description:</label>
+          <input
+            name="description"
+            onChange={handleChange}
+            value={description}
+          />
+
+          <br />
+
+          <label htmlFor="userRating">User Rating:</label>
+          <input name="userRating" onChange={handleChange} value={userRating} />
+
+          <br />
+
+          <label htmlFor="price">Price:</label>
+          <input name="price" onChange={handleChange} value={price} />
+
+          <br />
+
+          <label htmlFor="SHU">SHU:</label>
+          <input name="SHU" onChange={handleChange} value={SHU} />
+
+          <button type="submit">Update Sauce</button>
+        </form>
       </div>
     );
   }
