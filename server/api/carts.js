@@ -35,7 +35,7 @@ router.get("/completed", async (req, res, next) => {
 // GET /api/carts/active/:userId
 router.get("/active/:userId", async (req, res, next) => {
   try {
-    const userId = req.params.userId
+    const userId = req.params.userId;
     const cart = await Cart.findOne({
       where: {
         userId: userId,
@@ -81,6 +81,37 @@ router.post("/", async (req, res, next) => {
       });
     });
 
+    res.send(await Cart.findByPk(cart.id, { include: Sauce }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PUT /api/carts/:cartId
+router.put("/:cartId", async (req, res, next) => {
+  try {
+    const cartId = req.params.cartId;
+    const { id, price, quantity } = req.body;
+    await CartItem.create({
+      cartId: cartId,
+      sauceId: id,
+      quantity: quantity,
+      price: price,
+    });
+
+    const cart = await Cart.findByPk(cartId, { include: Sauce });
+
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DELETE /api/carts/:id
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const cart = await Cart.findByPk(req.params.id);
+    await cart.destroy();
     res.send(cart);
   } catch (error) {
     next(error);
