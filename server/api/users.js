@@ -4,15 +4,46 @@ const {
 } = require("../db");
 module.exports = router;
 
+//GET /api/users
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and  fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ["id", "email", "name"],
+      attributes: ["id", "email", "name", "isAdmin"],
     });
-    res.json(users);
+    res.send(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const users = await User.findByPk(id);
+    res.send(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//PUT /api/users/:id
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    res.send(await user.update(req.body));
+  } catch (err) {
+    next(err);
+  }
+});
+
+//DELETE /api/users/:id
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    await user.destroy();
+    res.status(200).send(user);
   } catch (err) {
     next(err);
   }

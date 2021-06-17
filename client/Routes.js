@@ -10,6 +10,11 @@ import { me } from "./store";
 import EditSauce from "./components/EditSauce";
 import CreateSauce from "./components/CreateSauce";
 
+import Profile from "./components/Profile";
+import AllUsers from "./components/AllUsers";
+import EditUser from "./components/EditUser";
+
+
 /**
  * COMPONENT
  */
@@ -26,6 +31,9 @@ class Routes extends Component {
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/users" component={AllUsers} />
+          <Route exact path="/users/:id/edit" component={EditUser} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
           <Route path="/shop/:id" component={SingleSauce} />
