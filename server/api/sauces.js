@@ -24,6 +24,15 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+//POST /api/sauces
+router.post("/", async (req, res, next) => {
+  try {
+    res.status(201).send(await Sauce.create(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 //DELETE /api/sauces/${id}
 router.delete("/:id", async (req, res, next) => {
   try {

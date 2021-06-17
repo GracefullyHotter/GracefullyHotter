@@ -5,6 +5,7 @@ import history from "../history";
  * ACTION TYPES
  */
 const SET_SAUCES = "SET_SAUCES";
+const CREATE_SAUCE = "CREATE_SAUCE";
 const REMOVE_SAUCE = "REMOVE_SAUCE";
 const UPDATE_SAUCE = "UPDATE_SAUCE";
 
@@ -12,6 +13,7 @@ const UPDATE_SAUCE = "UPDATE_SAUCE";
  * ACTION CREATORS
  */
 const setSauces = (sauces) => ({ type: SET_SAUCES, sauces });
+const createSauce = (sauce) => ({ type: CREATE_SAUCE, sauce });
 const removeSauce = (id) => ({ type: REMOVE_SAUCE, id });
 const updateSauce = (updatedSauce) => ({ type: UPDATE_SAUCE, updatedSauce });
 
@@ -24,6 +26,18 @@ export const fetchSauces = () => {
     try {
       const { data: sauces } = await axios.get("/api/sauces");
       dispatch(setSauces(sauces));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const createNewSauce = (sauce) => {
+  return async (dispatch) => {
+    try {
+      const { data: created } = await axios.post("/api/sauces", sauce);
+      dispatch(createSauce(created));
+      history.push("/shop");
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +78,8 @@ export default function (state = [], action) {
   switch (action.type) {
     case SET_SAUCES:
       return action.sauces;
+    case CREATE_SAUCE:
+      return [...state, action.sauce];
     case REMOVE_SAUCE:
       return state.filter((sauce) => sauce.id !== parseInt(action.id));
     case UPDATE_SAUCE:
