@@ -42,10 +42,13 @@ export const deleteSauce = (id) => {
   };
 };
 
-export const putSauce = (id, obj) => {
+export const putSauce = (id, sauce) => {
   return async (dispatch) => {
     try {
-      const { data: updatedSauce } = await axios.put(`/api/sauces/${id}`, obj);
+      const { data: updatedSauce } = await axios.put(
+        `/api/sauces/${id}`,
+        sauce
+      );
       dispatch(updateSauce(updatedSauce));
       history.push(`/shop/${id}`);
     } catch (error) {
