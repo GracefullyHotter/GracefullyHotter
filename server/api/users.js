@@ -8,7 +8,7 @@ module.exports = router;
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
-      attributes: ["email", "name", "isAdmin"],
+      attributes: ["id", "email", "name", "isAdmin"],
     });
     res.send(users);
   } catch (err) {
@@ -33,7 +33,7 @@ router.delete("/:id", async (req, res, next) => {
     const { id } = req.params;
     const user = await User.findByPk(id);
     await user.destroy();
-    res.sendStatus(200);
+    res.status(200).send(user);
   } catch (err) {
     next(err);
   }

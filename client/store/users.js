@@ -1,4 +1,5 @@
 import axios from "axios";
+import history from "../history";
 
 /**
  * ACTION TYPES
@@ -34,6 +35,7 @@ export const deleteUser = (id) => {
     try {
       const { data } = await axios.delete(`/api/users/${id}`);
       dispatch(removeUser(data));
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +64,7 @@ export default function (state = [], action) {
     case SET_USERS:
       return action.users;
     case REMOVE_USERS:
-      return state.filter((user) => user.id !== action.user.id);
+      return state.filter((user) => user.id !== action.id);
     case UPDATE_USERS:
       return state.map((user) => {
         return user.id === action.user.id ? action.user : user;

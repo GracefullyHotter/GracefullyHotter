@@ -5,16 +5,10 @@ import { deleteUser, putUser } from "../store/users";
 class UserCard extends React.Component {
   constructor(props) {
     super(props);
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  handleDelete() {
-    const id = this.props.user.id;
-    this.props.removeUser(id);
   }
 
   render() {
-    console.log(this.props);
+    const { user, removeUser } = this.props;
     return (
       <article className="media">
         <div className="media-content">
@@ -35,7 +29,7 @@ class UserCard extends React.Component {
                   <i className="far fa-edit"></i>
                 </span>
               </a>
-              <a className="level-item">
+              <a className="level-item" onClick={() => removeUser(user.id)}>
                 <span className="icon is-small">
                   <i className="far fa-trash-alt"></i>
                 </span>
