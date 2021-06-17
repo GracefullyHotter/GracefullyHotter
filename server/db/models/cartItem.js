@@ -6,6 +6,10 @@ const CartItem = db.define("cartItem", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  price: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  }
 });
 
 module.exports = CartItem;
