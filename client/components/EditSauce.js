@@ -2,13 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSauce } from "../store/sauce";
 import { Link } from "react-router-dom";
+import { deleteSauce } from "../store/sauces";
 
-class SingleSauce extends React.Component {
+class EditSauce extends React.Component {
   constructor() {
     super();
     this.state = {
       loading: true,
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -17,9 +19,16 @@ class SingleSauce extends React.Component {
     this.setState({ loading: false });
   }
 
+  handleClick(e) {
+    e.preventDefault();
+    const id = this.props.match.params.id;
+    this.props.removeSauce(id);
+  }
+
   render() {
-    const { sauce, isAdmin } = this.props;
+    const { sauce } = this.props;
     const { loading } = this.state;
+    const { handleClick } = this;
 
     if (loading) {
       return <div>Loading...</div>;
@@ -41,16 +50,12 @@ class SingleSauce extends React.Component {
           <h3>Price: ${sauce.price}</h3>
           <Link to="/shop">Back to all sauces</Link>
         </div>
-        {isAdmin ? (
-          <Link
-            className="button is-medium is-link"
-            to={`/editsauce/${sauce.id}`}
-          >
-            Edit Sauce
-          </Link>
-        ) : (
-          <div />
-        )}
+        <button className="button is-medium is-danger" onClick={handleClick}>
+          Delete
+        </button>
+        <Link className="button is-medium is-link" to={`/shop/${sauce.id}`}>
+          Back to sauce view
+        </Link>
       </div>
     );
   }
@@ -58,11 +63,11 @@ class SingleSauce extends React.Component {
 
 const mapState = (state) => ({
   sauce: state.sauce,
-  isAdmin: state.auth.isAdmin,
 });
 
 const mapDispatch = (dispatch) => ({
   getSauce: (id) => dispatch(fetchSauce(id)),
+  removeSauce: (id) => dispatch(deleteSauce(id)),
 });
 
-export default connect(mapState, mapDispatch)(SingleSauce);
+export default connect(mapState, mapDispatch)(EditSauce);
