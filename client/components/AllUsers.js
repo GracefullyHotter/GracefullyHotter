@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchUsers } from "../store/users";
+import UserCard from "./UserCard";
 
 export class AllUsers extends React.Component {
   constructor() {
@@ -22,14 +23,14 @@ export class AllUsers extends React.Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-    console.log(users);
+
     return (
       <React.Fragment>
         <h1>ALL USERS (ADMIN ONLY)</h1>
         {users.length > 0 ? (
           <div>
             {users.map((user) => (
-              <div>{user.name}</div>
+              <UserCard key={user.id} user={user} />
             ))}
           </div>
         ) : (
