@@ -60,7 +60,9 @@ router.get("/orders/:userId", async (req, res, next) => {
         userId: userId,
         isCompleted: true,
       },
-      include: Sauce,
+      include: {
+        model: Sauce,
+      },
     });
     res.send(carts);
   } catch (error) {
