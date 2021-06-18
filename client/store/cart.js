@@ -36,7 +36,9 @@ export const fetchCart = (userId) => {
 export const addToCart = (item, cart) => {
   return async (dispatch) => {
     try {
-      if (window.localStorage.token) {
+      const token = window.localStorage.getItem("token");
+
+      if (token) {
         if (cart) {
           await axios.put(`/api/carts/${cart.id}`);
           dispatch(_addToCart(item));
@@ -76,7 +78,9 @@ export const cartLoginOrSignup = (userId, storeCart) => {
 
 export const checkoutCart = () => {
   return async (dispatch) => {
-    if (window.localStorage.token) {
+    const token = window.localStorage.getItem("token");
+
+    if (token) {
       // PUT cart to update isCompleted, clear store
     } else {
       // POST cart to DB with no userId

@@ -42,7 +42,6 @@ router.get("/active/:userId", async (req, res, next) => {
         isCompleted: false,
       },
       include: Sauce,
-
     });
     console.log(cart);
     res.send(cart);
@@ -74,7 +73,10 @@ router.get("/orders/:userId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const { userId, sauces } = req.body;
-    const cart = await Cart.create({ userId: userId });
+    const cart = await Cart.findOrCreate({
+      userId: userId,
+      where: { isCompleted: false },
+    });
 
     sauces.forEach(async (sauce) => {
       await CartItem.create({
@@ -85,7 +87,7 @@ router.post("/", async (req, res, next) => {
       });
     });
 
-    res.send(await Cart.findByPk(cart.id, { include: Sauce }));
+    res.send(cart);
   } catch (error) {
     next(error);
   }
