@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 
 const SauceCard = ({ sauce }) => {
   return (
-    <div className="column is-3">
-      <Link to={`/shop/${sauce.id}`} className="sauce-link">
-        <figure className="media-center">
-          <p>
-            <img src={sauce.imageURL} className="sauceCardImg" />
-          </p>
-        </figure>
+
+    <div className="card column is-3">
+      <div className="card-image">
+        <Link to={`/shop/${sauce.id}`} className="sauce-link">
+          <figure className="image sauceCardImg">
+            <img src={sauce.imageURL} alt="Placeholder image" />
+          </figure>
+        </Link>
+      </div>
+      <div className="card-content">
         <div className="media-content">
-          <div className="field">
-            <p className="control">
-              <h1>{sauce.name}</h1>
-            </p>
-          </div>
+          <p className="title is-4">{sauce.name}</p>
+
         </div>
       </Link>
     </div>

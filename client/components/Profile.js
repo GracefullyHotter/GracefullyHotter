@@ -1,29 +1,43 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-const Profile = () => {
+class Profile extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
   //should conditionally render for admin links if isAdmin from state is true
 
-  return (
-    <React.Fragment>
-      <div id="user-info">
-        <p>my user info is here!</p>
-        <p>eventually i'll be able to edit but not now!</p>
-      </div>
+  render() {
+    const { isAdmin } = this.props;
+    return (
+      <React.Fragment>
+        <div id="user-info">
+          <p>my user info is here!</p>
+          <p>eventually i'll be able to edit but not now!</p>
+        </div>
 
-      <a>View Order History</a>
+        <a>View Order History</a>
 
-      <br></br>
-      <br></br>
-
-      <div id="admin-dashboard">
-        <h1>ADMINS</h1>
-        <Link to="/users">Users</Link>
         <br></br>
-        <Link to="/shop">Hot Sauces</Link>
-      </div>
-    </React.Fragment>
-  );
-};
+        <br></br>
 
-export default Profile;
+        {isAdmin ? (
+          <div id="admin-dashboard">
+            <h1>ADMINS</h1>
+            <Link to="/users">Users</Link>
+            <br></br>
+            <Link to="/shop">Hot Sauces</Link>
+          </div>
+        ) : null}
+      </React.Fragment>
+    );
+  }
+}
+
+const mapState = (state) => ({
+  isAdmin: state.auth.isAdmin,
+});
+
+export default connect(mapState)(Profile);
