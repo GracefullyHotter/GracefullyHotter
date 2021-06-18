@@ -14,21 +14,20 @@ class EditSauce extends React.Component {
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id;
+    const id = +this.props.match.params.id;
     this.props.getSauce(id);
     this.setState(this.props.sauce);
   }
 
   handleDelete(e) {
     e.preventDefault();
-    const id = this.props.match.params.id;
+    const id = +this.props.match.params.id;
     this.props.removeSauce(id);
   }
 
   handleUpdate(event) {
     event.preventDefault();
-    const id = this.props.match.params.id;
-    this.props.updateSauce(id, this.state);
+    this.props.updateSauce(this.state);
   }
 
   handleChange(event) {
@@ -119,7 +118,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   getSauce: (id) => dispatch(fetchSauce(id)),
   removeSauce: (id) => dispatch(deleteSauce(id)),
-  updateSauce: (id, obj) => dispatch(putSauce(id, obj)),
+  updateSauce: (obj) => dispatch(putSauce(obj)),
 });
 
 export default connect(mapState, mapDispatch)(EditSauce);

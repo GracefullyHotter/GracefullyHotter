@@ -10,6 +10,9 @@ import { me } from "./store";
 import EditSauce from "./components/EditSauce";
 import CreateSauce from "./components/CreateSauce";
 
+import Profile from "./components/Profile";
+import AllUsers from "./components/AllUsers";
+import EditUser from "./components/EditUser";
 
 /**
  * COMPONENT
@@ -20,17 +23,31 @@ class Routes extends Component {
   }
 
   render() {
+    const { isAdmin } = this.props;
+
     return (
       <div>
         <Switch>
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route exact path="/profile" component={Profile} />
           <Route exact path="/shop" component={AllSauces} />
-          <Route exact path="/sauces/create" component={CreateSauce} />
           <Route path="/cart" component={Cart} />
           <Route path="/shop/:id" component={SingleSauce} />
-          <Route path="/editsauce/:id" component={EditSauce} />
+          {isAdmin ? (
+            <>
+              <Route exact path="/users" component={AllUsers} />
+              <Route exact path="/users/:id/edit" component={EditUser} />
+              <Route path="/editsauce/:id" component={EditSauce} />
+              <Route exact path="/sauces/create" component={CreateSauce} />
+            </>
+          ) : (
+            <>
+              <Route path="/editsauce/:id" component={LandingPage} />
+              <Route exact path="/sauces/create" component={LandingPage} />
+            </>
+          )}
         </Switch>
       </div>
     );
@@ -45,6 +62,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 

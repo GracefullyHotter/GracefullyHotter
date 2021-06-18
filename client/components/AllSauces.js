@@ -18,7 +18,7 @@ export class AllSauces extends React.Component {
   }
 
   render() {
-    const { sauces } = this.props;
+    const { sauces, isAdmin } = this.props;
     const { loading } = this.state;
 
     if (loading) {
@@ -27,12 +27,18 @@ export class AllSauces extends React.Component {
 
     return (
       <React.Fragment>
-        <Link to="/sauces/create" className="buttons is-right">
-          <button className="button is-warning is-right">Add Hot Sauce</button>
-        </Link>
+        {isAdmin ? (
+          <Link to="/sauces/create" className="buttons is-right">
+            <button className="button is-warning is-right">
+              Add Hot Sauce
+            </button>
+          </Link>
+        ) : (
+          <div />
+        )}
 
         {sauces.length > 0 ? (
-          <div className="columns is-multiline">
+          <div className="columns is-multiline is-centered">
             {sauces.map((sauce) => (
               <SauceCard
                 key={sauce.id}
@@ -52,6 +58,7 @@ export class AllSauces extends React.Component {
 const mapState = (state) => {
   return {
     sauces: state.sauces,
+    isAdmin: state.auth.isAdmin,
   };
 };
 

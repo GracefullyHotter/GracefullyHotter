@@ -3,6 +3,8 @@ const {
   models: { Sauce },
 } = require("../db");
 
+const adminMiddleware = require("./adminMiddleware");
+
 //GET /api/sauces
 router.get("/", async (req, res, next) => {
   try {
@@ -24,8 +26,17 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+//POST /api/sauces
+router.post("/", adminMiddleware, async (req, res, next) => {
+  try {
+    res.status(201).send(await Sauce.create(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 //DELETE /api/sauces/${id}
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", adminMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const sauceToDestroy = await Sauce.findByPk(id);
@@ -37,7 +48,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 //PUT /api/sauces/${id}
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", adminMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const sauceToUpdate = await Sauce.findByPk(id);
