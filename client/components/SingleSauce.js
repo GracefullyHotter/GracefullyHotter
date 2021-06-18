@@ -9,6 +9,8 @@ class SingleSauce extends React.Component {
     this.state = {
       loading: true,
     };
+
+    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
   componentDidMount() {
@@ -17,9 +19,19 @@ class SingleSauce extends React.Component {
     this.setState({ loading: false });
   }
 
+  handleAddToCart() {}
+
   render() {
-    const { name, imageURL, description, pepper, userRating, SHU, price, id } =
-      this.props.sauce;
+    const {
+      name,
+      imageURL,
+      description,
+      pepper,
+      userRating,
+      SHU,
+      price,
+      id,
+    } = this.props.sauce;
     const { isAdmin } = this.props;
 
     const { loading } = this.state;
@@ -41,8 +53,11 @@ class SingleSauce extends React.Component {
           <p>Pepper(s): {pepper}</p>
           <p>Rating: {userRating}</p>
           <p>Heat (SHU): {SHU}</p>
-          <h3>Price: ${price / 100}</h3>
+          <h3>Price: ${(price / 100).toFixed(2)}</h3>
           <Link to="/shop">Back to all sauces</Link>
+          <button className="button is-medium is-danger" onClick={handleDelete}>
+            ADD TO CART
+          </button>
         </div>
         {isAdmin ? (
           <Link className="button is-medium is-link" to={`/editsauce/${id}`}>
