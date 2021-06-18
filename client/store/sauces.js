@@ -68,12 +68,20 @@ export const deleteSauce = (id) => {
 export const putSauce = (id, sauce) => {
   return async (dispatch) => {
     try {
-      const { data: updatedSauce } = await axios.put(
-        `/api/sauces/${id}`,
-        sauce
-      );
-      dispatch(updateSauce(updatedSauce));
-      history.push(`/shop/${id}`);
+      const token = window.localStorage.getItem("token");
+      if (token) {
+        const { data: updatedSauce } = await axios.put(
+          `/api/sauces/${id}`,
+          sauce,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        dispatch(updateSauce(updatedSauce));
+        history.push(`/shop/${id}`);
+      }
     } catch (error) {
       console.log(error);
     }
