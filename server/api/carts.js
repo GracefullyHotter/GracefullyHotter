@@ -33,12 +33,15 @@ router.get("/completed", async (req, res, next) => {
 });
 
 // GET /api/carts/active/:userId
-router.get("/active/:userId", async (req, res, next) => {
+router.get("/active", async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    // const userId = req.params.userId;
     const cart = await Cart.findOne({
       where: {
-        userId: userId,
+        userId: id,
         isCompleted: false,
       },
       include: Sauce,
@@ -72,20 +75,29 @@ router.get("/orders/:userId", async (req, res, next) => {
 // POST /api/carts
 router.post("/", async (req, res, next) => {
   try {
-    const { userId, sauces } = req.body;
-    const cart = await Cart.findOrCreate({
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    const { item } = req.body;
+    const cart = await Cart.create({
       userId: userId,
-      where: { isCompleted: false },
     });
 
-    sauces.forEach(async (sauce) => {
-      await CartItem.create({
-        cartId: cart.id,
-        sauceId: sauce.id,
-        quantity: sauce.quantity,
-        price: sauce.price,
-      });
+    await CartItem.create({
+      cartId: cart.id,
+      sauceId: item.id,
+      quantity: item.quantity,
+      price: item.price,
     });
+
+    // items.forEach(async (sauce) => {
+    //   await CartItem.create({
+    //     cartId: cart.id,
+    //     sauceId: sauce.id,
+    //     quantity: sauce.quantity,
+    //     price: sauce.price,
+    //   });
+    // });
 
     res.send(cart);
   } catch (error) {
@@ -97,7 +109,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:cartId", async (req, res, next) => {
   try {
     const cartId = req.params.cartId;
-    const { id, price, quantity } = req.body;
+    const { id, price, quantity } = req.body.item;
     const sauce = await Sauce.findByPk(id);
     const cart = await Cart.findByPk(cartId);
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+const jwt = require("jsonwebtoken");
 
 // ACTION TYPES
 const SET_CART = "SET_CART";
@@ -6,7 +7,7 @@ const ADD_TO_CART = "ADD_TO_CART";
 
 // ACTION CREATORS
 const setCart = (cart) => ({ type: SET_CART, cart });
-const _addToCart = (item, id) => ({ type: ADD_TO_CART, item, id });
+const _addToCart = (item) => ({ type: ADD_TO_CART, item });
 
 // THUNK CREATORS
 export const fetchCart = (userId) => {
@@ -33,21 +34,37 @@ export const fetchCart = (userId) => {
   };
 };
 
-export const addToCart = (item, cart) => {
+export const addToCart = (item) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
+      const cartJSON = window.localStorage.getItem("cart");
+      //turn JSON parse cart object into array to push item
+      const cart = JSON.parse(cartJSON);
+      cart.push(item);
+      localStorage.setItem("cart", JSON.stringify(cart));
 
       if (token) {
-        if (cart) {
-          await axios.put(`/api/carts/${cart.id}`);
-          dispatch(_addToCart(item));
+        //get user ID via token
+        const { data: activeCart } = await axios.get("/api/carts/active", {
+          headers: {
+            authorization: token,
+          },
+        });
+
+        //check is user has active cart in db
+        if (activeCart) {
+          //if active cart, put request to update cart in db
+          const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
         } else {
-          const data = await axios.post("/api/carts");
-          await axios.put(`/api/carts/${data.cart.id}`);
-          dispatch(_addToCart(item, data.cart.id));
+          const { data } = await axios.post("/api/carts", item, {
+            headers: {
+              authorization: token,
+            },
+          });
         }
-      } else dispatch(_addToCart(item));
+      }
+      dispatch(_addToCart(item));
     } catch (error) {
       console.error("error in addItemToCart Thunk!");
     }
@@ -89,21 +106,13 @@ export const checkoutCart = () => {
 };
 
 // REDUCER
-const initialState = {
-  id: 0,
-  sauces: [],
-};
 
-export default function (state = initialState, action) {
+export default function (state = [], action) {
   switch (action.type) {
     case SET_CART:
-      return { ...state, sauces: action.cart };
+      return action.cart;
     case ADD_TO_CART:
-      if (action.id) {
-        return { id: action.id, sauces: [action.item] };
-      } else {
-        return { ...state, sauces: state.sauces.concat([action.item]) };
-      }
+      return state.concat([action.item]);
     default:
       return state;
   }

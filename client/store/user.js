@@ -19,6 +19,7 @@ const setUser = (user) => ({ type: SET_USER, user });
 export const fetchSingleUser = (id) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem("token");
       if (token) {
         const { data: user } = await axios.get(`/api/users/${id}`, {
           headers: {
