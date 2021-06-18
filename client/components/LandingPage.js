@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const LandingPage = () => {
+  console.log(localStorage);
   return <div>Landing page here</div>;
 };
 

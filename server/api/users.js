@@ -2,10 +2,11 @@ const router = require("express").Router();
 const {
   models: { User },
 } = require("../db");
-module.exports = router;
+
+const adminMiddleware = require("./adminMiddleware");
 
 //GET /api/users
-router.get("/", async (req, res, next) => {
+router.get("/", adminMiddleware, async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: ["id", "email", "name", "isAdmin"],
@@ -16,7 +17,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", adminMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const users = await User.findByPk(id);
@@ -27,7 +28,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //PUT /api/users/:id
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", adminMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
@@ -38,7 +39,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 //DELETE /api/users/:id
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", adminMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
@@ -48,3 +49,5 @@ router.delete("/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+module.exports = router;
