@@ -27,7 +27,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //POST /api/sauces
-router.post("/", async (req, res, next) => {
+router.post("/", adminMiddleware, async (req, res, next) => {
   try {
     res.status(201).send(await Sauce.create(req.body));
   } catch (error) {

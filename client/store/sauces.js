@@ -37,9 +37,16 @@ export const fetchSauces = () => {
 export const createNewSauce = (sauce) => {
   return async (dispatch) => {
     try {
-      const { data: created } = await axios.post("/api/sauces", sauce);
-      dispatch(createSauce(created));
-      history.push("/shop");
+      const token = window.localStorage.getItem("token");
+      if (token) {
+        const { data: created } = await axios.post("/api/sauces", sauce, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(createSauce(created));
+        history.push("/shop");
+      }
     } catch (error) {
       console.log(error);
     }
