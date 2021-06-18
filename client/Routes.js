@@ -14,7 +14,6 @@ import Profile from "./components/Profile";
 import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
 
-
 /**
  * COMPONENT
  */
@@ -25,6 +24,7 @@ class Routes extends Component {
 
   render() {
     const { isAdmin } = this.props;
+
     return (
       <div>
         <Switch>
@@ -32,13 +32,13 @@ class Routes extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route exact path="/profile" component={Profile} />
-          <Route exact path="/users" component={AllUsers} />
-          <Route exact path="/users/:id/edit" component={EditUser} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
           <Route path="/shop/:id" component={SingleSauce} />
           {isAdmin ? (
             <>
+              <Route exact path="/users" component={AllUsers} />
+              <Route exact path="/users/:id/edit" component={EditUser} />
               <Route path="/editsauce/:id" component={EditSauce} />
               <Route exact path="/sauces/create" component={CreateSauce} />
             </>

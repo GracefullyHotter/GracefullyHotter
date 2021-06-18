@@ -13,9 +13,9 @@ const SauceCard = ({ sauce, history }) => {
       </figure>
       <div className="media-content">
         <div className="field">
-          <p className="control">
+          <div className="control">
             <h1>{sauce.name}</h1>
-          </p>
+          </div>
         </div>
       </div>
     </div>
