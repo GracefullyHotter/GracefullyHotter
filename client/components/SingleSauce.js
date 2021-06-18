@@ -10,6 +10,9 @@ class SingleSauce extends React.Component {
     this.state = {
       loading: true,
     };
+
+
+
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
@@ -19,6 +22,7 @@ class SingleSauce extends React.Component {
     this.setState({ loading: false });
   }
 
+
   handleAddToCart() {
     this.props.addToCart({
       id: this.props.sauce.id,
@@ -26,6 +30,7 @@ class SingleSauce extends React.Component {
       quantity: 1,
     });
   }
+
 
   render() {
     const {
@@ -59,12 +64,14 @@ class SingleSauce extends React.Component {
           <p>Pepper(s): {pepper}</p>
           <p>Rating: {userRating}</p>
           <p>Heat (SHU): {SHU}</p>
-          <h3>Price: ${price / 100}</h3>
+          <h3>Price: ${(price / 100).toFixed(2)}</h3>
           <Link to="/shop">Back to all sauces</Link>
+
           <button
             className="button is-medium is-danger"
             onClick={this.handleAddToCart}
           >
+
             ADD TO CART
           </button>
         </div>
