@@ -17,7 +17,6 @@ const SauceCard = ({ sauce }) => {
           <p className="title is-4">{sauce.name}</p>
 
         </div>
-      </Link>
     </div>
   );
 };
