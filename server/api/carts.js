@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   models: { Cart, CartItem, Sauce },
 } = require("../db");
+const jwt = require("jsonwebtoken");
 
 // GET /api/carts
 router.get("/", async (req, res, next) => {
@@ -32,7 +33,7 @@ router.get("/completed", async (req, res, next) => {
   }
 });
 
-// GET /api/carts/active/:userId
+// GET /api/carts/active/
 router.get("/active", async (req, res, next) => {
   try {
     const token = req.headers.authorization;
@@ -78,16 +79,15 @@ router.post("/", async (req, res, next) => {
     const token = req.headers.authorization;
     const { id } = await jwt.verify(token, process.env.JWT);
 
-    const { item } = req.body;
     const cart = await Cart.create({
-      userId: userId,
+      userId: id,
     });
 
     await CartItem.create({
       cartId: cart.id,
-      sauceId: item.id,
-      quantity: item.quantity,
-      price: item.price,
+      sauceId: req.body.id,
+      quantity: req.body.quantity,
+      price: req.body.price,
     });
 
     // items.forEach(async (sauce) => {
@@ -109,7 +109,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:cartId", async (req, res, next) => {
   try {
     const cartId = req.params.cartId;
-    const { id, price, quantity } = req.body.item;
+    const { id, price, quantity } = req.body;
     const sauce = await Sauce.findByPk(id);
     const cart = await Cart.findByPk(cartId);
 

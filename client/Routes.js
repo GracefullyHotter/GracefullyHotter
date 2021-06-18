@@ -20,6 +20,7 @@ import EditUser from "./components/EditUser";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    localStorage.setItem("cart", JSON.stringify([]));
   }
 
   render() {

@@ -1,5 +1,4 @@
 import axios from "axios";
-const jwt = require("jsonwebtoken");
 
 // ACTION TYPES
 const SET_CART = "SET_CART";
@@ -55,7 +54,9 @@ export const addToCart = (item) => {
         //check is user has active cart in db
         if (activeCart) {
           //if active cart, put request to update cart in db
+          console.log(activeCart);
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
+          console.log(data);
         } else {
           const { data } = await axios.post("/api/carts", item, {
             headers: {
