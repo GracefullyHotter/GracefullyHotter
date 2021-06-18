@@ -1,6 +1,9 @@
 import axios from "axios";
 import history from "../history";
 
+//TOKEN
+const token = window.localStorage.getItem("token");
+
 /**
  * ACTION TYPES
  */
@@ -22,8 +25,14 @@ const updateUser = (user) => ({ type: UPDATE_USER, user });
 export const fetchUsers = () => {
   return async (dispatch) => {
     try {
-      const { data: users } = await axios.get("/api/users");
-      dispatch(setUsers(users));
+      if (token) {
+        const { data: users } = await axios.get("/api/users", {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(setUsers(users));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -33,9 +42,15 @@ export const fetchUsers = () => {
 export const deleteUser = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/users/${id}`);
-      dispatch(removeUser(data));
-      window.location.reload();
+      if (token) {
+        const { data } = await axios.delete(`/api/users/${id}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(removeUser(data));
+        window.location.reload();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,12 +60,19 @@ export const deleteUser = (id) => {
 export const putUser = (user) => {
   return async (dispatch) => {
     try {
-      const { data: updatedUser } = await axios.put(
-        `/api/users/${user.id}`,
-        user
-      );
-      dispatch(updateUser(updatedUser));
-      history.push("/users");
+      if (token) {
+        const { data: updatedUser } = await axios.put(
+          `/api/users/${user.id}`,
+          user,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        dispatch(updateUser(updatedUser));
+        history.push("/users");
+      }
     } catch (error) {
       console.log(error);
     }
