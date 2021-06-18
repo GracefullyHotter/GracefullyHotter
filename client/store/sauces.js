@@ -1,6 +1,9 @@
 import axios from "axios";
 import history from "../history";
 
+//TOKEN
+const token = window.localStorage.getItem("token");
+
 /**
  * ACTION TYPES
  */
@@ -37,9 +40,15 @@ export const fetchSauces = () => {
 export const createNewSauce = (sauce) => {
   return async (dispatch) => {
     try {
-      const { data: created } = await axios.post("/api/sauces", sauce);
-      dispatch(createSauce(created));
-      history.push("/shop");
+      if (token) {
+        const { data: created } = await axios.post("/api/sauces", sauce, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(createSauce(created));
+        history.push("/shop");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +58,6 @@ export const createNewSauce = (sauce) => {
 export const deleteSauce = (id) => {
   return async (dispatch) => {
     try {
-      const token = window.localStorage.getItem("token");
       if (token) {
         await axios.delete(`/api/sauces/${id}`, {
           headers: {
@@ -68,12 +76,19 @@ export const deleteSauce = (id) => {
 export const putSauce = (id, sauce) => {
   return async (dispatch) => {
     try {
-      const { data: updatedSauce } = await axios.put(
-        `/api/sauces/${id}`,
-        sauce
-      );
-      dispatch(updateSauce(updatedSauce));
-      history.push(`/shop/${id}`);
+      if (token) {
+        const { data: updatedSauce } = await axios.put(
+          `/api/sauces/${id}`,
+          sauce,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        dispatch(updateSauce(updatedSauce));
+        history.push(`/shop/${id}`);
+      }
     } catch (error) {
       console.log(error);
     }
