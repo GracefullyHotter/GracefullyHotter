@@ -1,9 +1,6 @@
 import axios from "axios";
 import history from "../history";
 
-//TOKEN
-const token = window.localStorage.getItem("token");
-
 /**
  * ACTION TYPES
  */
@@ -20,7 +17,7 @@ const UPDATE_SAUCE = "UPDATE_SAUCE";
 const setSauces = (sauces) => ({ type: SET_SAUCES, sauces });
 const createSauce = (sauce) => ({ type: CREATE_SAUCE, sauce });
 const removeSauce = (id) => ({ type: REMOVE_SAUCE, id });
-const updateSauce = (updatedSauce) => ({ type: UPDATE_SAUCE, updatedSauce });
+const updateSauce = (sauce) => ({ type: UPDATE_SAUCE, sauce });
 
 /**
  * THUNK CREATORS
@@ -40,6 +37,7 @@ export const fetchSauces = () => {
 export const createNewSauce = (sauce) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem("token");
       if (token) {
         const { data: created } = await axios.post("/api/sauces", sauce, {
           headers: {
@@ -58,6 +56,7 @@ export const createNewSauce = (sauce) => {
 export const deleteSauce = (id) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem("token");
       if (token) {
         await axios.delete(`/api/sauces/${id}`, {
           headers: {
@@ -73,12 +72,13 @@ export const deleteSauce = (id) => {
   };
 };
 
-export const putSauce = (id, sauce) => {
+export const putSauce = (sauce) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem("token");
       if (token) {
         const { data: updatedSauce } = await axios.put(
-          `/api/sauces/${id}`,
+          `/api/sauces/${sauce.id}`,
           sauce,
           {
             headers: {
@@ -87,7 +87,7 @@ export const putSauce = (id, sauce) => {
           }
         );
         dispatch(updateSauce(updatedSauce));
-        history.push(`/shop/${id}`);
+        history.push(`/shop/${sauce.id}`);
       }
     } catch (error) {
       console.log(error);
