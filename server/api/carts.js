@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   models: { Cart, CartItem, Sauce },
 } = require("../db");
+const jwt = require("jsonwebtoken");
 
 // GET /api/carts
 router.get("/", async (req, res, next) => {
@@ -32,17 +33,21 @@ router.get("/completed", async (req, res, next) => {
   }
 });
 
-// GET /api/carts/active/:userId
-router.get("/active/:userId", async (req, res, next) => {
+// GET /api/carts/active/
+router.get("/active", async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    // const userId = req.params.userId;
     const cart = await Cart.findOne({
       where: {
-        userId: userId,
+        userId: id,
         isCompleted: false,
       },
       include: Sauce,
     });
+    console.log(cart);
     res.send(cart);
   } catch (error) {
     next(error);
@@ -58,7 +63,9 @@ router.get("/orders/:userId", async (req, res, next) => {
         userId: userId,
         isCompleted: true,
       },
-      include: Sauce,
+      include: {
+        model: Sauce,
+      },
     });
     res.send(carts);
   } catch (error) {
@@ -69,19 +76,30 @@ router.get("/orders/:userId", async (req, res, next) => {
 // POST /api/carts
 router.post("/", async (req, res, next) => {
   try {
-    const { userId, sauces } = req.body;
-    const cart = await Cart.create({ userId: userId });
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
 
-    sauces.forEach(async (sauce) => {
-      await CartItem.create({
-        cartId: cart.id,
-        sauceId: sauce.id,
-        quantity: sauce.quantity,
-        price: sauce.price,
-      });
+    const cart = await Cart.create({
+      userId: id,
     });
 
-    res.send(await Cart.findByPk(cart.id, { include: Sauce }));
+    await CartItem.create({
+      cartId: cart.id,
+      sauceId: req.body.id,
+      quantity: req.body.quantity,
+      price: req.body.price,
+    });
+
+    // items.forEach(async (sauce) => {
+    //   await CartItem.create({
+    //     cartId: cart.id,
+    //     sauceId: sauce.id,
+    //     quantity: sauce.quantity,
+    //     price: sauce.price,
+    //   });
+    // });
+
+    res.send(cart);
   } catch (error) {
     next(error);
   }
