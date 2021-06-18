@@ -1,34 +1,69 @@
-import axios from "axios";
+import axios from "axios"
+import history from "../history"
 
 /**
  * ACTION TYPES
  */
-const SET_SAUCES = "SET_SAUCES";
+const SET_SAUCES = "SET_SAUCES"
+const REMOVE_SAUCE = "REMOVE_SAUCE"
+const UPDATE_SAUCE = "UPDATE_SAUCE"
 
 /**
  * ACTION CREATORS
  */
-const setSauces = (sauces) => ({ type: SET_SAUCES, sauces });
+const setSauces = (sauces) => ({ type: SET_SAUCES, sauces })
+const removeSauce = (id) => ({ type: REMOVE_SAUCE, id })
+const updateSauce = (updatedSauce) => ({ type: UPDATE_SAUCE, updatedSauce })
 
 /**
  * THUNK CREATORS
  */
 
 export const fetchSauces = () => {
-  return async (dispatch) => {
-    const { data: sauces } = await axios.get("/api/sauces");
-    dispatch(setSauces(sauces));
-  };
-};
+	return async (dispatch) => {
+		try {
+			const { data: sauces } = await axios.get("/api/sauces")
+			dispatch(setSauces(sauces))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
+
+export const deleteSauce = (id) => {
+	return async (dispatch) => {
+		try {
+			await axios.delete(`/api/sauces/${id}`)
+			dispatch(removeSauce(id))
+			history.push("/shop")
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
+
+export const putSauce = (id, obj) => {
+	return async (dispatch) => {
+		try {
+			const { data: updatedSauce } = await axios.put(`/api/sauces/${id}`, obj)
+			dispatch(updateSauce(updatedSauce))
+			history.push(`/shop/${id}`)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+}
 
 /**
  * REDUCER
  */
 export default function (state = [], action) {
-  switch (action.type) {
-    case SET_SAUCES:
-      return action.sauces;
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case SET_SAUCES:
+			return action.sauces
+		case REMOVE_SAUCE:
+			return state.filter((sauce) => sauce.id !== parseInt(action.id))
+		default:
+			return state
+	}
 }

@@ -7,12 +7,11 @@ const Sauce = db.define("sauce", {
 		allowNull: false,
 	},
 	imageURL: {
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT,
 		allowNull: false,
 
 		defaultValue:
 			"https://hotsaucefever.com/images/sauces/654/el-yucateco-black-label-chile-habanero.jpg",
-
 	},
 	pepper: {
 		type: Sequelize.STRING,
@@ -34,7 +33,6 @@ const Sauce = db.define("sauce", {
 	SHU: {
 		type: Sequelize.INTEGER,
 	},
-
 })
 
 module.exports = Sauce

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchSauces } from "../store/sauces";
 import SauceCard from "./SauceCard";
 
@@ -27,6 +27,10 @@ export class AllSauces extends React.Component {
 
     return (
       <React.Fragment>
+        <Link to="/sauces/create" className="buttons is-right">
+          <button className="button is-warning is-right">Add Hot Sauce</button>
+        </Link>
+
         {sauces.length > 0 ? (
           <div className="columns is-multiline">
             {sauces.map((sauce) => (

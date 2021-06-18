@@ -24,4 +24,27 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+//DELETE /api/sauces/${id}
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const sauceToDestroy = await Sauce.findByPk(id);
+    await sauceToDestroy.destroy();
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//PUT /api/sauces/${id}
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const sauceToUpdate = await Sauce.findByPk(id);
+    res.send(await sauceToUpdate.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
