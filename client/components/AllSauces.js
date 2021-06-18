@@ -38,7 +38,7 @@ export class AllSauces extends React.Component {
         )}
 
         {sauces.length > 0 ? (
-          <div className="columns is-multiline">
+          <div className="columns is-multiline is-centered">
             {sauces.map((sauce) => (
               <SauceCard
                 key={sauce.id}
