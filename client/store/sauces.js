@@ -1,5 +1,5 @@
-import axios from "axios"
-import history from "../history"
+import axios from "axios";
+import history from "../history";
 
 /**
  * ACTION TYPES
@@ -10,7 +10,6 @@ const CREATE_SAUCE = "CREATE_SAUCE";
 const REMOVE_SAUCE = "REMOVE_SAUCE";
 const UPDATE_SAUCE = "UPDATE_SAUCE";
 
-
 /**
  * ACTION CREATORS
  */
@@ -20,13 +19,11 @@ const createSauce = (sauce) => ({ type: CREATE_SAUCE, sauce });
 const removeSauce = (id) => ({ type: REMOVE_SAUCE, id });
 const updateSauce = (updatedSauce) => ({ type: UPDATE_SAUCE, updatedSauce });
 
-
 /**
  * THUNK CREATORS
  */
 
 export const fetchSauces = () => {
-
   return async (dispatch) => {
     try {
       const { data: sauces } = await axios.get("/api/sauces");
@@ -52,9 +49,16 @@ export const createNewSauce = (sauce) => {
 export const deleteSauce = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`/api/sauces/${id}`);
-      dispatch(removeSauce(id));
-      history.push("/shop");
+      const token = window.localStorage.getItem("token");
+      if (token) {
+        await axios.delete(`/api/sauces/${id}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(removeSauce(id));
+        history.push("/shop");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -76,12 +80,10 @@ export const putSauce = (id, sauce) => {
   };
 };
 
-
 /**
  * REDUCER
  */
 export default function (state = [], action) {
-
   switch (action.type) {
     case SET_SAUCES:
       return action.sauces;
@@ -96,5 +98,4 @@ export default function (state = [], action) {
     default:
       return state;
   }
-
 }
