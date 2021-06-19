@@ -38,7 +38,7 @@ class SingleSauce extends React.Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-    console.log("props", this.props);
+
     return (
       <div style={{ display: "flex" }}>
         <div>
