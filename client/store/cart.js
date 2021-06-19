@@ -39,19 +39,24 @@ export const fetchCart = () => {
 export const addToCart = (item) => {
   return async (dispatch) => {
     try {
-      const token = window.localStorage.getItem("token");
-      const cart = JSON.parse(window.localStorage.getItem("cart"));
+      const token = localStorage.getItem("token");
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (!cart) {
+        localStorage.setItem("cart", JSON.stringify([]));
+      }
 
-      cart.push(item);
-      // cart.map((cartItem) => {
-      //   if (cartItem.id === item.id) {
-      //     console.log(cartItem, item);
-      //     cartItem.quantity++;
-      //   }
-      // });
-      // console.log("cart", cart);
+      let itemExists = false;
 
-      window.localStorage.setItem("cart", JSON.stringify(cart));
+      cart.forEach((cartItem) => {
+        if (cartItem.id === item.id) {
+          itemExists = true;
+          cartItem.quantity++;
+        }
+      });
+
+      if (!itemExists) cart.push(item);
+
+      localStorage.setItem("cart", JSON.stringify(cart));
 
       if (token) {
         //get user ID via token
