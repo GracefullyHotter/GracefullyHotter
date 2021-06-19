@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchSauces } from "../store/sauces";
+import { fetchSauces, filterBySpecificPepper } from "../store/sauces";
 import SauceCard from "./SauceCard";
 
 export class AllSauces extends React.Component {
@@ -21,12 +21,15 @@ export class AllSauces extends React.Component {
 
   filterProducts(e) {
     e.preventDefault();
-    console.log(e.target.innerHTML);
+    const innerString = e.target.innerHTML;
+    document.getElementById("filterspan").innerHTML = innerString;
   }
 
   filterByPepper(e) {
     e.preventDefault();
-    console.log(e.target.innerHTML);
+    const innerString = e.target.innerHTML;
+    this.props.filterByAPepper(innerString);
+    document.getElementById("filterpepperspan").innerHTML = innerString;
   }
 
   render() {
@@ -92,7 +95,7 @@ export class AllSauces extends React.Component {
               aria-haspopup="true"
               aria-controls="dropdown-menu4"
             >
-              <span id="filterspan">Pepper</span>
+              <span id="filterpepperspan">Pepper</span>
               <span className="icon is-small">
                 <i className="fas fa-angle-down" aria-hidden="true"></i>
               </span>
@@ -147,6 +150,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getSauces: () => dispatch(fetchSauces()),
+    filterByAPepper: (pepperString) =>
+      dispatch(filterBySpecificPepper(pepperString)),
   };
 };
 

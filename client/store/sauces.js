@@ -9,6 +9,7 @@ const SET_SAUCES = "SET_SAUCES";
 const CREATE_SAUCE = "CREATE_SAUCE";
 const REMOVE_SAUCE = "REMOVE_SAUCE";
 const UPDATE_SAUCE = "UPDATE_SAUCE";
+const FILTER_BY_ONE_PEPPER = "FILTER_BY_ONE_PEPPER";
 
 /**
  * ACTION CREATORS
@@ -18,6 +19,10 @@ const setSauces = (sauces) => ({ type: SET_SAUCES, sauces });
 const createSauce = (sauce) => ({ type: CREATE_SAUCE, sauce });
 const removeSauce = (id) => ({ type: REMOVE_SAUCE, id });
 const updateSauce = (sauce) => ({ type: UPDATE_SAUCE, sauce });
+const filterByOnePepper = (filteredByPepperSauces) => ({
+  type: FILTER_BY_ONE_PEPPER,
+  filteredByPepperSauces,
+});
 
 /**
  * THUNK CREATORS
@@ -95,6 +100,20 @@ export const putSauce = (sauce) => {
   };
 };
 
+export const filterBySpecificPepper = (pepperString) => {
+  return async (dispatch) => {
+    try {
+      const { data: sauces } = await axios.get("/api/sauces");
+      const filteredByPepperSauces = sauces.filter((sauce) => {
+        return sauce.pepper.includes(pepperString);
+      });
+      dispatch(filterByOnePepper(filteredByPepperSauces));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 /**
  * REDUCER
  */
@@ -110,6 +129,8 @@ export default function (state = [], action) {
       return state.map((sauce) => {
         return sauce.id === action.sauce.id ? action.sauce : sauce;
       });
+    case FILTER_BY_ONE_PEPPER:
+      return action.filteredByPepperSauces;
     default:
       return state;
   }
