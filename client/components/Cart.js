@@ -128,7 +128,7 @@ class Cart extends React.Component {
         ))}
 
         <Link to={"/confirmation"}>
-            Checkout
+            <button className="button is-large is-danger">Checkout</button>
         </Link>
       </>
     );
