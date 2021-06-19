@@ -41,8 +41,16 @@ export const addToCart = (item) => {
     try {
       const token = window.localStorage.getItem("token");
       const cart = JSON.parse(window.localStorage.getItem("cart"));
+
       cart.push(item);
-      console.log("cart", cart);
+      // cart.map((cartItem) => {
+      //   if (cartItem.id === item.id) {
+      //     console.log(cartItem, item);
+      //     cartItem.quantity++;
+      //   }
+      // });
+      // console.log("cart", cart);
+
       window.localStorage.setItem("cart", JSON.stringify(cart));
 
       if (token) {
