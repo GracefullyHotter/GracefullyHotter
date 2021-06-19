@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchSauces, filterBySpecificPepper } from "../store/sauces";
+import {
+  fetchSauces,
+  filterBySpecificPepper,
+  filterSauces,
+} from "../store/sauces";
 import SauceCard from "./SauceCard";
 
 export class AllSauces extends React.Component {
@@ -22,6 +26,7 @@ export class AllSauces extends React.Component {
   filterProducts(e) {
     e.preventDefault();
     const innerString = e.target.innerHTML;
+    this.props.filterBy(innerString);
     document.getElementById("filterspan").innerHTML = innerString;
   }
 
@@ -80,9 +85,6 @@ export class AllSauces extends React.Component {
               <div className="dropdown-item" onClick={filterProducts}>
                 <p>Price High to Low</p>
               </div>
-              <div className="dropdown-item" onClick={filterProducts}>
-                <p>Featured</p>
-              </div>
             </div>
           </div>
         </div>
@@ -95,7 +97,7 @@ export class AllSauces extends React.Component {
               aria-haspopup="true"
               aria-controls="dropdown-menu4"
             >
-              <span id="filterpepperspan">Pepper</span>
+              <span id="filterpepperspan">All Peppers</span>
               <span className="icon is-small">
                 <i className="fas fa-angle-down" aria-hidden="true"></i>
               </span>
@@ -103,6 +105,9 @@ export class AllSauces extends React.Component {
           </div>
           <div className="dropdown-menu" id="dropdown-menu4" role="menu">
             <div className="dropdown-content" style={{ cursor: "pointer" }}>
+              <div className="dropdown-item" onClick={filterByPepper}>
+                <p>All Peppers</p>
+              </div>
               <div className="dropdown-item" onClick={filterByPepper}>
                 <p>Habanero</p>
               </div>
@@ -152,6 +157,7 @@ const mapDispatch = (dispatch) => {
     getSauces: () => dispatch(fetchSauces()),
     filterByAPepper: (pepperString) =>
       dispatch(filterBySpecificPepper(pepperString)),
+    filterBy: (filterTypeString) => dispatch(filterSauces(filterTypeString)),
   };
 };
 
