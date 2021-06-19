@@ -2,10 +2,12 @@ import axios from "axios";
 
 // ACTION TYPES
 const SET_CART = "SET_CART";
+const SET_CARTITEM = "SET_CARTITEM";
 const ADD_TO_CART = "ADD_TO_CART";
 
 // ACTION CREATORS
 const setCart = (cart) => ({ type: SET_CART, cart });
+const setCartItem = (item) => ({ type: SET_CARTITEM, item });
 const _addToCart = (item) => ({ type: ADD_TO_CART, item });
 
 // THUNK CREATORS

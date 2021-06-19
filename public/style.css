@@ -36,3 +36,25 @@ form div {
   font-family: HotSauce;
   font-size: 100px;
 }
+
+.cart-title {
+  text-align: "center";
+  margin: "auto";
+  margin-bottom: "40px";
+  font-size: "50px";
+}
+
+.cart-item {
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  padding-top: "20px";
+  padding-bottom: "20px";
+  margin-bottom: "20px";
+  margin-left: "auto";
+  margin-right: "auto";
+  padding: "20 50 20 50";
+  width: "500px";
+  border: "1px solid black";
+  border-radius: "15px";
+}

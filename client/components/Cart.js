@@ -1,54 +1,38 @@
 import React from "react";
-// import { connect } from "react-redux"
-
-const cart = {
-  id: 3,
-  sauces: [
-    {
-      id: 1,
-      name: "HotSauce1",
-      imageUrl:
-        "https://hotsaucefever.com/images/sauces/654/el-yucateco-black-label-chile-habanero.jpg",
-      price: 450,
-      quantity: 4,
-    },
-    {
-      id: 2,
-      name: "HotSauce2",
-      imageUrl:
-        "https://hotsaucefever.com/images/sauces/654/el-yucateco-black-label-chile-habanero.jpg",
-      price: 400,
-      quantity: 4,
-    },
-    {
-      id: 3,
-      name: "HotSauce3",
-      imageUrl:
-        "https://hotsaucefever.com/images/sauces/654/el-yucateco-black-label-chile-habanero.jpg",
-      price: 560,
-      quantity: 4,
-    },
-  ],
-};
+import { connect } from "react-redux";
+import { fetchSauce } from "../store/sauce";
 
 class Cart extends React.Component {
-  constructor() {
-    super();
-    this.state = { quantity: 1 };
+  constructor(props) {
+    super(props);
+    this.state = {
+      quantity: 1,
+      cart: JSON.parse(localStorage.getItem("cart")),
+      sauces: [],
+    };
+
     this.onClick = this.onClick.bind(this);
   }
 
-  // componentDidMount() {
-  // 	this.props.fetchCart()
-  // 	this.setState({ loading: false })
-  // }
+  componentDidMount() {
+    const cart = this.state.cart;
+    cart.forEach((cartItem) => {
+      this.props.getSauce(cartItem);
+    });
+  }
 
-  // handleChange(event) {
-  // 	event.preventDefault()
-  // 	this.setState({
-  // 		[event.target.name]: event.target.value,
-  // 	})
-  // }
+  componentDidUpdate(prevProps) {
+    if (prevProps.sauce !== this.props.sauce) {
+      this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
+    }
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
 
   onClick(type) {
     this.setState((prevState) => {
@@ -60,36 +44,41 @@ class Cart extends React.Component {
   }
 
   render() {
-    const sauces = cart.sauces;
+    const { cart, sauces } = this.state;
+
+    console.log("state sauces", sauces);
+
+    // console.log("state fetchedSauce", this.props.sauce);
+
     return (
-      <>
-        <h1
-          style={{
-            textAlign: "center",
-            margin: "auto",
-            marginBottom: "40px",
-            fontSize: "50px",
-          }}
-        >
-          Cart
-        </h1>
-        {sauces.map((sauce) => (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: "20px",
-              paddingBottom: "20px",
-              marginBottom: "20px",
-              marginLeft: "auto",
-              marginRight: "auto",
-              padding: "20 50 20 50",
-              width: "500px",
-              border: "1px solid black",
-              borderRadius: "15px",
-            }}
-          >
+      <React.Fragment>
+        <h1 className="cart-title">Cart</h1>
+
+        {sauces.map((sauce, idx) => (
+          <article key={sauce.id} className="media">
+            <figure className="media-left">
+              <p className="image is-64x64">
+                <img src={sauce.imageURL} />
+              </p>
+            </figure>
+            <div className="media-content">
+              <div className="content">
+                <p>
+                  <strong>{sauce.name}</strong>
+                  <br />
+                  <small>Quantity:{cart[idx].quantity}</small>
+                  <br />
+                  <span>
+                    ${((sauce.price / 100) * this.state.quantity).toFixed(2)}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </article>
+        ))}
+
+        {/*sauces.map((sauce) => (
+          <div key={sauce.id} className="cart-item">
             <div>
               <div>
                 <span>{sauce.name}</span>
@@ -122,7 +111,7 @@ class Cart extends React.Component {
               </div>
             </div>
           </div>
-        ))}
+        ))*/}
 
         <div
           style={{
@@ -134,24 +123,17 @@ class Cart extends React.Component {
         >
           <button style={{ margin: "20px" }}>CHECKOUT</button>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }
 
-// const mapState = (state) => {
-// 	return {
-// 		cart: state.cart,
-// 	}
-// }
+const mapState = (state) => ({
+  sauce: state.sauce,
+});
 
-// const mapDispatch = (dispatch) => {
-// 	return {
-// 		fetchCart: () => dispatch(fetchCart()),
-// 		addToCart: () => dispatch(addToCart()),
-// 		decreaseQuantity: () => dispatch(decreaseQuantity()),
-// 	}
-// }
+const mapDispatch = (dispatch) => ({
+  getSauce: (item) => dispatch(fetchSauce(item)),
+});
 
-// export default connect(mapState, mapDispatch)(Cart)
-export default Cart;
+export default connect(mapState, mapDispatch)(Cart);
