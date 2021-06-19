@@ -47,7 +47,7 @@ router.get("/active", async (req, res, next) => {
       },
       include: Sauce,
     });
-    console.log(cart);
+
     res.send(cart);
   } catch (error) {
     next(error);

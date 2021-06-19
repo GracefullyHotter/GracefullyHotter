@@ -19,17 +19,25 @@ export const fetchCart = () => {
         },
       });
 
-      // const cleanCart = cart.sauces.map((sauce) => {
-      //   return {
-      //     id: sauce.id,
-      //     name: sauce.name,
-      //     imageURL: sauce.imageURL,
-      //     price: sauce.price,
-      //     quantity: sauce.cartItem.quantity,
-      //   };
-      // });
+      if (activeCart) {
+        console.log("active cart -->", activeCart);
 
-      dispatch(setCart(activeCart));
+        const storeCart = activeCart.sauces.map((sauce) => {
+          return {
+            id: sauce.id,
+            name: sauce.name,
+            imageURL: sauce.imageURL,
+            price: sauce.price,
+            quantity: sauce.cartItem.quantity,
+          };
+        });
+
+        window.localStorage.setItem("cart", JSON.stringify(storeCart));
+        dispatch(setCart(storeCart));
+      } else {
+        // LATER STORE CART TO DB
+        console.log("no active cart for this user in the DB");
+      }
     } catch (error) {
       console.error("Uh oh! error in fetchCart thunk.");
     }
