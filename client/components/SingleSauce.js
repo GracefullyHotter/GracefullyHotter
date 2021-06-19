@@ -11,8 +11,6 @@ class SingleSauce extends React.Component {
       loading: true,
     };
 
-
-
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
@@ -22,7 +20,6 @@ class SingleSauce extends React.Component {
     this.setState({ loading: false });
   }
 
-
   handleAddToCart() {
     this.props.addToCart({
       id: this.props.sauce.id,
@@ -30,7 +27,6 @@ class SingleSauce extends React.Component {
       quantity: 1,
     });
   }
-
 
   render() {
     const {
@@ -50,7 +46,7 @@ class SingleSauce extends React.Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-    console.log("props", this.props);
+
     return (
       <div style={{ display: "flex" }}>
         <div>
@@ -71,7 +67,6 @@ class SingleSauce extends React.Component {
             className="button is-medium is-danger"
             onClick={this.handleAddToCart}
           >
-
             ADD TO CART
           </button>
         </div>
