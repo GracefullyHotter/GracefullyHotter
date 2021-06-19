@@ -1,5 +1,7 @@
 import React from "react";
-// import { connect } from "react-redux"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom";
+
 
 const cart = {
   id: 3,
@@ -125,34 +127,24 @@ class Cart extends React.Component {
           </div>
         ))}
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "​100vh",
-          }}
-        >
-          <button style={{ margin: "20px" }}>CHECKOUT</button>
-        </div>
+        <Link to={"/confirmation"}>
+            Checkout
+        </Link>
       </>
     );
   }
 }
 
-// const mapState = (state) => {
-// 	return {
-// 		cart: state.cart,
-// 	}
-// }
+const mapState = (state) => ({
+  cart: state.cart,
+})
 
-// const mapDispatch = (dispatch) => {
-// 	return {
-// 		fetchCart: () => dispatch(fetchCart()),
-// 		addToCart: () => dispatch(addToCart()),
-// 		decreaseQuantity: () => dispatch(decreaseQuantity()),
-// 	}
-// }
+const mapDispatch = (dispatch) => {
+	return {
+		addToCart: () => dispatch(addToCart()),
+		decreaseQuantity: () => dispatch(decreaseQuantity()),
+	}
+}
 
 // export default connect(mapState, mapDispatch)(Cart)
 export default Cart;
