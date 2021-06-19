@@ -75,6 +75,7 @@ class Cart extends React.Component {
         </h1>
         {sauces.map((sauce) => (
           <div
+          key={sauce.id}
             style={{
               display: "flex",
               justifyContent: "center",
