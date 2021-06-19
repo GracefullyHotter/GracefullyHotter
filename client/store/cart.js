@@ -46,15 +46,20 @@ export const addToCart = (item) => {
       }
 
       let itemExists = false;
+      let newQuantity = item.quantity;
 
       cart.forEach((cartItem) => {
         if (cartItem.id === item.id) {
           itemExists = true;
           cartItem.quantity++;
+          newQuantity = cartItem.quantity;
         }
       });
 
       if (!itemExists) cart.push(item);
+      else item.quantity = newQuantity;
+
+      console.log("item", item);
 
       localStorage.setItem("cart", JSON.stringify(cart));
 
@@ -70,9 +75,8 @@ export const addToCart = (item) => {
         if (activeCart) {
           //if active cart, put request to update cart in db
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
-          console.log("put cart", data);
+          console.log("put data", data);
         } else {
-          localStorage.setItem("cart", JSON.stringify([]));
           const { data } = await axios.post("/api/carts", item, {
             headers: {
               authorization: token,
