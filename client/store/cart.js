@@ -35,7 +35,7 @@ export const fetchCart = () => {
         window.localStorage.setItem("cart", JSON.stringify(storeCart));
         dispatch(setCart(storeCart));
       } else {
-        // LATER STORE CART TO DB
+        // Later: store cart to DB here
         console.log("no active cart for this user in the DB");
       }
     } catch (error) {
