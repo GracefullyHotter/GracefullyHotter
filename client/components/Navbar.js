@@ -5,32 +5,10 @@ import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <React.Fragment>
-    <div className="columns ">
-      <div className="column is-half is-4">
-        <h1 className="column title font-test is-size-1">Gracefully Hotter</h1>
-      </div>
-
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-        <div id="navbarBasicExample" className="navbar-menu">
-          {isLoggedIn ? (
-            <div className="navbar-end">
-              <Link to="/" className="navbar-item">
-                Home
-              </Link>
-              <Link to="/shop" className="navbar-item">
-                Shop
-              </Link>
-              <Link to="/profile" className="navbar-item">
-                Profile
-              </Link>
-              <a to="#" className="navbar-item" onClick={handleClick}>
-                Logout
-              </a>
-              <Link to="/cart" className="navbar-item">
-                Cart
-              </Link>
-            </div>
-          ) : (
+    <nav className="navbar" role="navigation" aria-label="main navigation">
+      <div id="navbarBasicExample" className="navbar-menu">
+        {isLoggedIn ? (
+          <React.Fragment>
             <div className="navbar-start">
               <Link to="/" className="navbar-item">
                 Home
@@ -38,20 +16,68 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
               <Link to="/shop" className="navbar-item">
                 Shop
               </Link>
-              <Link to="/login" className="navbar-item">
-                Login
-              </Link>
-              <Link to="/signup" className="navbar-item">
-                Sign Up
-              </Link>
+            </div>
+
+            <div className="column is-half is-centered is-6">
+              <h1 className="column title font-test is-size-1 has-text-centered">
+                Gracefully Hotter
+              </h1>
+            </div>
+
+            <div className="navbar-end">
+              <div className="navbar-item has-dropdown is-hoverable">
+                <a className="navbar-link">User</a>
+                <div className="navbar-dropdown">
+                  <Link to="/profile" className="navbar-item">
+                    Profile
+                  </Link>
+                  <a to="#" className="navbar-item" onClick={handleClick}>
+                    Logout
+                  </a>
+                </div>
+              </div>
               <Link to="/cart" className="navbar-item">
                 Cart
               </Link>
             </div>
-          )}
-        </div>
-      </nav>
-    </div>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <div className="navbar-start">
+              <Link to="/" className="navbar-item">
+                Home
+              </Link>
+              <Link to="/shop" className="navbar-item">
+                Shop
+              </Link>
+            </div>
+
+            <div className="column is-half is-centered is-6">
+              <h1 className="column title font-test is-size-1 has-text-centered">
+                Gracefully Hotter
+              </h1>
+            </div>
+
+            <div className="navbar-end">
+              <div className="navbar-item has-dropdown is-hoverable">
+                <a className="navbar-link">User</a>
+                <div className="navbar-dropdown">
+                  <Link to="/login" className="navbar-item">
+                    Login
+                  </Link>
+                  <Link to="/signup" className="navbar-item">
+                    Sign Up
+                  </Link>
+                </div>
+              </div>
+              <Link to="/cart" className="navbar-item">
+                Cart
+              </Link>
+            </div>
+          </React.Fragment>
+        )}
+      </div>
+    </nav>
   </React.Fragment>
 );
 
