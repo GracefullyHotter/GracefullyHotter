@@ -6,12 +6,12 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 1,
+      // quantity: 1,
       cart: JSON.parse(localStorage.getItem("cart")),
       sauces: [],
     };
 
-    this.onClick = this.onClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -34,21 +34,37 @@ class Cart extends React.Component {
     });
   }
 
-  onClick(type) {
-    this.setState((prevState) => {
-      return {
-        quantity:
-          type == "add" ? prevState.quantity + 1 : prevState.quantity - 1,
-      };
+  // onClick(type) {
+  //   this.setState((prevState) => {
+  //     return {
+  //       quantity:
+  //         type == "add" ? prevState.quantity + 1 : prevState.quantity - 1,
+  //     };
+  //   });
+  // }
+
+  handleChange(e, sauceId) {
+    const increment = e.target.id === "plus";
+    this.setState({
+      cart: this.state.cart.map((item) => {
+        if (item.id === sauceId) {
+          increment ? ++item.quantity : --item.quantity;
+        }
+        return item;
+      }),
     });
   }
 
   render() {
     const { cart, sauces } = this.state;
 
-    console.log("state sauces", sauces);
+    console.log("state cart", cart);
+    // console.log("state sauces", sauces);
 
-    // console.log("state fetchedSauce", this.props.sauce);
+    const btns = [
+      { id: "plus", content: "+" },
+      { id: "minus", content: "-" },
+    ];
 
     return (
       <React.Fragment>
@@ -68,8 +84,22 @@ class Cart extends React.Component {
                   <br />
                   <small>Quantity:{cart[idx].quantity}</small>
                   <br />
+
+                  {btns.map((btn, btnIdx) => (
+                    <button
+                      type="button"
+                      key={btnIdx}
+                      id={btn.id}
+                      onClick={(e) => this.handleChange(e, sauce.id)}
+                    >
+                      {btn.content}
+                    </button>
+                  ))}
+
+                  <br />
+
                   <span>
-                    ${((sauce.price / 100) * this.state.quantity).toFixed(2)}
+                    ${((sauce.price / 100) * cart[idx].quantity).toFixed(2)}
                   </span>
                 </p>
               </div>
