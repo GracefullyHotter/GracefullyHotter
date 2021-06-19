@@ -91,27 +91,27 @@ export const addToCart = (item) => {
   };
 };
 
-export const cartLoginOrSignup = (userId, storeCart) => {
-  return async (dispatch) => {
-    try {
-      const { data: cart } = await axios.get(`/api/carts/active/${userId}`);
+// export const cartLoginOrSignup = (userId, storeCart) => {
+//   return async (dispatch) => {
+//     try {
+//       const { data: cart } = await axios.get(`/api/carts/active/${userId}`);
 
-      if (cart) {
-        if (storeCart) {
-          // REPLACE CART IN DB WITH REDUX STORE CART
-        } else {
-          // PUT DB CART IN THE STORE
-        }
-      } else {
-        if (storeCart) {
-          // POST STORE CART IN DB AS NEW CART
-        }
-      }
-    } catch (error) {
-      console.error("error in cartLogin thunk");
-    }
-  };
-};
+//       if (cart) {
+//         if (storeCart) {
+//           // REPLACE CART IN DB WITH REDUX STORE CART
+//         } else {
+//           // PUT DB CART IN THE STORE
+//         }
+//       } else {
+//         if (storeCart) {
+//           // POST STORE CART IN DB AS NEW CART
+//         }
+//       }
+//     } catch (error) {
+//       console.error("error in cartLogin thunk");
+//     }
+//   };
+// };
 
 export const checkoutCart = () => {
   return async (dispatch) => {
