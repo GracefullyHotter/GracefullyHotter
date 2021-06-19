@@ -44,68 +44,133 @@ class EditSauce extends React.Component {
       this.state;
 
     return (
-      <div style={{ display: "flex" }}>
-        <div>
-          <h1>{sauce.name}</h1>
+      <div style={{ display: "flex", margin: "20px" }}>
+        <div style={{ margin: "10px" }}>
+          <h1 className="title">{sauce.name}</h1>
           <p>
             <img src={sauce.imageURL} />
           </p>
         </div>
-        <div>
-          <p>{sauce.description}</p>
-          <p>Pepper(s): {sauce.pepper}</p>
-          <p>Rating: {sauce.userRating}</p>
-          <p>Heat (SHU): {sauce.SHU}</p>
-          <h3>Price: ${sauce.price}</h3>
-          <Link to="/shop">Back to all sauces</Link>
+        <div style={{ margin: "20px" }}>
+          <p className="title is-4 has-text-danger">{sauce.description}</p>
+          <p className="title is-4">Pepper(s): {sauce.pepper}</p>
+          <p className="title is-4 ">Rating: {sauce.userRating}</p>
+          <p className="title is-4 ">Heat (SHU): {sauce.SHU}</p>
+          <p className="title is-4 ">Price: ${sauce.price}</p>
+          <Link className="button is-medium is-warning" to="/shop">
+            Back to all sauces
+          </Link>
+          <button
+            style={{ margin: "0 10px" }}
+            className="button is-medium is-danger"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+          <Link className="button is-medium is-link" to={`/shop/${sauce.id}`}>
+            Back to sauce view
+          </Link>
+
+          <form onSubmit={handleUpdate}>
+            <div className="field">
+              <label className="label" htmlFor="name">
+                Sauce Name:
+              </label>
+              <input
+                className="input is-danger is-small"
+                name="name"
+                onChange={handleChange}
+                value={name}
+              />
+            </div>
+
+            <div className="field">
+              <label className="label" htmlFor="imageURL">
+                Image Url:
+              </label>
+              <input
+                className="input is-danger is-small"
+                name="imageURL"
+                onChange={handleChange}
+                value={imageURL}
+              />
+            </div>
+
+            <div className="field">
+              <label className="label" htmlFor="pepper">
+                Pepper:
+              </label>
+              <input
+                className="input is-danger is-small"
+                name="pepper"
+                onChange={handleChange}
+                value={pepper}
+              />
+            </div>
+
+            <br />
+
+            <div className="field">
+              <label className="label" htmlFor="userRating">
+                User Rating:
+              </label>
+              <input
+                className="input is-danger is-small"
+                name="userRating"
+                onChange={handleChange}
+                value={userRating}
+              />
+            </div>
+
+            <div className="field">
+              <label className="label" htmlFor="price">
+                Price:
+              </label>
+              <input
+                className="input is-danger is-small"
+                name="price"
+                onChange={handleChange}
+                value={price}
+              />
+            </div>
+
+            <div className="field">
+              <label className="label" htmlFor="SHU">
+                SHU:
+              </label>
+              <input
+                className="input is-danger is-small"
+                name="SHU"
+                onChange={handleChange}
+                value={SHU}
+              />
+            </div>
+
+            <br />
+
+            <div className="field">
+              <label className="label" htmlFor="description">
+                Description:
+              </label>
+              <input
+                className="input is-danger is-small"
+                name="description"
+                onChange={handleChange}
+                value={description}
+              />
+            </div>
+
+            <br />
+
+            <button
+              style={{ marginTop: "10px" }}
+              className="button is-primary is-medium"
+              type="submit"
+            >
+              Update Sauce
+            </button>
+          </form>
         </div>
-        <button className="button is-medium is-danger" onClick={handleDelete}>
-          Delete
-        </button>
-        <Link className="button is-medium is-link" to={`/shop/${sauce.id}`}>
-          Back to sauce view
-        </Link>
-
-        <form onSubmit={handleUpdate}>
-          <label htmlFor="name">Sauce Name:</label>
-          <input name="name" onChange={handleChange} value={name} />
-
-          <br />
-
-          <label htmlFor="imageURL">Image Url:</label>
-          <input name="imageURL" onChange={handleChange} value={imageURL} />
-
-          <br />
-
-          <label htmlFor="pepper">Pepper:</label>
-          <input name="pepper" onChange={handleChange} value={pepper} />
-
-          <br />
-
-          <label htmlFor="description">Description:</label>
-          <input
-            name="description"
-            onChange={handleChange}
-            value={description}
-          />
-
-          <br />
-
-          <label htmlFor="userRating">User Rating:</label>
-          <input name="userRating" onChange={handleChange} value={userRating} />
-
-          <br />
-
-          <label htmlFor="price">Price:</label>
-          <input name="price" onChange={handleChange} value={price} />
-
-          <br />
-
-          <label htmlFor="SHU">SHU:</label>
-          <input name="SHU" onChange={handleChange} value={SHU} />
-
-          <button type="submit">Update Sauce</button>
-        </form>
       </div>
     );
   }

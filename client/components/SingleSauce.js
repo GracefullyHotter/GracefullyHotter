@@ -40,35 +40,39 @@ class SingleSauce extends React.Component {
     }
 
     return (
-      <div style={{ display: "flex" }}>
-        <div>
-          <h1>{name}</h1>
+      <div style={{ display: "flex", margin: "20px" }}>
+        <div style={{ margin: "10px" }}>
+          <h1 className="title">{name}</h1>
           <p>
             <img src={imageURL} />
           </p>
         </div>
-        <div>
-          <p>{description}</p>
-          <p>Pepper(s): {pepper}</p>
-          <p>Rating: {userRating}</p>
-          <p>Heat (SHU): {SHU}</p>
-          <h3>Price: ${(price / 100).toFixed(2)}</h3>
-          <Link to="/shop">Back to all sauces</Link>
+        <div style={{ margin: "20px" }}>
+          <p className="title is-4 has-text-danger">"{description}"</p>
+          <p className="title is-4 ">Pepper(s): {pepper}</p>
+          <p className="title is-4 ">Rating: {userRating}</p>
+          <p className="title is-4 ">Heat (SHU): {SHU}</p>
+          <p className="title is-4 ">Price: ${(price / 100).toFixed(2)}</p>
+          <Link className="button is-medium is-warning" to="/shop">
+            Back to all sauces
+          </Link>
 
           <button
+            style={{ margin: "0 10px" }}
             className="button is-medium is-danger"
             onClick={this.handleAddToCart}
           >
             ADD TO CART
           </button>
+
+          {isAdmin ? (
+            <Link className="button is-medium is-link" to={`/editsauce/${id}`}>
+              Edit Sauce
+            </Link>
+          ) : (
+            <div />
+          )}
         </div>
-        {isAdmin ? (
-          <Link className="button is-medium is-link" to={`/editsauce/${id}`}>
-            Edit Sauce
-          </Link>
-        ) : (
-          <div />
-        )}
       </div>
     );
   }

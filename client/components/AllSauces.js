@@ -50,7 +50,10 @@ export class AllSauces extends React.Component {
       <React.Fragment>
         {isAdmin ? (
           <Link to="/sauces/create" className="buttons is-right">
-            <button className="button is-warning is-right">
+            <button
+              className="button is-link is-right"
+              style={{ marginRight: "20px" }}
+            >
               Add Hot Sauce
             </button>
           </Link>
