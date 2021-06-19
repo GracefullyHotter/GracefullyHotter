@@ -9,25 +9,57 @@ const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
+    <div className="columns">
+      <div className="column"></div>
+      <div className="column">
+        <form onSubmit={handleSubmit} name={name} className="">
+          <div className="field">
+            <label className="label is-large" htmlFor="email">
+              <small>Email</small>
+            </label>
+            <div className="control has-icons-left">
+              <input
+                className="input is-danger is-medium"
+                type="text"
+                placeholder="random@gmail.com"
+                name="email"
+                type="text"
+                required
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+          </div>
+          <br />
+          <div className="field">
+            <label className="label is-large" htmlFor="password">
+              <small>Password</small>
+            </label>
+            <div className="control has-icons-left">
+              <input
+                class="input is-danger is-medium"
+                type="text"
+                placeholder="*******"
+                name="password"
+                type="password"
+                required
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+          </div>
+          <br />
+          <div>
+            <button class="button is-large is-danger" type="submit">
+              {displayName}
+            </button>
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+      <div className="column"></div>
     </div>
   );
 };
