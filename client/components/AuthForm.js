@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { authenticate } from "../store";
+import { authenticate, fetchCart } from "../store";
 
 /**
  * COMPONENT
@@ -23,11 +23,10 @@ const AuthForm = (props) => {
                 type="text"
                 placeholder="random@gmail.com"
                 name="email"
-                type="text"
                 required
               />
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
+              <span className="icon is-small is-left">
+                <i className="fas fa-envelope"></i>
               </span>
             </div>
           </div>
@@ -38,21 +37,21 @@ const AuthForm = (props) => {
             </label>
             <div className="control has-icons-left">
               <input
-                class="input is-danger is-medium"
+                className="input is-danger is-medium"
                 type="text"
                 placeholder="*******"
                 name="password"
-                type="password"
+                type="password" // 2 types here?
                 required
               />
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
               </span>
             </div>
           </div>
           <br />
           <div>
-            <button class="button is-large is-danger" type="submit">
+            <button className="button is-large is-danger" type="submit">
               {displayName}
             </button>
           </div>
@@ -89,12 +88,13 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt) {
+    async handleSubmit(evt) {
       evt.preventDefault();
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
-      dispatch(authenticate(email, password, formName));
+      await dispatch(authenticate(email, password, formName));
+      await dispatch(fetchCart());
     },
   };
 };
