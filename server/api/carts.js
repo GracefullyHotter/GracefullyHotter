@@ -90,6 +90,12 @@ router.post("/", async (req, res, next) => {
       userId: id,
     });
 
+    if (!id) {
+      cart.isCompleted = true;
+      await cart.save();
+      console.log("GUEST CART --->", cart)
+    }
+
     console.log(req.body);
 
     req.body.forEach(async (item) => {
@@ -98,6 +104,8 @@ router.post("/", async (req, res, next) => {
         sauceId: item.id,
         quantity: item.quantity,
         price: item.price,
+        name: item.name,
+        imageURL: item.imageURL,
       });
     });
 
