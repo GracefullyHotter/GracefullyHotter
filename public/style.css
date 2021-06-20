@@ -36,3 +36,24 @@ form div {
   font-family: HotSauce;
   font-size: 100px;
 }
+
+#landingtitle {
+  font-family: HotSauce;
+  font-size: 200px;
+  color: yellow;
+}
+
+#landingsubtitle {
+  font-family: HotSauce;
+  font-size: 60px;
+  color: red;
+}
+
+#landingbutton {
+  font-weight: bolder;
+}
+
+#landingbutton:hover {
+  background-color: red;
+  color: white;
+}
