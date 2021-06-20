@@ -77,19 +77,37 @@ router.get("/orders/:userId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const { id } = await jwt.verify(token, process.env.JWT);
+    let id;
+
+    if (token) {
+      const data = await jwt.verify(token, process.env.JWT);
+      id = data.id;
+    } else {
+      id = null;
+    }
 
     const cart = await Cart.create({
       userId: id,
     });
 
-    await CartItem.create({
-      cartId: cart.id,
-      sauceId: req.body.id,
-      quantity: req.body.quantity,
-      price: req.body.price,
-      name: req.body.name,
-      imageURL: req.body.imageURL,
+    if (!id) {
+      cart.isCompleted = true;
+      await cart.save();
+      console.log("GUEST CART --->", cart)
+    }
+
+    console.log(req.body);
+
+    req.body.forEach(async (item) => {
+      await CartItem.create({
+        cartId: cart.id,
+        sauceId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        name: item.name,
+        imageURL: item.imageURL,
+      });
+
     });
 
     // items.forEach(async (sauce) => {

@@ -88,7 +88,9 @@ export const addToCart = (item) => {
           //if active cart, put request to update cart in db
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
         } else {
-          const { data } = await axios.post("/api/carts", item, {
+
+          console.log("post request new cart");
+          const { data } = await axios.post("/api/carts", [item], {
             headers: {
               authorization: token,
             },
@@ -212,6 +214,9 @@ export const checkoutCart = () => {
       dispatch(checkout());
     } else {
       console.log("A GUEST USER IS CHECKING OUT");
+
+      const { data } = await axios.post("/api/carts", cart);
+
       window.localStorage.setItem("cart", JSON.stringify([]));
       dispatch(checkout());
     }
