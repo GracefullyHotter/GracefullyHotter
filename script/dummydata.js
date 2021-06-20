@@ -635,6 +635,592 @@ const sauces = [
     SHU: 500000,
     price: 885,
   },
+  {
+    name: "Dua Belibis - Saus Cabe",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/108/dua_belibis_saus_cabe.jpg",
+    pepper: "Peri-Peri",
+    description: "Chilli Sauce",
+    userRating: 4.7,
+    SHU: 510000,
+    price: 785,
+  },
+  {
+    name: "Lingham's Chilli Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/107/lingham_chilli_sauce.jpg",
+    pepper: "Tabasco Pepper",
+    description: "The World's Finest Multi-Use Condiment",
+    userRating: 3.8,
+    SHU: 470000,
+    price: 485,
+  },
+  {
+    name: "Ayam Chilli Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/106/ayam_hot_chilli_sauce.jpg",
+    pepper: "Poblano",
+    description:
+      "Recommendation: A versatile, thick hot Chilli Sauce which is ideal as a dipping sauce for spring rolls, roasted meats, fried fish and chicken. Just add a few tablespoons to your favourite stir fry noodles to enhance flavour.",
+    userRating: 3.8,
+    SHU: 670000,
+    price: 775,
+  },
+  {
+    name: "ABC - Sambal Manis Pedas (Hot & Sweet)",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/105/abc_manic_pedas_sambal_chilli.jpg",
+    pepper: "Bell Pepper",
+    description: "Hot & sweet chilli sauce.",
+    userRating: 3.0,
+    SHU: 370000,
+    price: 565,
+  },
+  {
+    name: "ABC - Sambal Ayam Goreng",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/104/abc_sambal_ayam_goreng_chilli_sauce.jpg",
+    pepper: "Poblano",
+    description: "Dipping chilli sauce for fried chicken.",
+    userRating: 4.0,
+    SHU: 490000,
+    price: 665,
+  },
+  {
+    name: "Pun Chun - Yum Cha",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/103/pun_chun_yum_cha_hot_chilli_sauce.jpg",
+    pepper: "Locoto",
+    description: "Yum Cha Hot Chilli Sauce. Full Rich Flavour.",
+    userRating: 3.0,
+    SHU: 790000,
+    price: 555,
+  },
+  {
+    name: "Lucky Dog - Red - Fire-Roasted Hot Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/102/lucky_dog_red_fire_roasted_hot_pepper_sauce.jpg",
+    pepper: "Tabasco",
+    description:
+      "Red Label: Habanero, jalapeno and serrano peppers with roasted garlic. Foods Best Friend: A delicious addition to any dish, adding savory heat without overpowering food. Use Lucky Dog Hot Sauce on meat, eggs, pizza, sandwiches, fish & pretty much anything!",
+    userRating: 4.0,
+    SHU: 550000,
+    price: 777,
+  },
+  {
+    name: "Zulu Fire Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/99/zulu_fire_sauce_chilli.jpg",
+    pepper: "Jalapeno",
+    description:
+      "This hot sauce from the famous Zulu tribe in South Africa gets it’s wonderful color and flavor from a combination of carrots, sweet potato, chili peppers, spices and herbs. The favorite",
+    userRating: 2.0,
+    SHU: 10000,
+    price: 499,
+  },
+  {
+    name: "Matouk's Calypso Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/98/matouks_hot_salsa_calypso.jpg",
+    pepper: "Scotch Bonnet",
+    description: "Salsa Calypso. HOT HOT HOT Piquante",
+    userRating: 3.5,
+    SHU: 20000000,
+    price: 990,
+  },
+  {
+    name: "Boomslang Ghost Pepper Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/97/boomslang_ghost_pepper_sauce_mad_dog.jpg",
+    pepper: "Jalapeño, Bhut Jolokia (Ghost Chili), Thai",
+    description:
+      "Boomslang Peri Peri Ghost Pepper Hot Sauce. See the snake? It's the Boomslang, one of Africa's most lethal. See the pepper? It's the ominous and infamous Ghost Pepper. Put the two together and you have Boomlsang Hot Sauce, a unique blend of alll natural ingredients from the makers of the world's hottest and most flavorful sauces, Ashley Foods. One taste and you'll see why this is a sauce to die for!",
+    userRating: 3.5,
+    SHU: 1000000,
+    price: 780,
+  },
+  {
+    name: "Mad Dog - Inferno Reserve",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/94/mad_dog_reserve_inferno_ghost_pepper_sauce.jpg",
+    pepper: "Jalapeño, Bhut Jolokia (Ghost Chili)",
+    description:
+      "Like the blonde in the old detective movies, Mad Dog Reserved hot sauce is both beautiful and deadly. A unique blend of Caribbean spices, peppers, garlic, onions, red wine vinegar, and imported cloves",
+    userRating: 3.5,
+    SHU: 7000000,
+    price: 1000,
+  },
+  {
+    name: "St. Pete Heat - Pineapple Habanero Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/93/st_pete_heat_pineapple_habanero_sauce_chili.jpg",
+    pepper: "Habanero",
+    description:
+      "Give your dinner a doze of solar power from the home of the Skyway Bridge. Just as the glorious gulf waters intensify the heat of the sun, this sauce delivers tropical flavor intensified with habanero heat that burns so good! Treat your tongue to a hot pineapple paradise",
+    userRating: 3.8,
+    SHU: 500000,
+    price: 1200,
+  },
+  {
+    name: "Hot Licks Serrano Extra Hot",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/89/hot_licks_serrano_pepper_sauce_extra_hot.jpg",
+    pepper: "Serrano",
+    description:
+      "We added more Serranos for more heat! Smooth Serrano bite it plays well with all foods.",
+    userRating: 3.3,
+    SHU: 540000,
+    price: 500,
+  },
+  {
+    name: "Louisiana Swamp Scum Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/87/louisiana_swamp_scum_hot_sauce.jpg",
+    pepper: "Red Pepper",
+    description:
+      "Award winning! Louisiana Style hot sauce with a delicious smoke flavor and swamp green color.",
+    userRating: 5.0,
+    SHU: 510000,
+    price: 700,
+  },
+  {
+    name: "Iguana - Gold Island Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/86/iguana_gold_island_pepper_sauce.jpg",
+    pepper: "Habanero, Cayenne",
+    description:
+      "Iggy... our reptilian product development guru returned from a trip thru Barbados & the West Indies with the most peculiar souvenirs.",
+    userRating: 3.0,
+    SHU: 10000,
+    price: 600,
+  },
+  {
+    name: "Melinda's - Garlic Habanero Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/85/melindas_habanero_pepper_sauce_garlic.jpg",
+    pepper: "Habanero",
+    description:
+      "Melinda's Garlic Habanero Hot Sauce blends the habanero chile with fresh garlic, carrots, onions, more garlic and a hint of lime juice for a truly fiery taste that enhances the original flavor of your foods without overpowering. Melinda's Garlic Habanero Hot Sauce is a garlic lover's dream.",
+    userRating: 3.4,
+    SHU: 3000000,
+    price: 870,
+  },
+  {
+    name: "Mad Dog - Liquid Fire",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/84/mad_dog_liquid_fire.jpg",
+    pepper: "Jalapeño, Peri Peri",
+    description:
+      "The Original Peri-Peri Hot Sauce. Get back to the roots of heat...the original that started it all. Mad Dog Liquid Fire, a super rich and super flavorful peri-peri sauce that has won the favor of heat seekers for nearly two decades.",
+    userRating: 4.9,
+    SHU: 3200000,
+    price: 840,
+  },
+  {
+    name: "Dave's Roasted Garlic Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/83/daves_roasted_garlic_spicy_sauce.jpg",
+    pepper: "Tabasco",
+    description:
+      "This sauce has a great roasted garlic flavor. Try it on everything from pasta to potatoes. Even vampires love this sauce.",
+    userRating: 3.9,
+    SHU: 1200000,
+    price: 440,
+  },
+  {
+    name: "Bee Sting Honey n' Habanero Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/82/bee_sting_honey_habanero_pepper_sauce.jpg",
+    pepper: "Habanero, Cayenne",
+    description:
+      "This is an Asian/Thai influenced, pan-cultural sweet-hot pepper sauce with a hint of garlic, onion & lemon. Excellent with rice dishes, curries, chicken, shrimp and steak, with vegetables & tofu or anywhere you want a bit of Asian-style excitement.",
+    userRating: 4.1,
+    SHU: 1260000,
+    price: 790,
+  },
+  {
+    name: "Smack My Sweet Ass & Call Me Sally Sweet Chili Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/81/smack-ass-call-me-sally-hot-sauce.jpg",
+    pepper: "Cayenne",
+    description:
+      "Who knew getting smacked could be so sweet? Getting smacked to many times can be painful& possibly drive a person insane!! After all of these years of smacking heat, this new smacking will be sweet relief.",
+    userRating: 4.4,
+    SHU: 2365,
+    price: 800,
+  },
+  {
+    name: "Tahiti Joe's - Tahitiaki Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/75/tahiiti_joes_hot_sauce.jpg",
+    pepper: "Habanero, Jalapeño",
+    description:
+      "While Tahiti's Hot Sauces was hanging ten in Japan (actually, he was just surfing the net), he realized that he could take Japan's famous Teriyaki sauce and make it Tahiti's Hot Sauces style for all the chili-heads to crave and sweat for!",
+    userRating: 3.5,
+    SHU: 2305,
+    price: 750,
+  },
+  {
+    name: "Hog's Breath Red Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/74/hogs_breath_red_sauce_bottle.jpg",
+    pepper: "Habanero",
+    description: "Hog's breath is better than no breath at all!",
+    userRating: 4.9,
+    SHU: 211305,
+    price: 550,
+  },
+  {
+    name: "Flying Goose Sriracha Hot Chilli Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/71/sriracha_hot_chilli_goose.jpg",
+    pepper: "Red Pepper",
+    description:
+      "Sriracha Hot Chilli Sauce is made from sun ripened chillies. Read to use with roasted meat, cold meat, cutlet fish, egg roll or salad or whatever takes your fancy.",
+    userRating: 4.1,
+    SHU: 29931,
+    price: 750,
+  },
+  {
+    name: "Dave's Total Insanity Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/69/daves_total_insanity_sauce_hot.jpg",
+    pepper: "Jalapeño",
+    description:
+      "Insane heat with a garlicky flavor! Winner of National Fiery Foods Challenge and featured on The Food Network. Insanity Sauce is a cooking ingredient and this sauce can go right on your plate, but one drop at a time.",
+    userRating: 4.8,
+    SHU: 48700,
+    price: 947,
+  },
+  {
+    name: "Tropical Pepper Co. - Curry Delight Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/68/tropical_chile_curry_delight_bottle.jpg",
+    pepper: "Jalapeño",
+    description:
+      "Caribbean Flavor, Caribbean Heat, Caribbean Memories, Caribbean Love.",
+    userRating: 4.5,
+    SHU: 48500,
+    price: 537,
+  },
+  {
+    name: "The Brutal Bajan",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/67/brutal_bajan_review.jpg",
+    pepper: "Habanero",
+    description:
+      "Get brutalized! - This island inspired recipe combines the hurricane force of the habanero with tropical spices and the best damn mustard on the planet. A snappy sauce that offers a nice lingering burn. [Offered and sold at Tijuana Flats.",
+    userRating: 2.5,
+    SHU: 44500,
+    price: 724,
+  },
+  {
+    name: "Georgia Peach & Vidalia Onion Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/66/georgia_peach_vidalia_onion_bottle.jpg",
+    pepper: "Cayenne, Jalapeño",
+    description:
+      "The famous sauce with the red velvet top goes well with all food groups. Labeled as International Champion, National Award Winner: 2001, 2000, 1999, 1998, 1996.",
+    userRating: 4.7,
+    SHU: 33500,
+    price: 524,
+  },
+  {
+    name: "Ass Blaster Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/64/ass_blaster_sauce_hot-copy-1.jpg",
+    pepper: "Habanero",
+    description:
+      "Be warned and be prepared: The ASS BLASTER&reg; is not for the uninitiated and has well earned its highly esteemed name among connoisseurs of fine quality condiments.",
+    userRating: 3.5,
+    SHU: 999500,
+    price: 999,
+  },
+  {
+    name: "Waha Wera Kiwifruit & Habanero Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/63/waha_wera_kiwi_habanero_sauce.jpg",
+    pepper: "Green Pepper",
+    description:
+      "We grow our habaneros, the world's hottest pepper, in New Zealand's Far North. Their unique tropical fruit flavor is an ideal supplement to the kiwifruit and manuka honey.",
+    userRating: 3.6,
+    SHU: 949500,
+    price: 989,
+  },
+  {
+    name: "Melinda’s - Naga Jolokia Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/59/melindas_naga_jolokia_lg.jpg",
+    pepper: "Bhut Jolokia (Ghost Chili)",
+    description:
+      "Melinda’s Naga Jolokia Hot Sauce will thrill the most seasoned hot sauce lover. Fire and flavor is what this sauce is all about!",
+    userRating: 4.2,
+    SHU: 449500,
+    price: 1189,
+  },
+  {
+    name: "CaJohns - Nagasoreass",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/58/naga_soreass_spicy_sauce_lg.jpg",
+    pepper: "Bhut Jolokia (Ghost Chili)",
+    description:
+      "Nagasoreass Hot Sauce Warning! This fiery sauce is as vicious as the creature portrayed on the label! It's a tasty blend, made with the World's two hottest chiles!",
+    userRating: 5.0,
+    SHU: 999900,
+    price: 1500,
+  },
+  {
+    name: "Satan's Rage Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/57/satans_rage_saucehot_lg.jpg",
+    pepper: "Cayenne, Bhut Jolokia (Ghost Chili), Peri Peri, Chipotle",
+    description:
+      "Satan's Rage Hot Sauce - Made with Ghost Peppers.When you indulge in this sauce you will surely encounter the wrath of Satan's Rage.Moments after you taste this sinfully delicious sauce you will pay the price.",
+    userRating: 4.1,
+    SHU: 40000000,
+    price: 900,
+  },
+  {
+    name: "Mad Dog 357 - Pure Ghost Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/56/mad_dog_357_pure_ghost_chili.jpg",
+    pepper: "Habanero, Bhut Jolokia (Ghost Chili), Peri Peri",
+    description:
+      "Mad Dog 357 Pure Ghost Hot Sauce - No Extract Added To This Edition. Made with the Naga Jolokia Ghost Pepper, The Worlds Hottest Pepper.",
+    userRating: 3.8,
+    SHU: 300000,
+    price: 800,
+  },
+  {
+    name: "Mad Dog 357 - Ghost Pepper Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/55/mad_dog_357_ghost_pepper_sauce.jpg",
+    pepper: "Habanero, Bhut Jolokia (Ghost Chili), Peri Peri",
+    description:
+      "Ever seen a ghost? One taste of 357 Mad Dog Ghost Pepper Hot Sauce, and you will!...your own! Made with the world's hottest chile pepper, the Bhut Jolokia, this isn't just super hot.",
+    userRating: 3.8,
+    SHU: 900000,
+    price: 760,
+  },
+  {
+    name: "Mad Dog 357 - Ghost Pepper Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/55/mad_dog_357_ghost_pepper_sauce.jpg",
+    pepper: "Habanero, Bhut Jolokia (Ghost Chili), Peri Peri",
+    description:
+      "Ever seen a ghost? One taste of 357 Mad Dog Ghost Pepper Hot Sauce, and you will!...your own! Made with the world's hottest chile pepper, the Bhut Jolokia, this isn't just super hot.",
+    userRating: 3.8,
+    SHU: 900000,
+    price: 760,
+  },
+  {
+    name: "Grace - Scotch Bonnet Hot Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/54/grace_scotch_bonnet_pepper_sauce_bottle.jpg",
+    pepper: "Scotch Bonnet",
+    description: "Scotch bonnet hot sauce.",
+    userRating: 3.9,
+    SHU: 50000,
+    price: 700,
+  },
+  {
+    name: "Grace - Hot Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/53/grace_original_jamaican_very_hot_pepper_sauce.jpg",
+    pepper: "Scotch Bonnet",
+    description:
+      "Grace Hot Pepper Sauce - if you went to Jamaica and asked for hot sauce this is the one they would hand you. Grace foods since 1922 has been the number one hot sauce brand in Jamaica.",
+    userRating: 4.1,
+    SHU: 770000,
+    price: 1700,
+  },
+  {
+    name: "Nando's - Garlic Peri Peri Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/52/nandos_garlic_pepper_sauce_peri_peri.jpg",
+    pepper: "Cayenne, Peri Peri, Serrano",
+    description:
+      "A traditional Garlic Peri-Peri sauce. Blended with Peri-Peri & Serrano chilies, bold garlic pieces, and a dash of lemon....A characteristic of the Peri-Peri chili is that the heat creeps up on you, thus allowing you to first enjoy the taste & then ex-peri-peri ence the African glow.",
+    userRating: 4.2,
+    SHU: 370000,
+    price: 500,
+  },
+  {
+    name: "Nando's - Medium Peri Peri Pepper Sauce",
+    imageURL: "https://hotsaucefever.com/images/sauces/51/nandos_peri_peri.jpg",
+    pepper: "Peri Peri",
+    description: "South African hotsauce at its finest.",
+    userRating: 4.2,
+    SHU: 20000,
+    price: 600,
+  },
+  {
+    name: "Nando's - Hot Peri Peri Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/50/nandos_hot_peri_peri.jpg",
+    pepper: "Cayenne, Peri Peri, Serrano",
+    description: "South African hotsauce at its finest.",
+    userRating: 3.7,
+    SHU: 210000,
+    price: 840,
+  },
+  {
+    name: "Crazy Jerry's Devil's Brew Garlic Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/49/crazy_jerrys_devils_brew_garlic_hotsauce.jpg",
+    pepper: "Habanero, Cayenne, Tabasco",
+    description: "Crazy Jerry's hot sauce.",
+    userRating: 4.3,
+    SHU: 2130000,
+    price: 515,
+  },
+  {
+    name: "Crazy Jerry's Biker Trash D.I.L.L.I.G.A.F. Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/48/crazy_jerrys_biker_trash_habanero_garlic_sauce.jpg",
+    pepper: "Habanero, Trinidad Scorpion",
+    description: "Delicious hot sauce.",
+    userRating: 3.3,
+    SHU: 2000000,
+    price: 615,
+  },
+  {
+    name: "Crazy Jerry's Orange Rush Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/47/hot_sauce_review_crazy_jerrys_orange_rush.jpg",
+    pepper: "Habanero, Chipotle",
+    description: "A mandarin hot sauce that will blow your mind.",
+    userRating: 5.0,
+    SHU: 2900000,
+    price: 500,
+  },
+  {
+    name: "Crazy Jerry's Brain Damage Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/46/hot_sauce_brain_damage_crazy_jerrys.jpg",
+    pepper: "Cayenne",
+    description:
+      "Crazy Jerry's Brain Damage Hot Sauce.this hot sauce ain't for wimps...it's for people with an adventurous soul looking for cheap thrills.",
+    userRating: 3.0,
+    SHU: 1000000,
+    price: 700,
+  },
+  {
+    name: "Trinidad - Extra Hot Habanero Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/45/trinidad_extra_hot_habanero.jpg",
+    pepper: "Poblano",
+    description: "A powerful punch in a tiny bottle.",
+    userRating: 4.5,
+    SHU: 1800000,
+    price: 1000,
+  },
+  {
+    name: "Trinidad - Hot Habanero Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/43/sauce_hot_trinidad_habanero.jpg",
+    pepper: "Poblano",
+    description: "A unique tasting hot-sauce, sure to please.",
+    userRating: 4.7,
+    SHU: 1400000,
+    price: 1100,
+  },
+  {
+    name: "Marie Sharp's Belizean Heat - Habanero Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/42/marie_sharp_belizean_heat_habanero_pepper_sauce.jpg",
+    pepper: "Red Pepper",
+    description:
+      "Marie Sharp's Belizean Heat Habanero Pepper Sauce is great for cooking. Flavor Soups, Sauces and Stir Fries or add to boiling water for rice, pasta or broiled seafood.",
+    userRating: 4.5,
+    SHU: 1300000,
+    price: 900,
+  },
+  {
+    name: "Marie Sharp's - Mild Habanero Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/41/habanero_pepper_sauce_marie_sharp_mild.jpg",
+    pepper: "Habanero",
+    description: "A milder but still potent blend.",
+    userRating: 4.5,
+    SHU: 100000,
+    price: 800,
+  },
+  {
+    name: "Marie Sharp's - Grapefruit Pulp Habanero Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/40/grapefruit_pulp_habanero_pepper_sauce.jpg",
+    pepper: "Habanero",
+    description: "The great taste of Grapefruit and Yellow Habanero.",
+    userRating: 4.1,
+    SHU: 100000,
+    price: 500,
+  },
+  {
+    name: "Marie Sharp's - Orange Pulp Habanero Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/38/orange_pulp_habanero_chilli_sauce.jpg",
+    pepper: "Habanero",
+    description:
+      "Marie Sharp's Orange Pulp Hot Sauce is a unique habanero and orange-based blend that achieves the perfect balance between flavor and heat. Nestled in the foothills of the Mayan Mountains, Marie Sharps factory still creates products the old-fashioned way.",
+    userRating: 4.6,
+    SHU: 110000,
+    price: 750,
+  },
+  {
+    name: "Marie Sharp's - BEWARE Habanero Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/36/marie_sharp_beware_heat_chilli_sauce.jpg",
+    pepper: "Cayenne",
+    description:
+      "If you are in need of extreme heat (as in mouth numbing, taste nothing else kind of heat) then this is for you. This is a quality product - as all of Marie Sharp's stuff is.",
+    userRating: 4.6,
+    SHU: 1120000,
+    price: 799,
+  },
+  {
+    name: "Stonewall Kitchen Habanero Mango Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/34/hotsauce_stonewall_habanero_mango_lg.jpg",
+    pepper: "Habanero",
+    description: "A medium heat sauce.",
+    userRating: 2.3,
+    SHU: 1000,
+    price: 499,
+  },
+  {
+    name: "Walkerswood - Hot Jonkanoo Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/31/walkers_wood_jonkanoo_pepper_sauce.jpg",
+    pepper: "Walkerswood Jamaica",
+    description:
+      "Walkerswood Jonkanoo Pepper Sauce captures the festive Jonkanoo spirit in this sunny and spicy hot sauce.",
+    userRating: 3.6,
+    SHU: 3000,
+    price: 579,
+  },
+  {
+    name: "Walkerswood - Hot Jamaican Scotch Bonnet Pepper Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/30/jamaican_scotch_bonnet_pepper_sauce_walkers.jpg",
+    pepper: "Scotch Bonnet",
+    description:
+      "They started with the habanero pepper (just about the hottest variety on this planet) and then added sugar cane pineapple and vinegar.",
+    userRating: 3.7,
+    SHU: 6000,
+    price: 679,
+  },
+  {
+    name: "The Pepper Plant - Chipotle Pepper Hot Sauce",
+    imageURL:
+      "https://hotsaucefever.com/images/sauces/29/the_pepper_plant_chipotle.jpg",
+    pepper: "Jalapeño",
+    description:
+      "The Pepper Plant has created this chipotle sauce from a blend of jalapenos which are spiced and smoked. Use as a marinade for meats and poultry. Not too hot just medium.",
+    userRating: 5.0,
+    SHU: 9000000,
+    price: 1400,
+  },
 ];
 
 const carts = [
