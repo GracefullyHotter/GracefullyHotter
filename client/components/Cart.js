@@ -2,10 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSauce } from "../store/sauce";
 import { Link } from "react-router-dom";
-import { addToCart, checkoutCart } from "../store";
-
-
-
+import { checkoutCart, updateCart } from "../store/cart";
 
 class Cart extends React.Component {
   constructor(props) {
@@ -26,9 +23,9 @@ class Cart extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (prevProps.sauce !== this.props.sauce) {
-      this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
+      await this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
     }
   }
 
@@ -36,37 +33,27 @@ class Cart extends React.Component {
     const increment = e.target.id === "plus";
     let updatedQuantity = 0;
 
-    await this.setState({
-      cart: this.state.cart.map((item) => {
-        if (item.id === sauce.id) {
-          increment ? ++item.quantity : --item.quantity;
-          updatedQuantity = item.quantity;
-        }
-        return item;
-      }),
+    const updatedCart = this.state.cart.map((item) => {
+      if (item.id === sauce.id) {
+        increment ? ++item.quantity : --item.quantity;
+        updatedQuantity = item.quantity;
+      }
+      return item;
     });
 
-    //how to remove cart item in localstorage...
-    // if (updatedQuantity === 0) {
-    //   await this.setState({
-    //     cart: this.state.cart.filter((item) => item.id !== sauce.id),
-    //   });
-    // }
+    window.localStorage.setItem("cart", JSON.stringify(updatedCart));
+    await this.setState({ cart: updatedCart });
 
-    window.localStorage.setItem("cart", JSON.stringify(this.state.cart));
-
-    this.props.addToCart({
+    this.props.updateCart({
       id: sauce.id,
       price: sauce.price,
       quantity: updatedQuantity,
-
     });
   }
-  
-    handleCheckout() {
+
+  handleCheckout() {
     this.props.checkout();
   }
-
 
   render() {
     const { cart, sauces } = this.state;
@@ -79,9 +66,9 @@ class Cart extends React.Component {
     // if (cart.length === 0) {
     //   return <h1>no items in your cart!</h1>;
     // }
+    console.log("state cart", cart);
 
     return (
-
       <React.Fragment>
         <h1 className="cart-title">Cart</h1>
 
@@ -89,7 +76,6 @@ class Cart extends React.Component {
           <article key={sauce.id} className="media">
             <figure className="media-left">
               <p className="image is-64x64">
-
                 <img src={sauce.imageURL} />
               </p>
             </figure>
@@ -98,7 +84,10 @@ class Cart extends React.Component {
                 <p>
                   <strong>{sauce.name}</strong>
                   <br />
-                  <small>Quantity:{cart[idx].quantity}</small>
+                  <small>
+                    Quantity:
+                    {cart[idx].id === sauce.id ? cart[idx].quantity : 0}
+                  </small>
                   <br />
 
                   {btns.map((btn, btnIdx) => (
@@ -126,12 +115,15 @@ class Cart extends React.Component {
           </article>
         ))}
 
-
         <Link to={"/confirmation"}>
-            <button className="button is-large is-danger" onClick={this.handleCheckout}>Checkout</button>
+          <button
+            className="button is-large is-danger"
+            onClick={this.handleCheckout}
+          >
+            Checkout
+          </button>
         </Link>
       </React.Fragment>
-
     );
   }
 }
@@ -142,9 +134,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSauce: (id) => dispatch(fetchSauce(id)),
-  addToCart: (item) => dispatch(addToCart(item)),
-   checkout: () => dispatch(checkoutCart()),
+  updateCart: (item) => dispatch(updateCart(item)),
+  checkout: () => dispatch(checkoutCart()),
 });
-
 
 export default connect(mapState, mapDispatch)(Cart);
