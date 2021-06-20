@@ -60,7 +60,9 @@ const AuthForm = (props) => {
             </div>
           </div>
           <br />
+
           <div style={{ display: "flex", flexDirection: "column" }}>
+
             <button className="button is-large is-danger" type="submit">
               {displayName}
             </button>

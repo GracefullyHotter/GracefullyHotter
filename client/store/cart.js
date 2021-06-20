@@ -19,17 +19,25 @@ export const fetchCart = () => {
         },
       });
 
-      // const cleanCart = cart.sauces.map((sauce) => {
-      //   return {
-      //     id: sauce.id,
-      //     name: sauce.name,
-      //     imageURL: sauce.imageURL,
-      //     price: sauce.price,
-      //     quantity: sauce.cartItem.quantity,
-      //   };
-      // });
+      if (activeCart) {
+        console.log("active cart -->", activeCart);
 
-      dispatch(setCart(activeCart));
+        const storeCart = activeCart.sauces.map((sauce) => {
+          return {
+            id: sauce.id,
+            name: sauce.name,
+            imageURL: sauce.imageURL,
+            price: sauce.price,
+            quantity: sauce.cartItem.quantity,
+          };
+        });
+
+        window.localStorage.setItem("cart", JSON.stringify(storeCart));
+        dispatch(setCart(storeCart));
+      } else {
+        // Later: store cart to DB here
+        console.log("no active cart for this user in the DB");
+      }
     } catch (error) {
       console.error("Uh oh! error in fetchCart thunk.");
     }
@@ -91,27 +99,27 @@ export const addToCart = (item) => {
   };
 };
 
-export const cartLoginOrSignup = (userId, storeCart) => {
-  return async (dispatch) => {
-    try {
-      const { data: cart } = await axios.get(`/api/carts/active/${userId}`);
+// export const cartLoginOrSignup = (userId, storeCart) => {
+//   return async (dispatch) => {
+//     try {
+//       const { data: cart } = await axios.get(`/api/carts/active/${userId}`);
 
-      if (cart) {
-        if (storeCart) {
-          // REPLACE CART IN DB WITH REDUX STORE CART
-        } else {
-          // PUT DB CART IN THE STORE
-        }
-      } else {
-        if (storeCart) {
-          // POST STORE CART IN DB AS NEW CART
-        }
-      }
-    } catch (error) {
-      console.error("error in cartLogin thunk");
-    }
-  };
-};
+//       if (cart) {
+//         if (storeCart) {
+//           // REPLACE CART IN DB WITH REDUX STORE CART
+//         } else {
+//           // PUT DB CART IN THE STORE
+//         }
+//       } else {
+//         if (storeCart) {
+//           // POST STORE CART IN DB AS NEW CART
+//         }
+//       }
+//     } catch (error) {
+//       console.error("error in cartLogin thunk");
+//     }
+//   };
+// };
 
 export const checkoutCart = () => {
   return async (dispatch) => {
