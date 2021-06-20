@@ -178,14 +178,10 @@ router.delete("/active/:cartItemId", async (req, res, next) => {
       include: Sauce,
     });
 
-    // cart.dataValues.sauces.forEach(async (sauce) => {
-    //   console.log(sauce);
-    //   if (sauce.id === req.params.cartItemId) await sauce.destroy();
-    // });
-    console.log(req.params.cartItemId);
-    cart.dataValues.sauces.forEach((sauce) => {
-      if (sauce.id === req.params.cartItemId) {
-        console.log("meow");
+    cart.dataValues.sauces.forEach(async (sauce) => {
+      console.log(sauce.dataValues.id, req.params.cartItemId);
+      if (sauce.dataValues.id === Number(req.params.cartItemId)) {
+        await sauce.destroy();
       }
     });
 
