@@ -1,5 +1,8 @@
 import React from "react";
-// import { connect } from "react-redux"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom";
+import { addToCart, checkoutCart } from "../store";
+
 
 const cart = {
   id: 3,
@@ -32,10 +35,10 @@ const cart = {
 };
 
 class Cart extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { quantity: 1 };
-    this.onClick = this.onClick.bind(this);
+    this.handleCheckout = this.handleCheckout.bind(this);
   }
 
   // componentDidMount() {
@@ -43,12 +46,9 @@ class Cart extends React.Component {
   // 	this.setState({ loading: false })
   // }
 
-  // handleChange(event) {
-  // 	event.preventDefault()
-  // 	this.setState({
-  // 		[event.target.name]: event.target.value,
-  // 	})
-  // }
+  handleCheckout() {
+    this.props.checkout();
+  }
 
   onClick(type) {
     this.setState((prevState) => {
@@ -75,6 +75,7 @@ class Cart extends React.Component {
         </h1>
         {sauces.map((sauce) => (
           <div
+          key={sauce.id}
             style={{
               display: "flex",
               justifyContent: "center",
@@ -124,34 +125,24 @@ class Cart extends React.Component {
           </div>
         ))}
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "​100vh",
-          }}
-        >
-          <button style={{ margin: "20px" }}>CHECKOUT</button>
-        </div>
+        <Link to={"/confirmation"}>
+            <button className="button is-large is-danger" onClick={this.handleCheckout}>Checkout</button>
+        </Link>
       </>
     );
   }
 }
 
-// const mapState = (state) => {
-// 	return {
-// 		cart: state.cart,
-// 	}
-// }
+const mapState = (state) => ({
+  cart: state.cart,
+})
 
-// const mapDispatch = (dispatch) => {
-// 	return {
-// 		fetchCart: () => dispatch(fetchCart()),
-// 		addToCart: () => dispatch(addToCart()),
-// 		decreaseQuantity: () => dispatch(decreaseQuantity()),
-// 	}
-// }
+const mapDispatch = (dispatch) => {
+	return {
+		addToCart: () => dispatch(addToCart()),
+    checkout: () => dispatch(checkoutCart()),
+	}
+}
 
 // export default connect(mapState, mapDispatch)(Cart)
-export default Cart;
+export default connect(mapState, mapDispatch)(Cart);
