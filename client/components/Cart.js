@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSauce } from "../store/sauce";
 import { Link } from "react-router-dom";
-import { checkoutCart, updateCart } from "../store/cart";
+import { checkoutCart, updateCart, deleteCartItem } from "../store/cart";
 
 class Cart extends React.Component {
   constructor(props) {
@@ -12,8 +12,10 @@ class Cart extends React.Component {
       cart: JSON.parse(localStorage.getItem("cart")),
       sauces: [],
     };
+
     this.handleCheckout = this.handleCheckout.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +55,10 @@ class Cart extends React.Component {
 
   handleCheckout() {
     this.props.checkout();
+  }
+
+  handleRemove(id) {
+    this.props.deleteItem(id);
   }
 
   render() {
@@ -100,7 +106,11 @@ class Cart extends React.Component {
                       {btn.content}
                     </button>
                   ))}
-                  <button type="button" id="delete">
+                  <button
+                    type="button"
+                    id="delete"
+                    onClick={() => this.handleRemove(sauce.id)}
+                  >
                     Remove
                   </button>
 
@@ -136,6 +146,7 @@ const mapDispatch = (dispatch) => ({
   getSauce: (id) => dispatch(fetchSauce(id)),
   updateCart: (item) => dispatch(updateCart(item)),
   checkout: () => dispatch(checkoutCart()),
+  deleteItem: (id) => dispatch(deleteCartItem(id)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);

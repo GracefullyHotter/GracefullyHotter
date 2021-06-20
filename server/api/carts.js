@@ -108,7 +108,6 @@ router.post("/", async (req, res, next) => {
 // PUT /api/carts/checkout
 router.put("/checkout", async (req, res, next) => {
   try {
-
     const token = req.body.headers.authorization;
     const { id } = await jwt.verify(token, process.env.JWT);
 
@@ -170,9 +169,17 @@ router.delete("/active/:cartItemId", async (req, res, next) => {
       include: Sauce,
     });
 
-    cart.sauces.forEach(async (sauce) => {
-      if (sauce.id === req.params.cartItemId) await sauce.destroy();
+    // cart.dataValues.sauces.forEach(async (sauce) => {
+    //   console.log(sauce);
+    //   if (sauce.id === req.params.cartItemId) await sauce.destroy();
+    // });
+    console.log(req.params.cartItemId);
+    cart.dataValues.sauces.forEach((sauce) => {
+      if (sauce.id === req.params.cartItemId) {
+        console.log("meow");
+      }
     });
+
     res.send(cart);
   } catch (error) {
     next(error);

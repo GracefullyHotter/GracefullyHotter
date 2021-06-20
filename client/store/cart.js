@@ -119,10 +119,7 @@ export const updateCart = (item) => {
             authorization: token,
           },
         });
-
-        //check is user has active cart in db
         if (activeCart) {
-          //if active cart, put request to update cart in db
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
         }
       }
@@ -133,37 +130,42 @@ export const updateCart = (item) => {
   };
 };
 
-// export const deleteCartItem = (id) => {
-//   return async (dispatch) => {
-//     try {
-//       const token = localStorage.getItem("token");
-//       const cart = JSON.parse(localStorage.getItem("cart"));
-//       if (!cart) {
-//         localStorage.setItem("cart", JSON.stringify([]));
-//       }
+export const deleteCartItem = (id) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("token");
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (!cart) {
+        localStorage.setItem("cart", JSON.stringify([]));
+      }
 
-//       localStorage.setItem("cart", JSON.stringify(cart));
+      const newCart = cart.filter((cartItem) => cartItem.id !== id);
+      // const removedItem = cart.filter((cartItem) => cartItem.id === id);
 
-//       if (token) {
-//         const { data: activeCart } = await axios.get("/api/carts/active", {
-//           headers: {
-//             authorization: token,
-//           },
-//         });
+      localStorage.setItem("cart", JSON.stringify(newCart));
 
-//         //check is user has active cart in db
-//         if (activeCart) {
-//           //if active cart, put request to update cart in db
-//           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
-//           console.log("put data", data);
-//         }
-//       }
-//       dispatch(_removeCartItem(id));
-//     } catch (error) {
-//       console.log("error in deleteCartItem thunk!");
-//     }
-//   };
-// };
+      if (token) {
+        const { data: activeCart } = await axios.get("/api/carts/active", {
+          headers: {
+            authorization: token,
+          },
+        });
+
+        if (activeCart) {
+          const { data } = await axios.delete(`/api/carts/active/${id}`, {
+            headers: {
+              authorization: token,
+            },
+          });
+        }
+      }
+
+      dispatch(_removeCartItem(id));
+    } catch (error) {
+      console.log("error in deleteCartItem thunk!");
+    }
+  };
+};
 
 // export const cartLoginOrSignup = (userId, storeCart) => {
 //   return async (dispatch) => {
