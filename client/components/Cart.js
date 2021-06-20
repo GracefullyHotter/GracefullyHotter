@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSauce } from "../store/sauce";
+import { addToCart } from "../store/cart";
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // quantity: 1,
       cart: JSON.parse(localStorage.getItem("cart")),
       sauces: [],
     };
@@ -17,7 +17,7 @@ class Cart extends React.Component {
   componentDidMount() {
     const cart = this.state.cart;
     cart.forEach((cartItem) => {
-      this.props.getSauce(cartItem);
+      this.props.getSauce(cartItem.id);
     });
   }
 
@@ -25,13 +25,6 @@ class Cart extends React.Component {
     if (prevProps.sauce !== this.props.sauce) {
       this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
     }
-  }
-
-  handleChange(event) {
-    event.preventDefault();
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
   }
 
   // onClick(type) {
@@ -43,23 +36,35 @@ class Cart extends React.Component {
   //   });
   // }
 
-  handleChange(e, sauceId) {
+  async handleChange(e, sauce) {
     const increment = e.target.id === "plus";
-    this.setState({
+    let updatedQuantity = 0;
+
+    await this.setState({
       cart: this.state.cart.map((item) => {
-        if (item.id === sauceId) {
+        if (item.id === sauce.id) {
           increment ? ++item.quantity : --item.quantity;
+          updatedQuantity = item.quantity;
         }
         return item;
       }),
     });
+
+    window.localStorage.setItem("cart", JSON.stringify(this.state.cart));
+
+    if (increment || !increment) {
+      this.props.addToCart({
+        id: sauce.id,
+        price: sauce.price,
+        quantity: updatedQuantity,
+      });
+    }
   }
 
   render() {
     const { cart, sauces } = this.state;
 
     console.log("state cart", cart);
-    // console.log("state sauces", sauces);
 
     const btns = [
       { id: "plus", content: "+" },
@@ -90,7 +95,7 @@ class Cart extends React.Component {
                       type="button"
                       key={btnIdx}
                       id={btn.id}
-                      onClick={(e) => this.handleChange(e, sauce.id)}
+                      onClick={(e) => this.handleChange(e, sauce)}
                     >
                       {btn.content}
                     </button>
@@ -163,7 +168,8 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  getSauce: (item) => dispatch(fetchSauce(item)),
+  getSauce: (id) => dispatch(fetchSauce(id)),
+  addToCart: (item) => dispatch(addToCart(item)),
 });
 
 export default connect(mapState, mapDispatch)(Cart);

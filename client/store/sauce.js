@@ -14,10 +14,10 @@ const setSauce = (sauce) => ({ type: SET_SAUCE, sauce });
  * THUNK CREATORS
  */
 
-export const fetchSauce = (item) => {
+export const fetchSauce = (id) => {
   return async (dispatch) => {
     try {
-      const { data: sauce } = await axios.get(`/api/sauces/${item.id}`);
+      const { data: sauce } = await axios.get(`/api/sauces/${id}`);
       dispatch(setSauce(sauce));
     } catch (error) {
       console.log(error);

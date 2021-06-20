@@ -2,13 +2,13 @@ import axios from "axios";
 
 // ACTION TYPES
 const SET_CART = "SET_CART";
-const SET_CARTITEM = "SET_CARTITEM";
 const ADD_TO_CART = "ADD_TO_CART";
+const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
 // ACTION CREATORS
 const setCart = (cart) => ({ type: SET_CART, cart });
-const setCartItem = (item) => ({ type: SET_CARTITEM, item });
 const _addToCart = (item) => ({ type: ADD_TO_CART, item });
+const _removeFromCart = (item) => ({ type: ADD_TO_CART, item });
 
 // THUNK CREATORS
 export const fetchCart = () => {
@@ -55,21 +55,19 @@ export const addToCart = (item) => {
         localStorage.setItem("cart", JSON.stringify([]));
       }
 
-      let itemExists = false;
-      let newQuantity = item.quantity;
+      // let itemExists = false;
+      // let newQuantity = item.quantity;
 
-      cart.forEach((cartItem) => {
-        if (cartItem.id === item.id) {
-          itemExists = true;
-          cartItem.quantity++;
-          newQuantity = cartItem.quantity;
-        }
-      });
+      // cart.forEach((cartItem) => {
+      //   if (cartItem.id === item.id) {
+      //     itemExists = true;
+      //     cartItem.quantity++;
+      //     newQuantity = cartItem.quantity;
+      //   }
+      // });
 
-      if (!itemExists) cart.push(item);
-      else item.quantity = newQuantity;
-
-      console.log("item", item);
+      // if (!itemExists) cart.push(item);
+      // else item.quantity = newQuantity;
 
       localStorage.setItem("cart", JSON.stringify(cart));
 
@@ -87,6 +85,7 @@ export const addToCart = (item) => {
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
           console.log("put data", data);
         } else {
+          console.log("post request new cart");
           const { data } = await axios.post("/api/carts", item, {
             headers: {
               authorization: token,
