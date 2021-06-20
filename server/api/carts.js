@@ -107,6 +107,7 @@ router.post("/", async (req, res, next) => {
         name: item.name,
         imageURL: item.imageURL,
       });
+
     });
 
     // items.forEach(async (sauce) => {
@@ -151,11 +152,18 @@ router.put("/checkout", async (req, res, next) => {
 router.put("/:cartId", async (req, res, next) => {
   try {
     const cartId = req.params.cartId;
-    const { id, price, quantity } = req.body;
+    const { id, price, quantity, name, imageURL } = req.body;
     const sauce = await Sauce.findByPk(id);
     const cart = await Cart.findByPk(cartId);
 
-    cart.addSauce(sauce, { through: { quantity: quantity, price: price } });
+    cart.addSauce(sauce, {
+      through: {
+        quantity: quantity,
+        price: price,
+        name: name,
+        imageURL: imageURL,
+      },
+    });
 
     res.send(cart);
   } catch (error) {
@@ -188,9 +196,13 @@ router.delete("/active/:cartItemId", async (req, res, next) => {
       include: Sauce,
     });
 
-    cart.sauces.forEach(async (sauce) => {
-      if (sauce.id === req.params.cartItemId) await sauce.destroy();
+    cart.dataValues.sauces.forEach(async (sauce) => {
+      console.log(sauce.dataValues.id, req.params.cartItemId);
+      if (sauce.dataValues.id === Number(req.params.cartItemId)) {
+        await sauce.destroy();
+      }
     });
+
     res.send(cart);
   } catch (error) {
     next(error);
