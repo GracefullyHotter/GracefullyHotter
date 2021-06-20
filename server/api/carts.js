@@ -77,7 +77,14 @@ router.get("/orders/:userId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const { id } = await jwt.verify(token, process.env.JWT);
+    let id;
+
+    if (token) {
+      const data = await jwt.verify(token, process.env.JWT);
+      id = data.id;
+    } else {
+      id = null;
+    }
 
     const cart = await Cart.create({
       userId: id,
