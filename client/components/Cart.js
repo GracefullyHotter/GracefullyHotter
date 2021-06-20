@@ -2,10 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSauce } from "../store/sauce";
 import { Link } from "react-router-dom";
-import { addToCart, checkoutCart } from "../store";
-
-
-
+import { checkoutCart, updateCart, deleteCartItem } from "../store/cart";
 
 class Cart extends React.Component {
   constructor(props) {
@@ -13,63 +10,51 @@ class Cart extends React.Component {
 
     this.state = {
       cart: JSON.parse(localStorage.getItem("cart")),
-      sauces: [],
+      // sauces: [],
     };
+
     this.handleCheckout = this.handleCheckout.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
-  componentDidMount() {
-    const cart = this.state.cart;
-    cart.forEach((cartItem) => {
-      this.props.getSauce(cartItem.id);
-    });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.sauce !== this.props.sauce) {
-      this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
-    }
-  }
-
-  async handleChange(e, sauce) {
+  async handleChange(e, cartItem) {
     const increment = e.target.id === "plus";
     let updatedQuantity = 0;
 
-    await this.setState({
-      cart: this.state.cart.map((item) => {
-        if (item.id === sauce.id) {
-          increment ? ++item.quantity : --item.quantity;
-          updatedQuantity = item.quantity;
-        }
-        return item;
-      }),
+    const updatedCart = this.state.cart.map((item) => {
+      if (item.id === cartItem.id) {
+        increment ? ++item.quantity : --item.quantity;
+        updatedQuantity = item.quantity;
+      }
+      return item;
     });
 
-    //how to remove cart item in localstorage...
-    // if (updatedQuantity === 0) {
-    //   await this.setState({
-    //     cart: this.state.cart.filter((item) => item.id !== sauce.id),
-    //   });
-    // }
-
-    window.localStorage.setItem("cart", JSON.stringify(this.state.cart));
-
-    this.props.addToCart({
-      id: sauce.id,
-      price: sauce.price,
-      quantity: updatedQuantity,
-
-    });
+    window.localStorage.setItem("cart", JSON.stringify(updatedCart));
+    await this.setState({ cart: updatedCart });
+    if (updatedQuantity === 0) {
+      this.handleRemove(cartItem.id);
+    } else
+      this.props.updateCart({
+        id: cartItem.id,
+        price: cartItem.price,
+        quantity: updatedQuantity,
+      });
   }
-  
-    handleCheckout() {
+
+  handleCheckout() {
     this.props.checkout();
   }
 
+  handleRemove(id) {
+    const newCart = this.state.cart.filter((item) => item.id !== id);
+    window.localStorage.setItem("cart", JSON.stringify(newCart));
+    this.setState({ cart: newCart });
+    this.props.deleteItem(id);
+  }
 
   render() {
-    const { cart, sauces } = this.state;
+    const { cart } = this.state;
 
     const btns = [
       { id: "plus", content: "+" },
@@ -79,26 +64,28 @@ class Cart extends React.Component {
     // if (cart.length === 0) {
     //   return <h1>no items in your cart!</h1>;
     // }
+    console.log("state cart", cart);
 
     return (
-
       <React.Fragment>
         <h1 className="cart-title">Cart</h1>
 
-        {sauces.map((sauce, idx) => (
-          <article key={sauce.id} className="media">
+        {cart.map((cartItem, idx) => (
+          <article key={cartItem.id} className="media">
             <figure className="media-left">
               <p className="image is-64x64">
-
-                <img src={sauce.imageURL} />
+                <img src={cartItem.imageURL} />
               </p>
             </figure>
             <div className="media-content">
               <div className="content">
                 <p>
-                  <strong>{sauce.name}</strong>
+                  <strong>{cartItem.name}</strong>
                   <br />
-                  <small>Quantity:{cart[idx].quantity}</small>
+                  <small>
+                    Quantity:
+                    {cartItem.quantity}
+                  </small>
                   <br />
 
                   {btns.map((btn, btnIdx) => (
@@ -106,19 +93,23 @@ class Cart extends React.Component {
                       type="button"
                       key={btnIdx}
                       id={btn.id}
-                      onClick={(e) => this.handleChange(e, sauce)}
+                      onClick={(e) => this.handleChange(e, cartItem)}
                     >
                       {btn.content}
                     </button>
                   ))}
-                  <button type="button" id="delete">
+                  <button
+                    type="button"
+                    id="delete"
+                    onClick={() => this.handleRemove(cartItem.id)}
+                  >
                     Remove
                   </button>
 
                   <br />
 
                   <span>
-                    ${((sauce.price / 100) * cart[idx].quantity).toFixed(2)}
+                    ${((cartItem.price / 100) * cartItem.quantity).toFixed(2)}
                   </span>
                 </p>
               </div>
@@ -126,12 +117,15 @@ class Cart extends React.Component {
           </article>
         ))}
 
-
         <Link to={"/confirmation"}>
-            <button className="button is-large is-danger" onClick={this.handleCheckout}>Checkout</button>
+          <button
+            className="button is-large is-danger"
+            onClick={this.handleCheckout}
+          >
+            Checkout
+          </button>
         </Link>
       </React.Fragment>
-
     );
   }
 }
@@ -142,9 +136,9 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getSauce: (id) => dispatch(fetchSauce(id)),
-  addToCart: (item) => dispatch(addToCart(item)),
-   checkout: () => dispatch(checkoutCart()),
+  updateCart: (item) => dispatch(updateCart(item)),
+  checkout: () => dispatch(checkoutCart()),
+  deleteItem: (id) => dispatch(deleteCartItem(id)),
 });
-
 
 export default connect(mapState, mapDispatch)(Cart);

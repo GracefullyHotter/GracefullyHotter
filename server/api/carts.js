@@ -88,6 +88,8 @@ router.post("/", async (req, res, next) => {
       sauceId: req.body.id,
       quantity: req.body.quantity,
       price: req.body.price,
+      name: req.body.name,
+      imageURL: req.body.imageURL,
     });
 
     // items.forEach(async (sauce) => {
@@ -108,7 +110,6 @@ router.post("/", async (req, res, next) => {
 // PUT /api/carts/checkout
 router.put("/checkout", async (req, res, next) => {
   try {
-
     const token = req.body.headers.authorization;
     const { id } = await jwt.verify(token, process.env.JWT);
 
@@ -133,11 +134,18 @@ router.put("/checkout", async (req, res, next) => {
 router.put("/:cartId", async (req, res, next) => {
   try {
     const cartId = req.params.cartId;
-    const { id, price, quantity } = req.body;
+    const { id, price, quantity, name, imageURL } = req.body;
     const sauce = await Sauce.findByPk(id);
     const cart = await Cart.findByPk(cartId);
 
-    cart.addSauce(sauce, { through: { quantity: quantity, price: price } });
+    cart.addSauce(sauce, {
+      through: {
+        quantity: quantity,
+        price: price,
+        name: name,
+        imageURL: imageURL,
+      },
+    });
 
     res.send(cart);
   } catch (error) {
@@ -170,9 +178,13 @@ router.delete("/active/:cartItemId", async (req, res, next) => {
       include: Sauce,
     });
 
-    cart.sauces.forEach(async (sauce) => {
-      if (sauce.id === req.params.cartItemId) await sauce.destroy();
+    cart.dataValues.sauces.forEach(async (sauce) => {
+      console.log(sauce.dataValues.id, req.params.cartItemId);
+      if (sauce.dataValues.id === Number(req.params.cartItemId)) {
+        await sauce.destroy();
+      }
     });
+
     res.send(cart);
   } catch (error) {
     next(error);
