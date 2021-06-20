@@ -88,6 +88,8 @@ router.post("/", async (req, res, next) => {
       sauceId: req.body.id,
       quantity: req.body.quantity,
       price: req.body.price,
+      name: req.body.name,
+      imageURL: req.body.imageURL,
     });
 
     // items.forEach(async (sauce) => {
@@ -132,11 +134,18 @@ router.put("/checkout", async (req, res, next) => {
 router.put("/:cartId", async (req, res, next) => {
   try {
     const cartId = req.params.cartId;
-    const { id, price, quantity } = req.body;
+    const { id, price, quantity, name, imageURL } = req.body;
     const sauce = await Sauce.findByPk(id);
     const cart = await Cart.findByPk(cartId);
 
-    cart.addSauce(sauce, { through: { quantity: quantity, price: price } });
+    cart.addSauce(sauce, {
+      through: {
+        quantity: quantity,
+        price: price,
+        name: name,
+        imageURL: imageURL,
+      },
+    });
 
     res.send(cart);
   } catch (error) {

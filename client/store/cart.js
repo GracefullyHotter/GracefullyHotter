@@ -67,9 +67,9 @@ export const addToCart = (item) => {
           newQuantity = cartItem.quantity;
         }
       });
-      console.log("cart", cart);
       if (!itemExists) cart.push(item);
       else item.quantity = newQuantity;
+      console.log("cart", cart);
 
       localStorage.setItem("cart", JSON.stringify(cart));
 
@@ -84,6 +84,7 @@ export const addToCart = (item) => {
 
         //check is user has active cart in db
         if (activeCart) {
+          console.log("activecart", activeCart);
           //if active cart, put request to update cart in db
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
         } else {
