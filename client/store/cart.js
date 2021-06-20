@@ -27,8 +27,6 @@ export const fetchCart = () => {
         const storeCart = activeCart.sauces.map((sauce) => {
           return {
             id: sauce.id,
-            name: sauce.name,
-            imageURL: sauce.imageURL,
             price: sauce.price,
             quantity: sauce.cartItem.quantity,
           };
@@ -55,8 +53,25 @@ export const addToCart = (item) => {
         localStorage.setItem("cart", JSON.stringify([]));
       }
 
-      localStorage.setItem("cart", JSON.stringify(cart));
+      let itemExists = false;
+      let newQuantity = item.quantity;
 
+      console.log("before cart", cart);
+      cart.forEach((cartItem) => {
+        if (cartItem.id === item.id) {
+          itemExists = true;
+          cartItem.quantity++;
+          newQuantity = cartItem.quantity;
+        }
+      });
+      console.log("after cart", cart);
+
+      if (!itemExists) cart.push(item);
+      else item.quantity = newQuantity;
+
+      console.log("item", item);
+
+      localStorage.setItem("cart", JSON.stringify(cart));
       if (token) {
         //get user ID via token
         const { data: activeCart } = await axios.get("/api/carts/active", {
@@ -79,6 +94,7 @@ export const addToCart = (item) => {
           });
         }
       }
+
       dispatch(_addToCart(item));
     } catch (error) {
       console.error("error in addItemToCart Thunk!");

@@ -50,13 +50,11 @@ class Cart extends React.Component {
 
     window.localStorage.setItem("cart", JSON.stringify(this.state.cart));
 
-    if (increment || !increment) {
-      this.props.addToCart({
-        id: sauce.id,
-        price: sauce.price,
-        quantity: updatedQuantity,
-      });
-    }
+    this.props.addToCart({
+      id: sauce.id,
+      price: sauce.price,
+      quantity: updatedQuantity,
+    });
   }
 
   render() {
@@ -67,9 +65,9 @@ class Cart extends React.Component {
       { id: "minus", content: "-" },
     ];
 
-    if (cart.length === 0) {
-      return <h1>no items in your cart!</h1>;
-    }
+    // if (cart.length === 0) {
+    //   return <h1>no items in your cart!</h1>;
+    // }
 
     return (
       <React.Fragment>
