@@ -18,19 +18,6 @@ class Cart extends React.Component {
     this.handleRemove = this.handleRemove.bind(this);
   }
 
-  // componentDidMount() {
-  //   const cart = this.state.cart;
-  //   cart.forEach((cartItem) => {
-  //     this.props.getSauce(cartItem.id);
-  //   });
-  // }
-
-  // async componentDidUpdate(prevProps) {
-  //   if (prevProps.sauce !== this.props.sauce) {
-  //     await this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
-  //   }
-  // }
-
   async handleChange(e, cartItem) {
     const increment = e.target.id === "plus";
     let updatedQuantity = 0;
@@ -58,6 +45,9 @@ class Cart extends React.Component {
   }
 
   handleRemove(id) {
+    const newCart = this.state.cart.filter((item) => item.id !== id);
+    window.localStorage.setItem("cart", JSON.stringify(newCart));
+    this.setState({ cart: newCart });
     this.props.deleteItem(id);
   }
 
