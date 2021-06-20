@@ -178,6 +178,9 @@ export const checkoutCart = () => {
       dispatch(checkout());
     } else {
       console.log("A GUEST USER IS CHECKING OUT");
+
+      const { data } = await axios.post("/api/carts", cart);
+
       window.localStorage.setItem("cart", JSON.stringify([]));
       dispatch(checkout());
     }
