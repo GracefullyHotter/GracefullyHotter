@@ -1,148 +1,150 @@
 import React from "react";
-import { connect } from "react-redux"
+import { connect } from "react-redux";
+import { fetchSauce } from "../store/sauce";
 import { Link } from "react-router-dom";
 import { addToCart, checkoutCart } from "../store";
 
 
-const cart = {
-  id: 3,
-  sauces: [
-    {
-      id: 1,
-      name: "HotSauce1",
-      imageUrl:
-        "https://hotsaucefever.com/images/sauces/654/el-yucateco-black-label-chile-habanero.jpg",
-      price: 450,
-      quantity: 4,
-    },
-    {
-      id: 2,
-      name: "HotSauce2",
-      imageUrl:
-        "https://hotsaucefever.com/images/sauces/654/el-yucateco-black-label-chile-habanero.jpg",
-      price: 400,
-      quantity: 4,
-    },
-    {
-      id: 3,
-      name: "HotSauce3",
-      imageUrl:
-        "https://hotsaucefever.com/images/sauces/654/el-yucateco-black-label-chile-habanero.jpg",
-      price: 560,
-      quantity: 4,
-    },
-  ],
-};
+
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { quantity: 1 };
+
+    this.state = {
+      cart: JSON.parse(localStorage.getItem("cart")),
+      sauces: [],
+    };
     this.handleCheckout = this.handleCheckout.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  // componentDidMount() {
-  // 	this.props.fetchCart()
-  // 	this.setState({ loading: false })
-  // }
-
-  handleCheckout() {
-    this.props.checkout();
-  }
-
-  onClick(type) {
-    this.setState((prevState) => {
-      return {
-        quantity:
-          type == "add" ? prevState.quantity + 1 : prevState.quantity - 1,
-      };
+  componentDidMount() {
+    const cart = this.state.cart;
+    cart.forEach((cartItem) => {
+      this.props.getSauce(cartItem.id);
     });
   }
 
-  render() {
-    const sauces = cart.sauces;
-    return (
-      <>
-        <h1
-          style={{
-            textAlign: "center",
-            margin: "auto",
-            marginBottom: "40px",
-            fontSize: "50px",
-          }}
-        >
-          Cart
-        </h1>
-        {sauces.map((sauce) => (
-          <div
-          key={sauce.id}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: "20px",
-              paddingBottom: "20px",
-              marginBottom: "20px",
-              marginLeft: "auto",
-              marginRight: "auto",
-              padding: "20 50 20 50",
-              width: "500px",
-              border: "1px solid black",
-              borderRadius: "15px",
-            }}
-          >
-            <div>
-              <div>
-                <span>{sauce.name}</span>
-              </div>
-              <div>
-                <img src={sauce.imageURL} />
-              </div>
+  componentDidUpdate(prevProps) {
+    if (prevProps.sauce !== this.props.sauce) {
+      this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
+    }
+  }
 
-              <div>
-                <button
-                  type="button"
-                  onClick={this.onClick.bind(this, "sub")}
-                  name="button"
-                >
-                  <span> - </span>
-                </button>
-                <span> {this.state.quantity} </span>
-                <button
-                  type="button"
-                  onClick={this.onClick.bind(this, "add")}
-                  name="button"
-                >
-                  <span> + </span>
-                </button>
-                <div>
-                  <span style={{ textAlign: "center" }}>
-                    ${((sauce.price / 100) * this.state.quantity).toFixed(2)}
+  async handleChange(e, sauce) {
+    const increment = e.target.id === "plus";
+    let updatedQuantity = 0;
+
+    await this.setState({
+      cart: this.state.cart.map((item) => {
+        if (item.id === sauce.id) {
+          increment ? ++item.quantity : --item.quantity;
+          updatedQuantity = item.quantity;
+        }
+        return item;
+      }),
+    });
+
+    //how to remove cart item in localstorage...
+    // if (updatedQuantity === 0) {
+    //   await this.setState({
+    //     cart: this.state.cart.filter((item) => item.id !== sauce.id),
+    //   });
+    // }
+
+    window.localStorage.setItem("cart", JSON.stringify(this.state.cart));
+
+    this.props.addToCart({
+      id: sauce.id,
+      price: sauce.price,
+      quantity: updatedQuantity,
+
+    });
+  }
+  
+    handleCheckout() {
+    this.props.checkout();
+  }
+
+
+  render() {
+    const { cart, sauces } = this.state;
+
+    const btns = [
+      { id: "plus", content: "+" },
+      { id: "minus", content: "-" },
+    ];
+
+    // if (cart.length === 0) {
+    //   return <h1>no items in your cart!</h1>;
+    // }
+
+    return (
+
+      <React.Fragment>
+        <h1 className="cart-title">Cart</h1>
+
+        {sauces.map((sauce, idx) => (
+          <article key={sauce.id} className="media">
+            <figure className="media-left">
+              <p className="image is-64x64">
+
+                <img src={sauce.imageURL} />
+              </p>
+            </figure>
+            <div className="media-content">
+              <div className="content">
+                <p>
+                  <strong>{sauce.name}</strong>
+                  <br />
+                  <small>Quantity:{cart[idx].quantity}</small>
+                  <br />
+
+                  {btns.map((btn, btnIdx) => (
+                    <button
+                      type="button"
+                      key={btnIdx}
+                      id={btn.id}
+                      onClick={(e) => this.handleChange(e, sauce)}
+                    >
+                      {btn.content}
+                    </button>
+                  ))}
+                  <button type="button" id="delete">
+                    Remove
+                  </button>
+
+                  <br />
+
+                  <span>
+                    ${((sauce.price / 100) * cart[idx].quantity).toFixed(2)}
                   </span>
-                </div>
+                </p>
               </div>
             </div>
-          </div>
+          </article>
         ))}
+
 
         <Link to={"/confirmation"}>
             <button className="button is-large is-danger" onClick={this.handleCheckout}>Checkout</button>
         </Link>
-      </>
+      </React.Fragment>
+
     );
   }
 }
 
 const mapState = (state) => ({
-  cart: state.cart,
-})
+  sauce: state.sauce,
+});
 
-const mapDispatch = (dispatch) => {
-	return {
-		addToCart: () => dispatch(addToCart()),
-    checkout: () => dispatch(checkoutCart()),
-	}
-}
+const mapDispatch = (dispatch) => ({
+  getSauce: (id) => dispatch(fetchSauce(id)),
+  addToCart: (item) => dispatch(addToCart(item)),
+   checkout: () => dispatch(checkoutCart()),
+});
 
-// export default connect(mapState, mapDispatch)(Cart)
+
 export default connect(mapState, mapDispatch)(Cart);

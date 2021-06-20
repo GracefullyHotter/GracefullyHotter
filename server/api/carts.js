@@ -145,11 +145,34 @@ router.put("/:cartId", async (req, res, next) => {
   }
 });
 
-// DELETE /api/carts/:id
+// DELETE /api/carts/:id/
 router.delete("/:id", async (req, res, next) => {
   try {
     const cart = await Cart.findByPk(req.params.id);
     await cart.destroy();
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DELETE /api/carts/active/:id
+router.delete("/active/:cartItemId", async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    const cart = await Cart.findOne({
+      where: {
+        userId: id,
+        isCompleted: false,
+      },
+      include: Sauce,
+    });
+
+    cart.sauces.forEach(async (sauce) => {
+      if (sauce.id === req.params.cartItemId) await sauce.destroy();
+    });
     res.send(cart);
   } catch (error) {
     next(error);
