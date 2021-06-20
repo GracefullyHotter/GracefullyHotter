@@ -137,11 +137,11 @@ export const checkoutCart = () => {
         },
       });
 
-      window.localStorage.setItem("token", JSON.stringify([]));
+      window.localStorage.setItem("cart", JSON.stringify([]));
       dispatch(checkout());
     } else {
       console.log("A GUEST USER IS CHECKING OUT");
-      window.localStorage.setItem("token", JSON.stringify([]));
+      window.localStorage.setItem("cart", JSON.stringify([]));
       dispatch(checkout());
     }
   };
