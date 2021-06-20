@@ -32,9 +32,10 @@ export const fetchCart = () => {
           return {
             id: sauce.id,
             price: sauce.price,
-            quantity: sauce.cartItem.quantity,
           };
         });
+
+        console.log("storecart", storeCart);
 
         window.localStorage.setItem("cart", JSON.stringify(storeCart));
         dispatch(setCart(storeCart));
@@ -66,17 +67,20 @@ export const addToCart = (item) => {
           newQuantity = cartItem.quantity;
         }
       });
-
+      console.log("cart", cart);
       if (!itemExists) cart.push(item);
       else item.quantity = newQuantity;
 
       localStorage.setItem("cart", JSON.stringify(cart));
+
       if (token) {
         const { data: activeCart } = await axios.get("/api/carts/active", {
           headers: {
             authorization: token,
           },
         });
+
+        console.log("item", item);
 
         //check is user has active cart in db
         if (activeCart) {

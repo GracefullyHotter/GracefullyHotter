@@ -10,7 +10,7 @@ class Cart extends React.Component {
 
     this.state = {
       cart: JSON.parse(localStorage.getItem("cart")),
-      sauces: [],
+      // sauces: [],
     };
 
     this.handleCheckout = this.handleCheckout.bind(this);
@@ -18,25 +18,25 @@ class Cart extends React.Component {
     this.handleRemove = this.handleRemove.bind(this);
   }
 
-  componentDidMount() {
-    const cart = this.state.cart;
-    cart.forEach((cartItem) => {
-      this.props.getSauce(cartItem.id);
-    });
-  }
+  // componentDidMount() {
+  //   const cart = this.state.cart;
+  //   cart.forEach((cartItem) => {
+  //     this.props.getSauce(cartItem.id);
+  //   });
+  // }
 
-  async componentDidUpdate(prevProps) {
-    if (prevProps.sauce !== this.props.sauce) {
-      await this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
-    }
-  }
+  // async componentDidUpdate(prevProps) {
+  //   if (prevProps.sauce !== this.props.sauce) {
+  //     await this.setState({ sauces: [...this.state.sauces, this.props.sauce] });
+  //   }
+  // }
 
-  async handleChange(e, sauce) {
+  async handleChange(e, cartItem) {
     const increment = e.target.id === "plus";
     let updatedQuantity = 0;
 
     const updatedCart = this.state.cart.map((item) => {
-      if (item.id === sauce.id) {
+      if (item.id === cartItem.id) {
         increment ? ++item.quantity : --item.quantity;
         updatedQuantity = item.quantity;
       }
@@ -47,8 +47,8 @@ class Cart extends React.Component {
     await this.setState({ cart: updatedCart });
 
     this.props.updateCart({
-      id: sauce.id,
-      price: sauce.price,
+      id: cartItem.id,
+      price: cartItem.price,
       quantity: updatedQuantity,
     });
   }
@@ -62,7 +62,7 @@ class Cart extends React.Component {
   }
 
   render() {
-    const { cart, sauces } = this.state;
+    const { cart } = this.state;
 
     const btns = [
       { id: "plus", content: "+" },
@@ -78,21 +78,21 @@ class Cart extends React.Component {
       <React.Fragment>
         <h1 className="cart-title">Cart</h1>
 
-        {sauces.map((sauce, idx) => (
-          <article key={sauce.id} className="media">
+        {cart.map((cartItem, idx) => (
+          <article key={cartItem.id} className="media">
             <figure className="media-left">
               <p className="image is-64x64">
-                <img src={sauce.imageURL} />
+                <img src={cartItem.imageURL} />
               </p>
             </figure>
             <div className="media-content">
               <div className="content">
                 <p>
-                  <strong>{sauce.name}</strong>
+                  <strong>{cartItem.name}</strong>
                   <br />
                   <small>
                     Quantity:
-                    {cart[idx].id === sauce.id ? cart[idx].quantity : 0}
+                    {cartItem.quantity}
                   </small>
                   <br />
 
@@ -101,7 +101,7 @@ class Cart extends React.Component {
                       type="button"
                       key={btnIdx}
                       id={btn.id}
-                      onClick={(e) => this.handleChange(e, sauce)}
+                      onClick={(e) => this.handleChange(e, cartItem)}
                     >
                       {btn.content}
                     </button>
@@ -109,7 +109,7 @@ class Cart extends React.Component {
                   <button
                     type="button"
                     id="delete"
-                    onClick={() => this.handleRemove(sauce.id)}
+                    onClick={() => this.handleRemove(cartItem.id)}
                   >
                     Remove
                   </button>
@@ -117,7 +117,7 @@ class Cart extends React.Component {
                   <br />
 
                   <span>
-                    ${((sauce.price / 100) * cart[idx].quantity).toFixed(2)}
+                    ${((cartItem.price / 100) * cartItem.quantity).toFixed(2)}
                   </span>
                 </p>
               </div>

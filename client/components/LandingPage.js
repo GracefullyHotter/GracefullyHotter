@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
-    <section class="hero is-dark is-fullheight">
+    <section className="hero is-dark is-fullheight">
       <div
-        class="hero-body"
+        className="hero-body"
         style={{
           position: "fixed",
           bottom: "0",

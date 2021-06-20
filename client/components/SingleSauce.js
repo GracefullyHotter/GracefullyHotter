@@ -25,12 +25,22 @@ class SingleSauce extends React.Component {
       id: this.props.sauce.id,
       price: this.props.sauce.price,
       quantity: 1,
+      name: this.props.sauce.name,
+      imageURL: this.props.sauce.imageURL,
     });
   }
 
   render() {
-    const { name, imageURL, description, pepper, userRating, SHU, price, id } =
-      this.props.sauce;
+    const {
+      name,
+      imageURL,
+      description,
+      pepper,
+      userRating,
+      SHU,
+      price,
+      id,
+    } = this.props.sauce;
     const { isAdmin } = this.props;
 
     const { loading } = this.state;
