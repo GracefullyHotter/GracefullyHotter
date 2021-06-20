@@ -26,16 +26,18 @@ export class AllUsers extends React.Component {
 
     return (
       <React.Fragment>
-        <h1>ALL USERS (ADMIN ONLY)</h1>
-        {users.length > 0 ? (
-          <div>
-            {users.map((user) => (
-              <UserCard key={user.id} user={user} />
-            ))}
-          </div>
-        ) : (
-          <h1>No users in the database</h1>
-        )}
+        <div style={{ padding: "20px" }}>
+          <h1>ALL USERS (ADMIN ONLY)</h1>
+          {users.length > 0 ? (
+            <div>
+              {users.map((user) => (
+                <UserCard key={user.id} user={user} />
+              ))}
+            </div>
+          ) : (
+            <h1>No users in the database</h1>
+          )}
+        </div>
       </React.Fragment>
     );
   }

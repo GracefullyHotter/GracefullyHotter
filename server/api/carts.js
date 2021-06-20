@@ -105,6 +105,30 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// PUT /api/carts/checkout
+router.put("/checkout", async (req, res, next) => {
+  try {
+
+    const token = req.body.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    const cart = await Cart.findOne({
+      where: {
+        userId: id,
+        isCompleted: false,
+      },
+    });
+
+    cart.isCompleted = true;
+
+    await cart.save();
+    console.log(cart);
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT /api/carts/:cartId
 router.put("/:cartId", async (req, res, next) => {
   try {

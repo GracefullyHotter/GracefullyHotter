@@ -1,16 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSauce } from "../store/sauce";
-import { addToCart } from "../store/cart";
+import { Link } from "react-router-dom";
+import { addToCart, checkoutCart } from "../store";
+
+
+
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       cart: JSON.parse(localStorage.getItem("cart")),
       sauces: [],
     };
-
+    this.handleCheckout = this.handleCheckout.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -54,8 +59,14 @@ class Cart extends React.Component {
       id: sauce.id,
       price: sauce.price,
       quantity: updatedQuantity,
+
     });
   }
+  
+    handleCheckout() {
+    this.props.checkout();
+  }
+
 
   render() {
     const { cart, sauces } = this.state;
@@ -70,6 +81,7 @@ class Cart extends React.Component {
     // }
 
     return (
+
       <React.Fragment>
         <h1 className="cart-title">Cart</h1>
 
@@ -77,6 +89,7 @@ class Cart extends React.Component {
           <article key={sauce.id} className="media">
             <figure className="media-left">
               <p className="image is-64x64">
+
                 <img src={sauce.imageURL} />
               </p>
             </figure>
@@ -113,17 +126,12 @@ class Cart extends React.Component {
           </article>
         ))}
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "​100vh",
-          }}
-        >
-          <button style={{ margin: "20px" }}>CHECKOUT</button>
-        </div>
+
+        <Link to={"/confirmation"}>
+            <button className="button is-large is-danger" onClick={this.handleCheckout}>Checkout</button>
+        </Link>
       </React.Fragment>
+
     );
   }
 }
@@ -135,6 +143,8 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   getSauce: (id) => dispatch(fetchSauce(id)),
   addToCart: (item) => dispatch(addToCart(item)),
+   checkout: () => dispatch(checkoutCart()),
 });
+
 
 export default connect(mapState, mapDispatch)(Cart);

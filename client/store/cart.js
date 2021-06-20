@@ -4,11 +4,15 @@ import axios from "axios";
 const SET_CART = "SET_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_CARTITEM = "REMOVE_CARTITEM";
+const CHECKOUT = "CHECKOUT";
+
 
 // ACTION CREATORS
 const setCart = (cart) => ({ type: SET_CART, cart });
 const _addToCart = (item) => ({ type: ADD_TO_CART, item });
 const _removeCartItem = (id) => ({ type: REMOVE_CARTITEM, id });
+const checkout = () => ({ type: CHECKOUT });
+
 
 // THUNK CREATORS
 export const fetchCart = () => {
@@ -159,11 +163,23 @@ export const addToCart = (item) => {
 export const checkoutCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
+    const cart = JSON.parse(localStorage.getItem("cart"));
 
-    if (token) {
-      // PUT cart to update isCompleted, clear store
+    if (cart.length === 0) {
+      console.log("NO CART TO CHECK OUT");
+    } else if (token) {
+      const data = await axios.put("/api/carts/checkout", {
+        headers: {
+          authorization: token,
+        },
+      });
+
+      window.localStorage.setItem("cart", JSON.stringify([]));
+      dispatch(checkout());
     } else {
-      // POST cart to DB with no userId
+      console.log("A GUEST USER IS CHECKING OUT");
+      window.localStorage.setItem("cart", JSON.stringify([]));
+      dispatch(checkout());
     }
   };
 };
@@ -178,6 +194,8 @@ export default function (state = [], action) {
       return state.concat([action.item]);
     case REMOVE_CARTITEM:
       return state.filter((cartItem) => cartItem.id !== action.id);
+    case CHECKOUT:
+      return [];
     default:
       return state;
   }

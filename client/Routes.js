@@ -5,6 +5,7 @@ import { Login, Signup } from "./components/AuthForm";
 import LandingPage from "./components/LandingPage";
 import AllSauces from "./components/AllSauces";
 import Cart from "./components/Cart";
+import Confirmation from "./components/Confirmation";
 import SingleSauce from "./components/SingleSauce";
 import { me } from "./store";
 import EditSauce from "./components/EditSauce";
@@ -35,6 +36,7 @@ class Routes extends Component {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
+          <Route path ="/confirmation" component={Confirmation} />
           <Route path="/shop/:id" component={SingleSauce} />
           {isAdmin ? (
             <>

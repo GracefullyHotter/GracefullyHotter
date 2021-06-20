@@ -12,8 +12,15 @@ const AuthForm = (props) => {
     <div className="columns">
       <div className="column"></div>
       <div className="column">
-        <form onSubmit={handleSubmit} name={name} className="">
-          <div className="field">
+        <form
+          onSubmit={handleSubmit}
+          name={name}
+          className="column is-one-half"
+        >
+          <div
+            className="field"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <label className="label is-large" htmlFor="email">
               <small>Email</small>
             </label>
@@ -31,7 +38,10 @@ const AuthForm = (props) => {
             </div>
           </div>
           <br />
-          <div className="field">
+          <div
+            className="field"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <label className="label is-large" htmlFor="password">
               <small>Password</small>
             </label>
@@ -50,7 +60,9 @@ const AuthForm = (props) => {
             </div>
           </div>
           <br />
-          <div>
+
+          <div style={{ display: "flex", flexDirection: "column" }}>
+
             <button className="button is-large is-danger" type="submit">
               {displayName}
             </button>

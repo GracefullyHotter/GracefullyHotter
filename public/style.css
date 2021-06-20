@@ -37,6 +37,7 @@ form div {
   font-size: 100px;
 }
 
+
 .cart-title {
   text-align: "center";
   margin: "auto";
@@ -57,4 +58,24 @@ form div {
   width: "500px";
   border: "1px solid black";
   border-radius: "15px";
+
+#landingtitle {
+  font-family: HotSauce;
+  font-size: 200px;
+  color: yellow;
+}
+
+#landingsubtitle {
+  font-family: HotSauce;
+  font-size: 60px;
+  color: red;
+}
+
+#landingbutton {
+  font-weight: bolder;
+}
+
+#landingbutton:hover {
+  background-color: red;
+  color: white;
 }
