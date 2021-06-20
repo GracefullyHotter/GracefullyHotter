@@ -1,4 +1,5 @@
 import axios from "axios";
+import { act } from "react-test-renderer";
 import history from "../history";
 
 /**
@@ -9,6 +10,8 @@ const SET_SAUCES = "SET_SAUCES";
 const CREATE_SAUCE = "CREATE_SAUCE";
 const REMOVE_SAUCE = "REMOVE_SAUCE";
 const UPDATE_SAUCE = "UPDATE_SAUCE";
+const FILTER_BY_ONE_PEPPER = "FILTER_BY_ONE_PEPPER";
+const FILTER_BY_PRICE_OR_SPICE = "FILTER_BY_PRICE_OR_SPICE";
 
 /**
  * ACTION CREATORS
@@ -18,6 +21,14 @@ const setSauces = (sauces) => ({ type: SET_SAUCES, sauces });
 const createSauce = (sauce) => ({ type: CREATE_SAUCE, sauce });
 const removeSauce = (id) => ({ type: REMOVE_SAUCE, id });
 const updateSauce = (sauce) => ({ type: UPDATE_SAUCE, sauce });
+const filterByOnePepper = (filteredByPepperSauces) => ({
+  type: FILTER_BY_ONE_PEPPER,
+  filteredByPepperSauces,
+});
+const filterByPriceOrSpice = (filterCallBack) => ({
+  type: FILTER_BY_PRICE_OR_SPICE,
+  filterCallBack,
+});
 
 /**
  * THUNK CREATORS
@@ -95,6 +106,60 @@ export const putSauce = (sauce) => {
   };
 };
 
+export const filterBySpecificPepper = (pepperString) => {
+  return async (dispatch) => {
+    try {
+      const { data: sauces } = await axios.get("/api/sauces");
+      if (pepperString === "All Peppers") {
+        dispatch(setSauces(sauces));
+      } else {
+        const filteredByPepperSauces = sauces.filter((sauce) => {
+          return sauce.pepper.includes(pepperString);
+        });
+        dispatch(filterByOnePepper(filteredByPepperSauces));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const filterSauces = (filterType) => {
+  return async (dispatch) => {
+    try {
+      let filterCallBack = null;
+      switch (filterType) {
+        case "Spice Low to High":
+          filterCallBack = function (a, b) {
+            return parseFloat(a.SHU) - parseFloat(b.SHU);
+          };
+          dispatch(filterByPriceOrSpice(filterCallBack));
+          break;
+        case "Spice High to Low":
+          filterCallBack = function (a, b) {
+            return parseFloat(b.SHU) - parseFloat(a.SHU);
+          };
+          dispatch(filterByPriceOrSpice(filterCallBack));
+          break;
+        case "Price Low to High":
+          filterCallBack = function (a, b) {
+            return parseFloat(a.price) - parseFloat(b.price);
+          };
+          dispatch(filterByPriceOrSpice(filterCallBack));
+          break;
+        case "Price High to Low":
+          filterCallBack = function (a, b) {
+            return parseFloat(b.price) - parseFloat(a.price);
+          };
+          dispatch(filterByPriceOrSpice(filterCallBack));
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 /**
  * REDUCER
  */
@@ -110,6 +175,10 @@ export default function (state = [], action) {
       return state.map((sauce) => {
         return sauce.id === action.sauce.id ? action.sauce : sauce;
       });
+    case FILTER_BY_ONE_PEPPER:
+      return action.filteredByPepperSauces;
+    case FILTER_BY_PRICE_OR_SPICE:
+      return [...state.sort(action.filterCallBack)];
     default:
       return state;
   }
