@@ -3,12 +3,12 @@ import axios from "axios";
 // ACTION TYPES
 const SET_CART = "SET_CART";
 const ADD_TO_CART = "ADD_TO_CART";
-const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+const REMOVE_CARTITEM = "REMOVE_CARTITEM";
 
 // ACTION CREATORS
 const setCart = (cart) => ({ type: SET_CART, cart });
 const _addToCart = (item) => ({ type: ADD_TO_CART, item });
-const _removeFromCart = (item) => ({ type: ADD_TO_CART, item });
+const _removeCartItem = (id) => ({ type: REMOVE_CARTITEM, id });
 
 // THUNK CREATORS
 export const fetchCart = () => {
@@ -55,20 +55,6 @@ export const addToCart = (item) => {
         localStorage.setItem("cart", JSON.stringify([]));
       }
 
-      // let itemExists = false;
-      // let newQuantity = item.quantity;
-
-      // cart.forEach((cartItem) => {
-      //   if (cartItem.id === item.id) {
-      //     itemExists = true;
-      //     cartItem.quantity++;
-      //     newQuantity = cartItem.quantity;
-      //   }
-      // });
-
-      // if (!itemExists) cart.push(item);
-      // else item.quantity = newQuantity;
-
       localStorage.setItem("cart", JSON.stringify(cart));
 
       if (token) {
@@ -99,6 +85,38 @@ export const addToCart = (item) => {
     }
   };
 };
+
+// export const deleteCartItem = (id) => {
+//   return async (dispatch) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const cart = JSON.parse(localStorage.getItem("cart"));
+//       if (!cart) {
+//         localStorage.setItem("cart", JSON.stringify([]));
+//       }
+
+//       localStorage.setItem("cart", JSON.stringify(cart));
+
+//       if (token) {
+//         const { data: activeCart } = await axios.get("/api/carts/active", {
+//           headers: {
+//             authorization: token,
+//           },
+//         });
+
+//         //check is user has active cart in db
+//         if (activeCart) {
+//           //if active cart, put request to update cart in db
+//           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
+//           console.log("put data", data);
+//         }
+//       }
+//       dispatch(_removeCartItem(id));
+//     } catch (error) {
+//       console.log("error in deleteCartItem thunk!");
+//     }
+//   };
+// };
 
 // export const cartLoginOrSignup = (userId, storeCart) => {
 //   return async (dispatch) => {
@@ -142,6 +160,8 @@ export default function (state = [], action) {
       return action.cart;
     case ADD_TO_CART:
       return state.concat([action.item]);
+    case REMOVE_CARTITEM:
+      return state.filter((cartItem) => cartItem.id !== action.id);
     default:
       return state;
   }

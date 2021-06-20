@@ -27,15 +27,6 @@ class Cart extends React.Component {
     }
   }
 
-  // onClick(type) {
-  //   this.setState((prevState) => {
-  //     return {
-  //       quantity:
-  //         type == "add" ? prevState.quantity + 1 : prevState.quantity - 1,
-  //     };
-  //   });
-  // }
-
   async handleChange(e, sauce) {
     const increment = e.target.id === "plus";
     let updatedQuantity = 0;
@@ -49,6 +40,13 @@ class Cart extends React.Component {
         return item;
       }),
     });
+
+    //how to remove cart item in localstorage...
+    // if (updatedQuantity === 0) {
+    //   await this.setState({
+    //     cart: this.state.cart.filter((item) => item.id !== sauce.id),
+    //   });
+    // }
 
     window.localStorage.setItem("cart", JSON.stringify(this.state.cart));
 
@@ -64,12 +62,14 @@ class Cart extends React.Component {
   render() {
     const { cart, sauces } = this.state;
 
-    console.log("state cart", cart);
-
     const btns = [
       { id: "plus", content: "+" },
       { id: "minus", content: "-" },
     ];
+
+    if (cart.length === 0) {
+      return <h1>no items in your cart!</h1>;
+    }
 
     return (
       <React.Fragment>
@@ -100,6 +100,9 @@ class Cart extends React.Component {
                       {btn.content}
                     </button>
                   ))}
+                  <button type="button" id="delete">
+                    Remove
+                  </button>
 
                   <br />
 
@@ -111,42 +114,6 @@ class Cart extends React.Component {
             </div>
           </article>
         ))}
-
-        {/*sauces.map((sauce) => (
-          <div key={sauce.id} className="cart-item">
-            <div>
-              <div>
-                <span>{sauce.name}</span>
-              </div>
-              <div>
-                <img src={sauce.imageURL} />
-              </div>
-
-              <div>
-                <button
-                  type="button"
-                  onClick={this.onClick.bind(this, "sub")}
-                  name="button"
-                >
-                  <span> - </span>
-                </button>
-                <span> {this.state.quantity} </span>
-                <button
-                  type="button"
-                  onClick={this.onClick.bind(this, "add")}
-                  name="button"
-                >
-                  <span> + </span>
-                </button>
-                <div>
-                  <span style={{ textAlign: "center" }}>
-                    ${((sauce.price / 100) * this.state.quantity).toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))*/}
 
         <div
           style={{
