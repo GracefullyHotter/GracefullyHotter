@@ -32,12 +32,14 @@ class Cart extends React.Component {
 
     window.localStorage.setItem("cart", JSON.stringify(updatedCart));
     await this.setState({ cart: updatedCart });
-
-    this.props.updateCart({
-      id: cartItem.id,
-      price: cartItem.price,
-      quantity: updatedQuantity,
-    });
+    if (updatedQuantity === 0) {
+      this.handleRemove(cartItem.id);
+    } else
+      this.props.updateCart({
+        id: cartItem.id,
+        price: cartItem.price,
+        quantity: updatedQuantity,
+      });
   }
 
   handleCheckout() {
