@@ -83,11 +83,15 @@ router.post("/", async (req, res, next) => {
       userId: id,
     });
 
-    await CartItem.create({
-      cartId: cart.id,
-      sauceId: req.body.id,
-      quantity: req.body.quantity,
-      price: req.body.price,
+    console.log(req.body);
+
+    req.body.forEach(async (item) => {
+      await CartItem.create({
+        cartId: cart.id,
+        sauceId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+      });
     });
 
     // items.forEach(async (sauce) => {
@@ -108,7 +112,6 @@ router.post("/", async (req, res, next) => {
 // PUT /api/carts/checkout
 router.put("/checkout", async (req, res, next) => {
   try {
-
     const token = req.body.headers.authorization;
     const { id } = await jwt.verify(token, process.env.JWT);
 

@@ -91,7 +91,7 @@ export const addToCart = (item) => {
           console.log("put data", data);
         } else {
           console.log("post request new cart");
-          const { data } = await axios.post("/api/carts", item, {
+          const { data } = await axios.post("/api/carts", [item], {
             headers: {
               authorization: token,
             },
