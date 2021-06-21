@@ -19,6 +19,8 @@ export const fetchCart = () => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+
       const { data: activeCart } = await axios.get("/api/carts/active", {
         headers: {
           authorization: token,
@@ -231,6 +233,10 @@ export default function (state = [], action) {
       return action.cart;
     case ADD_TO_CART:
       return state.concat([action.item]);
+    case UPDATE_CART:
+      return state.map((cartItem) => {
+        return cartItem.id === action.item.id ? action.item : cartItem;
+      });
     case REMOVE_CARTITEM:
       return state.filter((cartItem) => cartItem.id !== action.id);
     case CHECKOUT:
