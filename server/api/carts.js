@@ -3,6 +3,7 @@ const {
   models: { Cart, CartItem, Sauce },
 } = require("../db");
 const jwt = require("jsonwebtoken");
+const Sequelize = require("sequelize");
 
 // GET /api/carts
 router.get("/", async (req, res, next) => {
@@ -93,7 +94,7 @@ router.post("/", async (req, res, next) => {
     if (!id) {
       cart.isCompleted = true;
       await cart.save();
-      console.log("GUEST CART --->", cart)
+      console.log("GUEST CART --->", cart);
     }
 
     console.log(req.body);
@@ -107,7 +108,6 @@ router.post("/", async (req, res, next) => {
         name: item.name,
         imageURL: item.imageURL,
       });
-
     });
 
     // items.forEach(async (sauce) => {
@@ -166,6 +166,56 @@ router.put("/:cartId", async (req, res, next) => {
     });
 
     res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PUT /api/carts/merge
+router.put("/merge", async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    const cart = await Cart.findOne({
+      where: {
+        userId: id,
+        isCompleted: false,
+      },
+      include: Sauce,
+    });
+
+    const cartIds = cart.sauces.map((sauce) => {
+      return sauce.id;
+    });
+
+    req.body.forEach(async (item) => {
+      if (cartIds.includes(item.id)) {
+        const dbQuantity = cart.sauces[item.id].cartItem.quantity;
+        const newQuantity = dbQuantity + item.quantity;
+
+        await CartItem.update(
+          { quantity: newQuantity },
+          {
+            where: {
+              cartId: cart.id,
+              sauceId: item.id,
+            },
+          }
+        );
+      } else {
+        await CartItem.create({
+          cartId: cart.id,
+          sauceId: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          name: item.name,
+          imageURL: item.imageURL,
+        });
+      }
+    });
+
+    res.send(await CartItem.findAll({ where: { cartId: cart.id }}));
   } catch (error) {
     next(error);
   }
