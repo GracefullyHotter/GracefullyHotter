@@ -28,25 +28,46 @@ export const loginCart = () => {
       });
 
       if (activeCart) {
+        // if there's a cart in the DB
         console.log("active cart -->", activeCart);
 
-        const storeCart = activeCart.sauces.map((sauce) => {
-          return {
-            id: sauce.id,
-            price: sauce.price,
-            quantity: sauce.cartItem.quantity,
-            name: sauce.name,
-            imageURL: sauce.imageURL,
-          };
-        });
+        if (localCart.length > 0) {
+          const { data: newCart} = await axios.put("/api/carts/merge", localCart, {
+            headers: {
+              authorization: token,
+            },
+          });
 
-        console.log("storecart", storeCart);
+          const { data: newestCart } = await axios.get("/api/carts/active", {
+            headers: {
+              authorization: token,
+            },
+          });
 
-        window.localStorage.setItem("cart", JSON.stringify(storeCart));
-        dispatch(setCart(storeCart));
+          console.log("MERGED CART --->", newestCart);
+        } else {
+          const storeCart = activeCart.sauces.map((sauce) => {
+            return {
+              id: sauce.id,
+              price: sauce.price,
+              quantity: sauce.cartItem.quantity,
+              name: sauce.name,
+              imageURL: sauce.imageURL,
+            };
+          });
+
+          console.log("storecart", storeCart);
+
+          window.localStorage.setItem("cart", JSON.stringify(storeCart));
+          dispatch(setCart(storeCart));
+        }
       } else {
-        // Later: store cart to DB here
-        console.log("no active cart for this user in the DB");
+        //no cart in DB
+        if (localCart.length > 0) {
+          //POST localStorage to DB
+        } else {
+          console.log("no cart in db or localStorage");
+        }
       }
     } catch (error) {
       console.error("error in loginCart thunk");

@@ -19,6 +19,67 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// PUT /api/carts/merge
+router.put("/merge", async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    const cart = await Cart.findOne({
+      where: {
+        userId: id,
+        isCompleted: false,
+      },
+      include: {
+        model: Sauce,
+      },
+    });
+
+    const cartSauceIds = cart.sauces.map((sauce) => {
+      return sauce.id;
+    });
+
+    let cartSauces = cart.sauces;
+
+    req.body.forEach(async (item) => {
+      if (cartSauceIds.includes(item.id)) {
+        const cartIdx = cartSauceIds.indexOf(item.id);
+        const dbQuantity = cartSauces[cartIdx].cartItem.quantity;
+        const newQuantity = dbQuantity + item.quantity;
+
+        await CartItem.update(
+          { quantity: newQuantity },
+          {
+            where: {
+              cartId: cart.id,
+              sauceId: item.id,
+            },
+          }
+        );
+      } else {
+        await CartItem.create({
+          cartId: cart.id,
+          sauceId: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          name: item.name,
+          imageURL: item.imageURL,
+        });
+      }
+    });
+
+    const updatedCartItems = await CartItem.findAll({
+      where: {
+        cartId: cart.id,
+      }
+    })
+
+    res.send(updatedCartItems);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // GET /api/carts/completed
 router.get("/completed", async (req, res, next) => {
   try {
@@ -171,55 +232,7 @@ router.put("/:cartId", async (req, res, next) => {
   }
 });
 
-// PUT /api/carts/merge
-router.put("/merge", async (req, res, next) => {
-  try {
-    const token = req.headers.authorization;
-    const { id } = await jwt.verify(token, process.env.JWT);
 
-    const cart = await Cart.findOne({
-      where: {
-        userId: id,
-        isCompleted: false,
-      },
-      include: Sauce,
-    });
-
-    const cartIds = cart.sauces.map((sauce) => {
-      return sauce.id;
-    });
-
-    req.body.forEach(async (item) => {
-      if (cartIds.includes(item.id)) {
-        const dbQuantity = cart.sauces[item.id].cartItem.quantity;
-        const newQuantity = dbQuantity + item.quantity;
-
-        await CartItem.update(
-          { quantity: newQuantity },
-          {
-            where: {
-              cartId: cart.id,
-              sauceId: item.id,
-            },
-          }
-        );
-      } else {
-        await CartItem.create({
-          cartId: cart.id,
-          sauceId: item.id,
-          quantity: item.quantity,
-          price: item.price,
-          name: item.name,
-          imageURL: item.imageURL,
-        });
-      }
-    });
-
-    res.send(await CartItem.findAll({ where: { cartId: cart.id }}));
-  } catch (error) {
-    next(error);
-  }
-});
 
 // DELETE /api/carts/:id/
 router.delete("/:id", async (req, res, next) => {
