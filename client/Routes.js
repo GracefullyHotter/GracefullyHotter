@@ -14,6 +14,7 @@ import CreateSauce from "./components/CreateSauce";
 import Profile from "./components/Profile";
 import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
+import EditProfileInfo from "./components/EditProfileInfo";
 
 /**
  * COMPONENT
@@ -36,8 +37,9 @@ class Routes extends Component {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
-          <Route path ="/confirmation" component={Confirmation} />
+          <Route path="/confirmation" component={Confirmation} />
           <Route path="/shop/:id" component={SingleSauce} />
+          <Route path="/users/profiles/edit/:id" component={EditProfileInfo} />
           {isAdmin ? (
             <>
               <Route exact path="/users" component={AllUsers} />

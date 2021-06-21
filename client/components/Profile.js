@@ -15,7 +15,9 @@ class Profile extends React.Component {
       <React.Fragment>
         <div id="user-info">
           <p>my user info is here!</p>
-          <p>eventually i'll be able to edit but not now!</p>
+          <Link to={`/users/profiles/edit/${this.props.userId}`}>
+            Edit My Profile
+          </Link>
         </div>
 
         <a>View Order History</a>
@@ -38,6 +40,7 @@ class Profile extends React.Component {
 
 const mapState = (state) => ({
   isAdmin: state.auth.isAdmin,
+  userId: state.auth.id,
 });
 
 export default connect(mapState)(Profile);

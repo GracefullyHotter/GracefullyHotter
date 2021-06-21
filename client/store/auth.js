@@ -48,6 +48,32 @@ export const logout = () => {
   };
 };
 
+export const checkIfProfileDataAlreadyExists = (obj) => async (dispatch) => {
+  try {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token) {
+      const { data } = await axios.put(`/auth/check`, obj, {
+        headers: {
+          authorization: token,
+        },
+      });
+      if (data.nameTaken === false && data.emailTaken === false) {
+        await axios.put(`/auth/updateprofile`, obj, {
+          headers: {
+            authorization: token,
+          },
+        });
+        dispatch(setAuth(obj));
+        return data;
+      } else {
+        return data;
+      }
+    }
+  } catch (authError) {
+    return dispatch(setAuth({ error: authError }));
+  }
+};
+
 /**
  * REDUCER
  */
