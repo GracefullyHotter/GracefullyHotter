@@ -15,7 +15,7 @@ const _removeCartItem = (id) => ({ type: REMOVE_CARTITEM, id });
 const checkout = () => ({ type: CHECKOUT });
 
 // THUNK CREATORS
-export const fetchCart = () => {
+export const loginCart = () => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
@@ -37,43 +37,6 @@ export const fetchCart = () => {
             quantity: sauce.cartItem.quantity,
             name: sauce.name,
             imageURL: sauce.imageURL,
-          };
-        });
-
-        console.log("storecart", storeCart);
-
-        window.localStorage.setItem("cart", JSON.stringify(storeCart));
-        dispatch(setCart(storeCart));
-      } else {
-        // Later: store cart to DB here
-        console.log("no active cart for this user in the DB");
-      }
-    } catch (error) {
-      console.error("Uh oh! error in fetchCart thunk.");
-    }
-  };
-};
-
-export const loginCart = () => {
-  return async (dispatch) => {
-    try {
-      const token = window.localStorage.getItem("token");
-      const localCart = JSON.parse(localStorage.getItem("cart"));
-
-      const { data: activeCart } = await axios.get("/api/carts/active", {
-        headers: {
-          authorization: token,
-        },
-      });
-
-      if (activeCart) {
-        console.log("active cart -->", activeCart);
-
-        const storeCart = activeCart.sauces.map((sauce) => {
-          return {
-            id: sauce.id,
-            price: sauce.price,
-
           };
         });
 

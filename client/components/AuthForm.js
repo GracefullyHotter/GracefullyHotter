@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { authenticate, fetchCart } from "../store";
+import { authenticate, loginCart } from "../store";
 
 /**
  * COMPONENT
@@ -106,7 +106,7 @@ const mapDispatch = (dispatch) => {
       const email = evt.target.email.value;
       const password = evt.target.password.value;
       await dispatch(authenticate(email, password, formName));
-      await dispatch(fetchCart());
+      await dispatch(loginCart());
     },
   };
 };
