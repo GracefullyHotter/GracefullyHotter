@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { authenticate, fetchCart } from "../store";
+import ReactTooltip from "react-tooltip";
+import PasswordTooltip from "./PasswordTooltip";
 
 /**
  * COMPONENT
@@ -65,6 +67,7 @@ const AuthForm = (props) => {
           >
             <label className="label is-large" htmlFor="password">
               <small>Password</small>
+              {name === "login" ? null : <PasswordTooltip />}
             </label>
             <div className="control has-icons-left">
               <input
