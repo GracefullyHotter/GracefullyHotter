@@ -3,6 +3,7 @@ const {
   models: { Cart, CartItem, Sauce },
 } = require("../db");
 const jwt = require("jsonwebtoken");
+const Sequelize = require("sequelize");
 
 // GET /api/carts
 router.get("/", async (req, res, next) => {
@@ -13,6 +14,67 @@ router.get("/", async (req, res, next) => {
       },
     });
     res.send(carts);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PUT /api/carts/merge
+router.put("/merge", async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    const cart = await Cart.findOne({
+      where: {
+        userId: id,
+        isCompleted: false,
+      },
+      include: {
+        model: Sauce,
+      },
+    });
+
+    const cartSauceIds = cart.sauces.map((sauce) => {
+      return sauce.id;
+    });
+
+    let cartSauces = cart.sauces;
+
+    req.body.forEach(async (item) => {
+      if (cartSauceIds.includes(item.id)) {
+        const cartIdx = cartSauceIds.indexOf(item.id);
+        const dbQuantity = cartSauces[cartIdx].cartItem.quantity;
+        const newQuantity = dbQuantity + item.quantity;
+
+        await CartItem.update(
+          { quantity: newQuantity },
+          {
+            where: {
+              cartId: cart.id,
+              sauceId: item.id,
+            },
+          }
+        );
+      } else {
+        await CartItem.create({
+          cartId: cart.id,
+          sauceId: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          name: item.name,
+          imageURL: item.imageURL,
+        });
+      }
+    });
+
+    const updatedCartItems = await CartItem.findAll({
+      where: {
+        cartId: cart.id,
+      }
+    })
+
+    res.send(updatedCartItems);
   } catch (error) {
     next(error);
   }
@@ -93,7 +155,7 @@ router.post("/", async (req, res, next) => {
     if (!id) {
       cart.isCompleted = true;
       await cart.save();
-      console.log("GUEST CART --->", cart)
+      console.log("GUEST CART --->", cart);
     }
 
     console.log(req.body);
@@ -107,7 +169,6 @@ router.post("/", async (req, res, next) => {
         name: item.name,
         imageURL: item.imageURL,
       });
-
     });
 
     // items.forEach(async (sauce) => {
@@ -170,6 +231,8 @@ router.put("/:cartId", async (req, res, next) => {
     next(error);
   }
 });
+
+
 
 // DELETE /api/carts/:id/
 router.delete("/:id", async (req, res, next) => {
