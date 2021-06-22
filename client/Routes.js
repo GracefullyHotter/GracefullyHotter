@@ -15,6 +15,9 @@ import Profile from "./components/Profile";
 import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
 
+import OrderHistory from "./components/OrderHistory";
+import SingleOrder from "./components/SingleOrder";
+
 /**
  * COMPONENT
  */
@@ -34,6 +37,8 @@ class Routes extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/orders" component={OrderHistory} />
+          <Route path="/orders/:id" component={SingleOrder} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
           <Route path ="/confirmation" component={Confirmation} />
