@@ -50,7 +50,7 @@ export const deleteUser = (id) => {
         console.log(id);
         dispatch(removeUser(data));
         history.push("/users");
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
