@@ -18,7 +18,7 @@ class Profile extends React.Component {
           <p>eventually i'll be able to edit but not now!</p>
         </div>
 
-        <a>View Order History</a>
+        <Link to="/orders">Order History</Link>
 
         <br></br>
         <br></br>
