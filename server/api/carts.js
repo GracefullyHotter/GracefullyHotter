@@ -71,8 +71,8 @@ router.put("/merge", async (req, res, next) => {
     const updatedCartItems = await CartItem.findAll({
       where: {
         cartId: cart.id,
-      }
-    })
+      },
+    });
 
     res.send(updatedCartItems);
   } catch (error) {
@@ -116,13 +116,15 @@ router.get("/active", async (req, res, next) => {
   }
 });
 
-// GET /api/carts/orders/:userId
-router.get("/orders/:userId", async (req, res, next) => {
+// GET /api/carts/orders
+router.get("/orders", async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
     const carts = await Cart.findAll({
       where: {
-        userId: userId,
+        userId: id,
         isCompleted: true,
       },
       include: {
@@ -231,8 +233,6 @@ router.put("/:cartId", async (req, res, next) => {
     next(error);
   }
 });
-
-
 
 // DELETE /api/carts/:id/
 router.delete("/:id", async (req, res, next) => {
