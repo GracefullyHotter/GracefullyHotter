@@ -160,6 +160,17 @@ export const filterSauces = (filterType) => {
   };
 };
 
+export const filterByUserSearchString = (input) => {
+  return async (dispatch) => {
+    try {
+      const { data: sauces } = await axios.get(`/api/sauces/search/${input}`);
+      dispatch(setSauces(sauces));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 /**
  * REDUCER
  */
