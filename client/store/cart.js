@@ -32,19 +32,32 @@ export const loginCart = () => {
         console.log("active cart -->", activeCart);
 
         if (localCart.length > 0) {
-          const { data: newCart} = await axios.put("/api/carts/merge", localCart, {
+          await axios.put("/api/carts/merge", localCart, {
             headers: {
               authorization: token,
             },
           });
 
-          const { data: newestCart } = await axios.get("/api/carts/active", {
+          const { data: newCart } = await axios.get("/api/carts/active", {
             headers: {
               authorization: token,
             },
           });
 
-          console.log("MERGED CART --->", newestCart);
+          const storeCart = newCart.sauces.map((sauce) => {
+            return {
+              id: sauce.id,
+              price: sauce.price,
+              quantity: sauce.cartItem.quantity,
+              name: sauce.name,
+              imageURL: sauce.imageURL,
+            };
+          });
+
+          console.log("MERGED CART --->", storeCart);
+
+          window.localStorage.setItem("cart", JSON.stringify(storeCart));
+          dispatch(setCart(newCart.sauces));
         } else {
           const storeCart = activeCart.sauces.map((sauce) => {
             return {
@@ -56,7 +69,7 @@ export const loginCart = () => {
             };
           });
 
-          console.log("storecart", storeCart);
+          console.log("adding DB cart to local storage --->", storeCart);
 
           window.localStorage.setItem("cart", JSON.stringify(storeCart));
           dispatch(setCart(storeCart));
@@ -65,6 +78,13 @@ export const loginCart = () => {
         //no cart in DB
         if (localCart.length > 0) {
           //POST localStorage to DB
+          const { data } = await axios.post("/api/carts", localCart, {
+            headers: {
+              authorization: token,
+            },
+          });
+
+          console.log("Posted local cart to DB")
         } else {
           console.log("no cart in db or localStorage");
         }
