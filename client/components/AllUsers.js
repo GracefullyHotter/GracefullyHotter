@@ -16,6 +16,12 @@ export class AllUsers extends React.Component {
     this.setState({ loading: false });
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.users.length !== this.props.users.length) {
+      this.props.getUsers();
+    }
+  }
+
   render() {
     const { users } = this.props;
     const { loading } = this.state;

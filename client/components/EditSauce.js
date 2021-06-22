@@ -21,6 +21,7 @@ class EditSauce extends React.Component {
 
   handleDelete(e) {
     e.preventDefault();
+    confirm("Are you sure you want to delete?");
     const id = +this.props.match.params.id;
     this.props.removeSauce(id);
   }
@@ -40,8 +41,15 @@ class EditSauce extends React.Component {
   render() {
     const { sauce } = this.props;
     const { handleDelete, handleChange, handleUpdate } = this;
-    const { name, imageURL, pepper, description, userRating, price, SHU } =
-      this.state;
+    const {
+      name,
+      imageURL,
+      pepper,
+      description,
+      userRating,
+      price,
+      SHU,
+    } = this.state;
 
     return (
       <div style={{ display: "flex", margin: "20px" }}>
