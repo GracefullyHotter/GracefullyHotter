@@ -36,11 +36,25 @@ class EditProfileInfo extends React.Component {
 
   handleUpdate(event) {
     event.preventDefault();
+    const { id, isAdmin, password } = this.props.user;
+
+    const nameChanged =
+      this.state.name.toLowerCase() !== this.props.user.name.toLowerCase();
+    const emailChanged =
+      this.state.email.toLowerCase() !== this.props.user.email.toLowerCase();
+
+    if (nameChanged || emailChanged) {
+      this.props.updateUser({
+        id: id,
+        isAdmin: isAdmin,
+        password: password,
+        email: this.state.email,
+        name: this.state.name,
+      });
+    }
   }
 
   render() {
-    console.log("this.state", this.state);
-    console.log("this.props", this.props);
     const { handleChange, handleUpdate } = this;
     const { name, email } = this.state;
     return (
