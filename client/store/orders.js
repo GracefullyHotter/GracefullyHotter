@@ -28,6 +28,8 @@ export const fetchOrders = () => {
 // REDUCER
 export default function (state = [], action) {
   switch (action.type) {
+    case SET_ORDERS:
+      return action.orders;
     default:
       return state;
   }
