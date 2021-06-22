@@ -47,7 +47,9 @@ export const deleteUser = (id) => {
             authorization: token,
           },
         });
+        console.log(id);
         dispatch(removeUser(data));
+        history.push("/users");
         // window.location.reload();
       }
     } catch (error) {

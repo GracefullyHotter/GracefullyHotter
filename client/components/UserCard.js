@@ -10,14 +10,8 @@ class UserCard extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.user !== this.props.user) {
-  //     this.props.getUsers();
-  //   }
-  // }
-
   handleDelete() {
-    confirm("Are you sure you want to delete?");
+    // confirm("Are you sure you want to delete?");
     this.props.removeUser(this.props.user.id);
   }
 
