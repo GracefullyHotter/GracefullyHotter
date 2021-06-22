@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { authenticate, loginCart } from "../store";
+import ReactTooltip from "react-tooltip";
+import PasswordTooltip from "./PasswordTooltip";
 
 /**
  * COMPONENT
  */
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
+  const [passwordStrength, setPasswordStrength] = useState("");
+
+  function passwordCheck() {
+    let password = document.getElementById("password-input").value;
+    const strongRegex = new RegExp(
+      "^(?=.{10,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$",
+      "g"
+    );
+    const mediumRegex = new RegExp(
+      "^(?=.{8,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$",
+      "g"
+    );
+    if (strongRegex.test(password)) {
+      setPasswordStrength("strong");
+    } else if (mediumRegex.test(password)) {
+      setPasswordStrength("medium");
+    } else {
+      setPasswordStrength("weak");
+    }
+  }
 
   return (
     <div className="columns">
@@ -30,6 +52,7 @@ const AuthForm = (props) => {
                 type="text"
                 placeholder="random@gmail.com"
                 name="email"
+                pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
                 required
               />
               <span className="icon is-small is-left">
@@ -44,25 +67,41 @@ const AuthForm = (props) => {
           >
             <label className="label is-large" htmlFor="password">
               <small>Password</small>
+              {name === "login" ? null : <PasswordTooltip />}
             </label>
             <div className="control has-icons-left">
               <input
                 className="input is-danger is-medium"
+                id="password-input"
                 type="text"
                 placeholder="*******"
                 name="password"
                 type="password" // 2 types here?
+                onChange={passwordCheck}
                 required
               />
               <span className="icon is-small is-left">
                 <i className="fas fa-lock"></i>
               </span>
+
+              {name === "login" ? null : passwordStrength === "strong" ? (
+                <p id="password-strength" className="help is-success">
+                  Strong Password!
+                </p>
+              ) : passwordStrength === "medium" ? (
+                <p id="password-strength" className="help is-warning">
+                  Medium Password!
+                </p>
+              ) : (
+                <p id="password-strength" className="help is-danger">
+                  Weak Password!
+                </p>
+              )}
             </div>
           </div>
           <br />
 
           <div style={{ display: "flex", flexDirection: "column" }}>
-
             <button className="button is-large is-danger" type="submit">
               {displayName}
             </button>
