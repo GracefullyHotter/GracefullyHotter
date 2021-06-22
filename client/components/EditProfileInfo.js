@@ -1,42 +1,46 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { checkIfProfileDataAlreadyExists } from "../store/auth";
+import { fetchSingleUser } from "../store/user";
+import { putUser } from "../store/users";
 
 class EditProfileInfo extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      name: "",
+      email: "",
+    };
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.setState(this.props.profileInfo);
+    this.props.loadUser(+this.props.match.params.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user !== this.props.user) {
+      this.setState({
+        name: this.props.user.name,
+        email: this.props.user.email,
+      });
+    }
   }
 
   handleChange(event) {
-    event.preventDefault();
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
 
-  async handleUpdate(event) {
+  handleUpdate(event) {
     event.preventDefault();
-    const response = await this.props.updateProfile(this.state);
-    let alertMessage = null;
-    if (response.nameTaken) {
-      alertMessage = "Username is already in use!";
-    } else if (response.emailTaken) {
-      alertMessage = "Email is already in use!";
-    } else {
-      alertMessage = "Successfully changed profile info!";
-    }
-    alert(alertMessage);
   }
 
   render() {
+    console.log("this.state", this.state);
+    console.log("this.props", this.props);
     const { handleChange, handleUpdate } = this;
     const { name, email } = this.state;
     return (
@@ -96,12 +100,13 @@ class EditProfileInfo extends React.Component {
 }
 
 const mapState = (state) => ({
-  profileInfo: state.auth,
+  user: state.user,
 });
 
 //add update profile thunk creator in user.js
 const mapDispatch = (dispatch) => ({
-  updateProfile: (obj) => dispatch(checkIfProfileDataAlreadyExists(obj)),
+  loadUser: (id) => dispatch(fetchSingleUser(id)),
+  updateUser: (user) => dispatch(putUser(user)),
 });
 
 export default connect(mapState, mapDispatch)(EditProfileInfo);

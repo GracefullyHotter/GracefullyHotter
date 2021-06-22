@@ -5,19 +5,15 @@ import { connect } from "react-redux";
 class Profile extends React.Component {
   constructor() {
     super();
-    this.state = {};
   }
-  //should conditionally render for admin links if isAdmin from state is true
 
   render() {
-    const { isAdmin } = this.props;
+    const { isAdmin, userId } = this.props;
     return (
       <React.Fragment>
         <div id="user-info">
           <p>my user info is here!</p>
-          <Link to={`/users/profiles/edit/${this.props.userId}`}>
-            Edit My Profile
-          </Link>
+          <Link to={`/users/profiles/edit/${userId}`}>Edit My Profile</Link>
         </div>
 
         <a>View Order History</a>
