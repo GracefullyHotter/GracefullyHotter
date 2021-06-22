@@ -3,7 +3,6 @@ const {
   models: { Cart, CartItem, Sauce },
 } = require("../db");
 const jwt = require("jsonwebtoken");
-const Sequelize = require("sequelize");
 
 // GET /api/carts
 router.get("/", async (req, res, next) => {
@@ -144,11 +143,15 @@ router.post("/", async (req, res, next) => {
     let id;
 
     if (token) {
+      console.log("TOKEN --->", token)
       const data = await jwt.verify(token, process.env.JWT);
       id = data.id;
     } else {
+      console.log("NO TOKEN ADDING TO CART AS GUEST");
       id = null;
     }
+
+    console.log("USER ID", id)
 
     const cart = await Cart.create({
       userId: id,
