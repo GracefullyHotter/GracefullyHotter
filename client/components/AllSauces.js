@@ -22,7 +22,7 @@ export class AllSauces extends React.Component {
 
   componentDidMount() {
     this.props.getSauces();
-    this.setState({ loading: false});
+    this.setState({ loading: false });
   }
 
   filterProducts(e) {
@@ -39,10 +39,10 @@ export class AllSauces extends React.Component {
     document.getElementById("filterpepperspan").innerHTML = innerString;
   }
 
-  enterSearch(e){
+  enterSearch(e) {
     e.preventDefault();
-    const input = document.getElementById('inputSearchField').value;
-    this.props.filterByInput(input)
+    const input = document.getElementById("inputSearchField").value;
+    this.props.filterByInput(input);
   }
 
   render() {
@@ -69,82 +69,82 @@ export class AllSauces extends React.Component {
           <div />
         )}
 
-<div style={{ display: "flex", alignItems: "center" }}>
-        <div className="dropdown is-hoverable">
-          <div className="dropdown-trigger">
-            <button
-              style={{ marginLeft: "20px" }}
-              className="button is-warning"
-              aria-haspopup="true"
-              aria-controls="dropdown-menu4"
-            >
-              <span id="filterspan">Filter</span>
-              <span className="icon is-small">
-                <i className="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </button>
-          </div>
-          <div className="dropdown-menu" id="dropdown-menu4" role="menu">
-            <div className="dropdown-content" style={{ cursor: "pointer" }}>
-              <div className="dropdown-item" onClick={filterProducts}>
-                <p>Spice Low to High</p>
-              </div>
-              <div className="dropdown-item" onClick={filterProducts}>
-                <p>Spice High to Low</p>
-              </div>
-              <div className="dropdown-item" onClick={filterProducts}>
-                <p>Price Low to High</p>
-              </div>
-              <div className="dropdown-item" onClick={filterProducts}>
-                <p>Price High to Low</p>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div className="dropdown is-hoverable">
+            <div className="dropdown-trigger">
+              <button
+                style={{ marginLeft: "20px" }}
+                className="button is-warning"
+                aria-haspopup="true"
+                aria-controls="dropdown-menu4"
+              >
+                <span id="filterspan">Filter</span>
+                <span className="icon is-small">
+                  <i className="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div className="dropdown-menu" id="dropdown-menu4" role="menu">
+              <div className="dropdown-content" style={{ cursor: "pointer" }}>
+                <div className="dropdown-item" onClick={filterProducts}>
+                  <p>Spice Low to High</p>
+                </div>
+                <div className="dropdown-item" onClick={filterProducts}>
+                  <p>Spice High to Low</p>
+                </div>
+                <div className="dropdown-item" onClick={filterProducts}>
+                  <p>Price Low to High</p>
+                </div>
+                <div className="dropdown-item" onClick={filterProducts}>
+                  <p>Price High to Low</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="dropdown is-hoverable">
-          <div className="dropdown-trigger">
-            <button
-              style={{ marginLeft: "20px" }}
-              className="button is-danger"
-              aria-haspopup="true"
-              aria-controls="dropdown-menu4"
-            >
-              <span id="filterpepperspan">All Peppers</span>
-              <span className="icon is-small">
-                <i className="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </button>
-          </div>
-          <div className="dropdown-menu" id="dropdown-menu4" role="menu">
-            <div className="dropdown-content" style={{ cursor: "pointer" }}>
-              <div className="dropdown-item" onClick={filterByPepper}>
-                <p>All Peppers</p>
-              </div>
-              <div className="dropdown-item" onClick={filterByPepper}>
-                <p>Habanero</p>
-              </div>
-              <div className="dropdown-item" onClick={filterByPepper}>
-                <p>Cayenne</p>
-              </div>
-              <div className="dropdown-item" onClick={filterByPepper}>
-                <p>Pepper</p>
-              </div>
-              <div className="dropdown-item" onClick={filterByPepper}>
-                <p>Jalapeno</p>
+          <div className="dropdown is-hoverable">
+            <div className="dropdown-trigger">
+              <button
+                style={{ marginLeft: "20px" }}
+                className="button is-danger"
+                aria-haspopup="true"
+                aria-controls="dropdown-menu4"
+              >
+                <span id="filterpepperspan">All Peppers</span>
+                <span className="icon is-small">
+                  <i className="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div className="dropdown-menu" id="dropdown-menu4" role="menu">
+              <div className="dropdown-content" style={{ cursor: "pointer" }}>
+                <div className="dropdown-item" onClick={filterByPepper}>
+                  <p>All Peppers</p>
+                </div>
+                <div className="dropdown-item" onClick={filterByPepper}>
+                  <p>Habanero</p>
+                </div>
+                <div className="dropdown-item" onClick={filterByPepper}>
+                  <p>Cayenne</p>
+                </div>
+                <div className="dropdown-item" onClick={filterByPepper}>
+                  <p>Pepper</p>
+                </div>
+                <div className="dropdown-item" onClick={filterByPepper}>
+                  <p>Jalapeno</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div
+          <div
             className="control has-icons-left"
             style={{ marginLeft: "20px" }}
           >
             <input
               className="input is-danger"
-              id='inputSearchField'
+              id="inputSearchField"
               type="text"
-              name='searchString'
+              name="searchString"
               placeholder="Search Sauce Name"
             />
             <span className="icon is-small is-left">
@@ -152,8 +152,12 @@ export class AllSauces extends React.Component {
             </span>
           </div>
 
-          <button className='button is-danger' style={{marginLeft: '10px'}} onClick={enterSearch}>
-              Search
+          <button
+            className="button is-danger"
+            style={{ marginLeft: "10px" }}
+            onClick={enterSearch}
+          >
+            Search
           </button>
         </div>
 
@@ -191,7 +195,7 @@ const mapDispatch = (dispatch) => {
     filterByAPepper: (pepperString) =>
       dispatch(filterBySpecificPepper(pepperString)),
     filterBy: (filterTypeString) => dispatch(filterSauces(filterTypeString)),
-    filterByInput: (input) => dispatch(filterByUserSearchString(input))
+    filterByInput: (input) => dispatch(filterByUserSearchString(input)),
   };
 };
 
