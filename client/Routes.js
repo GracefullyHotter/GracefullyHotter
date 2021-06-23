@@ -40,6 +40,7 @@ class Routes extends Component {
           <Route path="/shop/:id" component={SingleSauce} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
+          <Route path="/stripecomp" component={Checkout} />
 
           {isLoggedIn ? (
             <>
@@ -47,7 +48,6 @@ class Routes extends Component {
               <Route exact path="/orders" component={OrderHistory} />
               <Route path="/orders/:id" component={SingleOrder} />
               <Route path="/confirmation" component={Confirmation} />
-              <Route path="/stripecomp" component={Checkout} />
             </>
           ) : (
             <>
@@ -55,7 +55,6 @@ class Routes extends Component {
               <Route exact path="/orders" component={LandingPage} />
               <Route path="/orders/:id" component={LandingPage} />
               <Route path="/confirmation" component={LandingPage} />
-              <Route path="/stripecomp" component={LandingPage} />
             </>
           )}
 
