@@ -10,6 +10,7 @@ class Navbar extends React.Component {
 
   render() {
     const { handleClick, isLoggedIn, cart } = this.props;
+
     return (
       <React.Fragment>
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -64,7 +65,6 @@ class Navbar extends React.Component {
                     Shop
                   </Link>
                 </div>
-
                 <div className="column is-half is-centered is-6">
                   <h1 className="column title font-test is-size-1 has-text-centered">
                     Gracefully Hotter

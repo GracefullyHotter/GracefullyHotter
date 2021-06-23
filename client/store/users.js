@@ -70,7 +70,7 @@ export const putUser = (user) => {
           }
         );
         dispatch(updateUser(updatedUser));
-        history.push("/users");
+        history.push("/profile");
       }
     } catch (error) {
       console.log(error);
