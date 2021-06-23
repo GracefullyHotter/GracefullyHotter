@@ -17,12 +17,11 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, cart } = this.props;
+    const { isLoggedIn } = this.props;
+    const cart = JSON.parse(localStorage.getItem("cart"));
     let cartQuantity = cart.reduce((accum, val) => {
       return accum + val.quantity;
     }, 0);
-
-    console.log("navbar cart", cart);
 
     return (
       <React.Fragment>
