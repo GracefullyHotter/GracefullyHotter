@@ -106,3 +106,22 @@ form div {
 	background: white;
 	border-style: solid;
 }
+
+/* USER PROFILE */
+#user-info,
+#admin-dashboard {
+  margin-left: 30px;
+}
+
+#user-info h2 {
+  font-size: large;
+}
+
+.user-view {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.user-form {
+  position: relative;
+}

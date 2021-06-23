@@ -32,8 +32,8 @@ export class AllUsers extends React.Component {
 
     return (
       <React.Fragment>
-        <div style={{ padding: "20px" }}>
-          <h1>ALL USERS (ADMIN ONLY)</h1>
+        <div>
+          <h1 className="title ml-6">ALL USERS (ADMIN ONLY)</h1>
           {users.length > 0 ? (
             <div>
               {users.map((user) => (

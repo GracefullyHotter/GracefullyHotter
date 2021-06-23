@@ -18,20 +18,20 @@ class UserCard extends React.Component {
   render() {
     const { user } = this.props;
     return (
-      <article className="media">
+      <article className="user-view media">
         <div className="media-content">
-          <div className="content">
-            <p>
-              <strong>Name: {user.name}</strong>
-              <br></br>
-              <strong>Email: {user.email}</strong>
-              <br></br>
-              <strong>Admin: {String(user.isAdmin)}</strong>
-              <br></br>
-            </p>
-          </div>
-          <nav className="level">
-            <div className="level-right">
+          <nav className="level has-text-left">
+            <div className="content level-item level-left">
+              <p>
+                <strong>Name: {user.name}</strong>
+                <br></br>
+                <strong>Email: {user.email}</strong>
+                <br></br>
+                <strong>Admin: {String(user.isAdmin)}</strong>
+                <br></br>
+              </p>
+            </div>
+            <div className="level-item level-right">
               <Link to={`/users/${user.id}/edit`} className="level-item">
                 <span className="icon is-small">
                   <i className="far fa-edit"></i>

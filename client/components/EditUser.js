@@ -53,9 +53,13 @@ class EditUser extends React.Component {
     const { name, email, isAdmin } = this.state;
     return (
       <React.Fragment>
-        <h1>EDIT USER FORM</h1>
+        <h1 className="title ml-6">EDIT USER FORM</h1>
 
-        <form name="edit-user" onSubmit={this.handleSubmit}>
+        <form
+          className="column ml-6"
+          name="edit-user"
+          onSubmit={this.handleSubmit}
+        >
           <div className="field">
             <label htmlFor="name" className="label">
               Name *
@@ -88,36 +92,37 @@ class EditUser extends React.Component {
             </div>
           </div>
 
-          <div className="field is-horizontal">
-            <div className="field-label">
-              <label className="label">Admin?</label>
-            </div>
-            <div className="field-body">
-              <div className="field is-narrow">
-                <div className="control">
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="isAdmin"
-                      value={true}
-                      onChange={this.handleAdmin}
-                    />
-                    Yes
-                  </label>
-                  <label className="radio">
-                    <input
-                      type="radio"
-                      name="isAdmin"
-                      value={false}
-                      onChange={this.handleAdmin}
-                    />
-                    No
-                  </label>
-                </div>
+          <div className="field">
+            <label className="label mt-10">Admin?</label>
+            <div className="field is-narrow">
+              <div className="control">
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="isAdmin"
+                    value={true}
+                    checked={isAdmin ? "checked" : null}
+                    onChange={this.handleAdmin}
+                  />
+                  Yes
+                </label>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="isAdmin"
+                    value={false}
+                    checked={isAdmin ? null : "checked"}
+                    onChange={this.handleAdmin}
+                  />
+                  No
+                </label>
               </div>
             </div>
           </div>
-          <button type="submit">Update User</button>
+
+          <button className="button is-medium is-success" type="submit">
+            Update User
+          </button>
         </form>
       </React.Fragment>
     );
