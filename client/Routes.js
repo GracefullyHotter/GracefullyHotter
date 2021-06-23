@@ -15,7 +15,7 @@ import CreateSauce from "./components/CreateSauce";
 import Profile from "./components/Profile";
 import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
-
+import EditProfileInfo from "./components/EditProfileInfo";
 import OrderHistory from "./components/OrderHistory";
 import SingleOrder from "./components/SingleOrder";
 
@@ -42,12 +42,14 @@ class Routes extends Component {
           <Route path="/cart" component={Cart} />
           <Route path="/stripecomp" component={Checkout} />
 
+
           {isLoggedIn ? (
             <>
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/orders" component={OrderHistory} />
               <Route path="/orders/:id" component={SingleOrder} />
               <Route path="/confirmation" component={Confirmation} />
+              <Route path="/users/profiles/edit/:id" component={EditProfileInfo} />
             </>
           ) : (
             <>
