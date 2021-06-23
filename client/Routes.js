@@ -10,6 +10,7 @@ import SingleSauce from "./components/SingleSauce"
 import { me } from "./store"
 import EditSauce from "./components/EditSauce"
 import CreateSauce from "./components/CreateSauce"
+import PageNotFound from "./components/NotFound"
 
 import Profile from "./components/Profile"
 import AllUsers from "./components/AllUsers"
@@ -43,6 +44,7 @@ class Routes extends Component {
 					<Route path="/cart" component={Cart} />
 					<Route path="/checkout" component={Checkout} />
 					<Route path="/shop/:id" component={SingleSauce} />
+					<Route path="/" component={PageNotFound} />
 					{isAdmin ? (
 						<>
 							<Route exact path="/users" component={AllUsers} />
