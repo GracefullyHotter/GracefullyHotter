@@ -6,6 +6,7 @@ const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_CARTITEM = "REMOVE_CARTITEM";
 const UPDATE_CART = "UPDATE_CART";
 const CHECKOUT = "CHECKOUT";
+const LOGOUT = "LOGOUT";
 
 // ACTION CREATORS
 const setCart = (cart) => ({ type: SET_CART, cart });
@@ -13,6 +14,7 @@ const _addToCart = (item) => ({ type: ADD_TO_CART, item });
 const _updateCart = (item) => ({ type: UPDATE_CART, item });
 const _removeCartItem = (id) => ({ type: REMOVE_CARTITEM, id });
 const checkout = () => ({ type: CHECKOUT });
+const logout = () => ({ type: LOGOUT });
 
 // THUNK CREATORS
 export const loginCart = () => {
@@ -29,7 +31,7 @@ export const loginCart = () => {
 
       if (activeCart) {
         // if there's a cart in the DB
-        console.log("active cart -->", activeCart);
+        // console.log("active cart -->", activeCart);
 
         if (localCart.length > 0) {
           await axios.put("/api/carts/merge", localCart, {
@@ -84,7 +86,7 @@ export const loginCart = () => {
             },
           });
 
-          console.log("Posted local cart to DB")
+          console.log("Posted local cart to DB");
         } else {
           console.log("no cart in db or localStorage");
         }
@@ -246,6 +248,16 @@ export const checkoutCart = () => {
   };
 };
 
+export const logoutCart = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(logout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 // REDUCER
 
 export default function (state = [], action) {
@@ -260,6 +272,8 @@ export default function (state = [], action) {
       });
     case REMOVE_CARTITEM:
       return state.filter((cartItem) => cartItem.id !== action.id);
+    case LOGOUT:
+      return [];
     case CHECKOUT:
       return [];
     default:
