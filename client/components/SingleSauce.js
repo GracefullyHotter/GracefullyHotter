@@ -1,10 +1,13 @@
-import React from "react";
-import { connect } from "react-redux";
-import { fetchSauce, clearSauce } from "../store/sauce";
-import { addToCart } from "../store/cart";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { injectStyle } from "react-toastify/dist/inject-style";
+
+import React from "react"
+import { connect } from "react-redux"
+import { fetchSauce } from "../store/sauce"
+import { addToCart } from "../store/cart"
+import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
+import { injectStyle } from "react-toastify/dist/inject-style"
+import SHUToolTip from "./SHUToolTip"
+
 
 injectStyle();
 toast.configure();
@@ -49,9 +52,34 @@ class SingleSauce extends React.Component {
 
     const { loading } = this.state;
 
+
     if (loading) {
       return <div>Loading...</div>;
     }
+
+		return (
+			<div style={{ display: "flex", margin: "20px" }}>
+				<div style={{ margin: "10px" }}>
+					<h1 className="title">{name}</h1>
+					<p>
+						<img src={imageURL} />
+					</p>
+				</div>
+				<div style={{ margin: "20px" }}>
+					<p className="title is-4 has-text-danger">"{description}"</p>
+					<p className="title is-4 ">Pepper(s): {pepper}</p>
+					<p className="title is-4 ">Rating: {userRating}</p>
+
+					<p className="title is-4 ">
+						Heat (SHU): {SHU}
+						<SHUToolTip />
+					</p>
+
+					<p className="title is-4 ">Price: ${(price / 100).toFixed(2)}</p>
+					<Link className="button is-medium is-warning" to="/shop">
+						Back to all sauces
+					</Link>
+
 
     return (
       <div style={{ display: "flex", margin: "20px" }}>
