@@ -115,10 +115,14 @@ export const addToCart = (item) => {
           newQuantity = cartItem.quantity;
         }
       });
-      if (!itemExists) cart.push(item);
-      else item.quantity = newQuantity;
-      console.log("cart", cart);
-
+      if (!itemExists) {
+        console.log("item does not exist");
+        cart.push(item);
+      } else {
+        console.log("item does  exist");
+        item.quantity = newQuantity;
+      }
+      console.log("new cart", cart);
       localStorage.setItem("cart", JSON.stringify(cart));
 
       if (token) {
@@ -127,8 +131,6 @@ export const addToCart = (item) => {
             authorization: token,
           },
         });
-
-        console.log("item", item);
 
         //check is user has active cart in db
         if (activeCart) {
@@ -265,7 +267,17 @@ export default function (state = [], action) {
     case SET_CART:
       return action.cart;
     case ADD_TO_CART:
-      return state.concat([action.item]);
+      let didUpdate = false;
+      let newState = state.map((cartItem) => {
+        if (cartItem.id === action.item.id) {
+          didUpdate = true;
+          return action.item;
+        }
+        return cartItem;
+      });
+
+      if (didUpdate) return newState;
+      else return state.concat([action.item]);
     case UPDATE_CART:
       return state.map((cartItem) => {
         return cartItem.id === action.item.id ? action.item : cartItem;

@@ -18,10 +18,10 @@ class Navbar extends React.Component {
 
   render() {
     const { isLoggedIn, cart } = this.props;
-
-    const cartQuantity = cart.reduce((accum, val) => {
+    let cartQuantity = cart.reduce((accum, val) => {
       return accum + val.quantity;
     }, 0);
+
     console.log("navbar cart", cart);
 
     return (
