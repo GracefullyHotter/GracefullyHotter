@@ -1,15 +1,27 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout, loginCart } from "../store";
+import { logout } from "../store/auth";
+import { logoutCart, loginCart } from "../store/cart";
 
 class Navbar extends React.Component {
   constructor() {
     super();
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.props.handleLogout();
+    this.props.handleCartLogout();
   }
 
   render() {
-    const { handleClick, isLoggedIn, cart } = this.props;
+    const { isLoggedIn } = this.props;
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    let cartQuantity = cart.reduce((accum, val) => {
+      return accum + val.quantity;
+    }, 0);
 
     return (
       <React.Fragment>
@@ -39,7 +51,11 @@ class Navbar extends React.Component {
                       <Link to="/profile" className="navbar-item">
                         Profile
                       </Link>
-                      <a to="#" className="navbar-item" onClick={handleClick}>
+                      <a
+                        to="#"
+                        className="navbar-item"
+                        onClick={this.handleClick}
+                      >
                         Logout
                       </a>
                     </div>
@@ -47,7 +63,7 @@ class Navbar extends React.Component {
                   <Link to="/cart" className="navbar-item">
                     <span
                       className="fa-stack fa-2x has-badge"
-                      data-count={cart.length}
+                      data-count={cartQuantity}
                     >
                       <i className="fa fa-circle fa-stack-1x fa-inverse"></i>
                       <i className="fa fa-shopping-cart fa-stack-1x red-cart"></i>
@@ -86,7 +102,7 @@ class Navbar extends React.Component {
                   <Link to="/cart" className="navbar-item">
                     <span
                       className="fa-stack fa-2x has-badge"
-                      data-count={cart.length}
+                      data-count={cartQuantity}
                     >
                       <i className="fa fa-circle fa-stack-1x fa-inverse"></i>
                       <i className="fa fa-shopping-cart fa-stack-1x red-cart"></i>
@@ -114,8 +130,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick: () => dispatch(logout()),
+    handleLogout: () => dispatch(logout()),
     fetchCart: () => dispatch(loginCart()),
+    handleCartLogout: () => dispatch(logoutCart()),
   };
 };
 

@@ -14,6 +14,7 @@ class EditSauce extends React.Component {
   }
 
   componentDidMount() {
+    console.log("entered edit sauce!!!");
     const id = +this.props.match.params.id;
     this.props.getSauce(id);
     this.setState(this.props.sauce);
@@ -41,15 +42,8 @@ class EditSauce extends React.Component {
   render() {
     const { sauce } = this.props;
     const { handleDelete, handleChange, handleUpdate } = this;
-    const {
-      name,
-      imageURL,
-      pepper,
-      description,
-      userRating,
-      price,
-      SHU,
-    } = this.state;
+    const { name, imageURL, pepper, description, userRating, price, SHU } =
+      this.state;
 
     return (
       <div style={{ display: "flex", margin: "20px" }}>

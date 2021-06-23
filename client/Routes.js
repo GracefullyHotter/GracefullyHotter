@@ -1,24 +1,27 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { withRouter, Route, Switch, Redirect } from "react-router-dom"
-import { Login, Signup } from "./components/AuthForm"
-import LandingPage from "./components/LandingPage"
-import AllSauces from "./components/AllSauces"
-import Cart from "./components/Cart"
-import Checkout from "./components/Checkout"
-import OrderSuccess from "./components/OrderSuccess"
-import OrderFailure from "./components/OrderFailure"
-import SingleSauce from "./components/SingleSauce"
-import { me } from "./store"
-import EditSauce from "./components/EditSauce"
-import CreateSauce from "./components/CreateSauce"
-import Profile from "./components/Profile"
-import AllUsers from "./components/AllUsers"
-import EditUser from "./components/EditUser"
-import EditProfileInfo from "./components/EditProfileInfo"
-import OrderHistory from "./components/OrderHistory"
-import SingleOrder from "./components/SingleOrder"
+
+
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch } from "react-router-dom";
+import { Login, Signup } from "./components/AuthForm";
+import LandingPage from "./components/LandingPage";
+import AllSauces from "./components/AllSauces";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
+import OrderSuccess from "./components/OrderSuccess";
+import OrderFailure from "./components/OrderFailure";
+import SingleSauce from "./components/SingleSauce";
+import { me } from "./store";
+import EditSauce from "./components/EditSauce";
+import CreateSauce from "./components/CreateSauce";
+import Profile from "./components/Profile";
+import AllUsers from "./components/AllUsers";
+import EditUser from "./components/EditUser";
+import EditProfileInfo from "./components/EditProfileInfo";
+import OrderHistory from "./components/OrderHistory";
+import SingleOrder from "./components/SingleOrder";
 import PageNotFound from "./components/NotFound"
+
 
 /**
  * COMPONENT
@@ -47,43 +50,73 @@ class Routes extends Component {
 					<Route path="/stripecomp" component={Checkout} />
 					<Route path="/" component={PageNotFound} />
 
-					{isLoggedIn ? (
-						<>
-							<Route exact path="/profile" component={Profile} />
-							<Route exact path="/orders" component={OrderHistory} />
-							<Route path="/orders/:id" component={SingleOrder} />
+          {isLoggedIn && isAdmin && (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/users" component={AllUsers} />
+              <Route exact path="/users/:id/edit" component={EditUser} />
+              <Route path="/editsauce/:id" component={EditSauce} />
+              <Route exact path="/sauces/create" component={CreateSauce} />
+              <Route
+                path="/users/profiles/edit/:id"
+                component={EditProfileInfo}
+              />
+            </>
+          )}
 
-							<Route
-								path="/users/profiles/edit/:id"
-								component={EditProfileInfo}
-							/>
-						</>
-					) : (
-						<>
-							<Route exact path="/profile" component={LandingPage} />
-							<Route exact path="/orders" component={LandingPage} />
-							<Route path="/orders/:id" component={LandingPage} />
-							<Route path="/confirmation" component={LandingPage} />
-						</>
-					)}
+          {isLoggedIn && !isAdmin && (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/orders" component={OrderHistory} />
+              <Route path="/orders/:id" component={SingleOrder} />
+              <Route
+                path="/users/profiles/edit/:id"
+                component={EditProfileInfo}
+              />
+            </>
+          )}
 
-					{isAdmin ? (
-						<>
-							<Route exact path="/users" component={AllUsers} />
-							<Route exact path="/users/:id/edit" component={EditUser} />
-							<Route path="/editsauce/:id" component={EditSauce} />
-							<Route exact path="/sauces/create" component={CreateSauce} />
-						</>
-					) : (
-						<>
-							<Route path="/editsauce/:id" component={LandingPage} />
-							<Route exact path="/sauces/create" component={LandingPage} />
-						</>
-					)}
-				</Switch>
-			</div>
-		)
-	}
+          {/*           {isAdmin ? (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/users" component={AllUsers} />
+              <Route exact path="/users/:id/edit" component={EditUser} />
+              <Route path="/editsauce/:id" component={EditSauce} />
+              <Route exact path="/sauces/create" component={CreateSauce} />
+            </>
+          ) : (
+            <>
+              <Route path="/editsauce/:id" component={LandingPage} />
+              <Route exact path="/sauces/create" component={LandingPage} />
+              <Route exact path="/profile" component={LandingPage} />
+            </>
+          )}
+
+          {isLoggedIn ? (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/orders" component={OrderHistory} />
+              <Route path="/orders/:id" component={SingleOrder} />
+              <Route
+                path="/users/profiles/edit/:id"
+                component={EditProfileInfo}
+              />
+            </>
+          ) : (
+            <>
+              <Route exact path="/profile" component={LandingPage} />
+              <Route exact path="/orders" component={LandingPage} />
+              <Route path="/orders/:id" component={LandingPage} />
+              <Route path="/confirmation" component={LandingPage} />
+              <Route exact path="/profile" component={LandingPage} />
+            </>
+          )}
+ */}
+        </Switch>
+      </div>
+    );
+  }
+
 }
 
 /**
