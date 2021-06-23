@@ -16,27 +16,50 @@ class Profile extends React.Component {
           <h1 className="title is-3 is-centered">ACCOUNT INFORMATION</h1>
           <h2>Name: {user.name}</h2>
           <h2>Email: {user.email}</h2>
-          <Link
-            className="button is-medium is-link"
-            to={`/users/profiles/edit/${user.id}`}
-          >
-            Edit My Profile
-          </Link>
-        </div>
 
-        <Link className="button is-medium is-danger" to="/orders">
-          Order History
-        </Link>
+          <br></br>
+
+          <div className="user-profile level">
+            <div className="level-right">
+              <div className="level-item">
+                <Link
+                  className="button is-medium is-link"
+                  to={`/users/profiles/edit/${user.id}`}
+                >
+                  Edit My Profile
+                </Link>
+              </div>
+
+              <div className="level-item">
+                <Link className="button is-medium is-danger" to="/orders">
+                  Order History
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <br></br>
         <br></br>
 
         {isAdmin ? (
           <div id="admin-dashboard">
-            <h1>ADMINS</h1>
-            <Link to="/users">Users</Link>
-            <br></br>
-            <Link to="/shop">Hot Sauces</Link>
+            <h1 className="title is-3 is-centered">ADMINS</h1>
+
+            <div className="level-left">
+              <div className="level-item">
+                <Link className="button is-medium is-link" to="/users">
+                  Users
+                </Link>
+              </div>
+
+              <br></br>
+              <div className="level-item">
+                <Link className="button is-medium is-danger" to="/shop">
+                  Hot Sauces
+                </Link>
+              </div>
+            </div>
           </div>
         ) : null}
       </React.Fragment>

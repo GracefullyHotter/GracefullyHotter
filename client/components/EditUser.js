@@ -53,9 +53,13 @@ class EditUser extends React.Component {
     const { name, email, isAdmin } = this.state;
     return (
       <React.Fragment>
-        <h1>EDIT USER FORM</h1>
+        <h1 className="title">EDIT USER FORM</h1>
 
-        <form name="edit-user" onSubmit={this.handleSubmit}>
+        <form
+          className="column is-one-half"
+          name="edit-user"
+          onSubmit={this.handleSubmit}
+        >
           <div className="field">
             <label htmlFor="name" className="label">
               Name *
@@ -117,7 +121,9 @@ class EditUser extends React.Component {
               </div>
             </div>
           </div>
-          <button type="submit">Update User</button>
+          <button className="button is-medium is-success" type="submit">
+            Update User
+          </button>
         </form>
       </React.Fragment>
     );
