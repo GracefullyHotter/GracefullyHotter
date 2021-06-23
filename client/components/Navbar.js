@@ -84,7 +84,13 @@ class Navbar extends React.Component {
                     </div>
                   </div>
                   <Link to="/cart" className="navbar-item">
-                    Cart
+                    <span
+                      className="fa-stack fa-2x has-badge"
+                      data-count={cart.length}
+                    >
+                      <i className="fa fa-circle fa-stack-1x fa-inverse"></i>
+                      <i className="fa fa-shopping-cart fa-stack-1x red-cart"></i>
+                    </span>
                   </Link>
                 </div>
               </React.Fragment>

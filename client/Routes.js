@@ -45,14 +45,16 @@ class Routes extends Component {
           <Route path="/checkout/failure" component={OrderFailure} />
           <Route path="/stripecomp" component={Checkout} />
 
-
           {isLoggedIn ? (
             <>
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/orders" component={OrderHistory} />
               <Route path="/orders/:id" component={SingleOrder} />
-              <Route path="/confirmation" component={Confirmation} />
-              <Route path="/users/profiles/edit/:id" component={EditProfileInfo} />
+
+              <Route
+                path="/users/profiles/edit/:id"
+                component={EditProfileInfo}
+              />
             </>
           ) : (
             <>
