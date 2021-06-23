@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { authenticate, loginCart } from "../store";
-import ReactTooltip from "react-tooltip";
 import PasswordTooltip from "./PasswordTooltip";
+import history from "../history";
 
 /**
  * COMPONENT
@@ -146,6 +146,7 @@ const mapDispatch = (dispatch) => {
       const password = evt.target.password.value;
       await dispatch(authenticate(email, password, formName));
       await dispatch(loginCart());
+      history.push("/");
     },
   };
 };

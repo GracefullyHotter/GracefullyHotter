@@ -1,5 +1,4 @@
 import axios from "axios";
-import history from "../history";
 
 const TOKEN = "token";
 
@@ -24,7 +23,6 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
-    history.push("/");
     return dispatch(setAuth(res.data));
   }
 };

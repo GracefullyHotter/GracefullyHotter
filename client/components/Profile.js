@@ -14,8 +14,8 @@ class Profile extends React.Component {
       <React.Fragment>
         <div id="user-info">
           <h1 className="title is-3 is-centered">ACCOUNT INFORMATION</h1>
-          <h2>{user.name}</h2>
-          <h2>{user.email}</h2>
+          <h2>Name: {user.name}</h2>
+          <h2>Email: {user.email}</h2>
           <Link
             className="button is-medium is-link"
             to={`/users/profiles/edit/${user.id}`}
@@ -24,8 +24,9 @@ class Profile extends React.Component {
           </Link>
         </div>
 
-
-        <Link className="button is-medium is-danger" to="/orders">Order History</Link>
+        <Link className="button is-medium is-danger" to="/orders">
+          Order History
+        </Link>
 
         <br></br>
         <br></br>
