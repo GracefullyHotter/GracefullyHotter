@@ -6,6 +6,7 @@ const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_CARTITEM = "REMOVE_CARTITEM";
 const UPDATE_CART = "UPDATE_CART";
 const CHECKOUT = "CHECKOUT";
+const LOGOUT = "LOGOUT";
 
 // ACTION CREATORS
 const setCart = (cart) => ({ type: SET_CART, cart });
@@ -13,6 +14,7 @@ const _addToCart = (item) => ({ type: ADD_TO_CART, item });
 const _updateCart = (item) => ({ type: UPDATE_CART, item });
 const _removeCartItem = (id) => ({ type: REMOVE_CARTITEM, id });
 const checkout = () => ({ type: CHECKOUT });
+const logout = () => ({ type: LOGOUT });
 
 // THUNK CREATORS
 export const loginCart = () => {
@@ -29,7 +31,7 @@ export const loginCart = () => {
 
       if (activeCart) {
         // if there's a cart in the DB
-        console.log("active cart -->", activeCart);
+        // console.log("active cart -->", activeCart);
 
         if (localCart.length > 0) {
           await axios.put("/api/carts/merge", localCart, {
@@ -84,7 +86,7 @@ export const loginCart = () => {
             },
           });
 
-          console.log("Posted local cart to DB")
+          console.log("Posted local cart to DB");
         } else {
           console.log("no cart in db or localStorage");
         }
@@ -113,10 +115,14 @@ export const addToCart = (item) => {
           newQuantity = cartItem.quantity;
         }
       });
-      if (!itemExists) cart.push(item);
-      else item.quantity = newQuantity;
-      console.log("cart", cart);
-
+      if (!itemExists) {
+        console.log("item does not exist");
+        cart.push(item);
+      } else {
+        console.log("item does  exist");
+        item.quantity = newQuantity;
+      }
+      console.log("new cart", cart);
       localStorage.setItem("cart", JSON.stringify(cart));
 
       if (token) {
@@ -125,8 +131,6 @@ export const addToCart = (item) => {
             authorization: token,
           },
         });
-
-        console.log("item", item);
 
         //check is user has active cart in db
         if (activeCart) {
@@ -246,6 +250,16 @@ export const checkoutCart = () => {
   };
 };
 
+export const logoutCart = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(logout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 // REDUCER
 
 export default function (state = [], action) {
@@ -253,13 +267,25 @@ export default function (state = [], action) {
     case SET_CART:
       return action.cart;
     case ADD_TO_CART:
-      return state.concat([action.item]);
+      let didUpdate = false;
+      let newState = state.map((cartItem) => {
+        if (cartItem.id === action.item.id) {
+          didUpdate = true;
+          return action.item;
+        }
+        return cartItem;
+      });
+
+      if (didUpdate) return newState;
+      else return state.concat([action.item]);
     case UPDATE_CART:
       return state.map((cartItem) => {
         return cartItem.id === action.item.id ? action.item : cartItem;
       });
     case REMOVE_CARTITEM:
       return state.filter((cartItem) => cartItem.id !== action.id);
+    case LOGOUT:
+      return [];
     case CHECKOUT:
       return [];
     default:
