@@ -31,4 +31,4 @@ Gracefully Hotter is a hot sauce selling e-commerce website that has the followi
 - [Hernan Berisso](https://github.com/htothenan1)
 - [Helen Sung](https://github.com/helsung)
 - [Evan Anderson](https://github.com/eee-vvv)
-- [Pablo Loepz](https://github.com/PabloLopez98)
+- [Pablo Lopez](https://github.com/PabloLopez98)
