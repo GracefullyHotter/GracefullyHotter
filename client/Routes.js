@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
@@ -50,6 +50,7 @@ class Routes extends Component {
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/orders" component={OrderHistory} />
               <Route path="/orders/:id" component={SingleOrder} />
+
               <Route
                 path="/users/profiles/edit/:id"
                 component={EditProfileInfo}
