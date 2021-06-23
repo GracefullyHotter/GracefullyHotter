@@ -5,6 +5,7 @@ import { addToCart } from "../store/cart"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import { injectStyle } from "react-toastify/dist/inject-style"
+import PageNotFound from "./NotFound"
 
 injectStyle()
 toast.configure()
@@ -46,8 +47,10 @@ class SingleSauce extends React.Component {
 		const { loading } = this.state
 
 		if (loading) {
-			return <div>Loading...</div>
-		}
+      return <div>Loading...</div>;
+    } else if (!name) {
+      return <PageNotFound />;
+    }
 
 		return (
 			<div style={{ display: "flex", margin: "20px" }}>
