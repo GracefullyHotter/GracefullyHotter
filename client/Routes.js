@@ -45,7 +45,33 @@ class Routes extends Component {
           <Route path="/checkout/failure" component={OrderFailure} />
           <Route path="/stripecomp" component={Checkout} />
 
-          {isAdmin ? (
+          {isLoggedIn && isAdmin && (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/users" component={AllUsers} />
+              <Route exact path="/users/:id/edit" component={EditUser} />
+              <Route path="/editsauce/:id" component={EditSauce} />
+              <Route exact path="/sauces/create" component={CreateSauce} />
+              <Route
+                path="/users/profiles/edit/:id"
+                component={EditProfileInfo}
+              />
+            </>
+          )}
+
+          {isLoggedIn && !isAdmin && (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/orders" component={OrderHistory} />
+              <Route path="/orders/:id" component={SingleOrder} />
+              <Route
+                path="/users/profiles/edit/:id"
+                component={EditProfileInfo}
+              />
+            </>
+          )}
+
+          {/*           {isAdmin ? (
             <>
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/users" component={AllUsers} />
@@ -80,6 +106,7 @@ class Routes extends Component {
               <Route exact path="/profile" component={LandingPage} />
             </>
           )}
+ */}
         </Switch>
       </div>
     );
