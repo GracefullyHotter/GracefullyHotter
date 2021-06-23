@@ -29,7 +29,7 @@ export class AllUsers extends React.Component {
     if (loading) {
       return <div>Loading...</div>;
     }
-    console.log(users);
+
     return (
       <React.Fragment>
         <div style={{ padding: "20px" }}>

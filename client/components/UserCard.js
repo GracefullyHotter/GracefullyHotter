@@ -10,9 +10,9 @@ class UserCard extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleDelete() {
-    // confirm("Are you sure you want to delete?");
-    this.props.removeUser(this.props.user.id);
+  handleDelete(id) {
+    confirm("Are you sure you want to delete?");
+    this.props.removeUser(id);
   }
 
   render() {
@@ -37,7 +37,10 @@ class UserCard extends React.Component {
                   <i className="far fa-edit"></i>
                 </span>
               </Link>
-              <a className="level-item" onClick={this.handleDelete}>
+              <a
+                className="level-item"
+                onClick={() => this.handleDelete(user.id)}
+              >
                 <span className="icon is-small">
                   <i className="far fa-trash-alt"></i>
                 </span>
