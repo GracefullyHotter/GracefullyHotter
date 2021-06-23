@@ -12,10 +12,10 @@ import { me } from "./store"
 import EditSauce from "./components/EditSauce"
 import CreateSauce from "./components/CreateSauce"
 
-import Profile from "./components/Profile"
-import AllUsers from "./components/AllUsers"
-import EditUser from "./components/EditUser"
-
+import Profile from "./components/Profile";
+import AllUsers from "./components/AllUsers";
+import EditUser from "./components/EditUser";
+import EditProfileInfo from "./components/EditProfileInfo";
 import OrderHistory from "./components/OrderHistory";
 import SingleOrder from "./components/SingleOrder";
 
@@ -45,6 +45,7 @@ class Routes extends Component {
           <Route path ="/confirmation" component={Confirmation} />
           <Route path="/stripecomp" component={Checkout} />
           <Route path="/shop/:id" component={SingleSauce} />
+          <Route path="/users/profiles/edit/:id" component={EditProfileInfo} />
           {isAdmin ? (
             <>
               <Route exact path="/users" component={AllUsers} />

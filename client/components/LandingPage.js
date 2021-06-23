@@ -39,7 +39,7 @@ const LandingPage = () => {
             id="landingbutton"
             className="button is-large is-light"
           >
-            🔥Browse🔥
+            🔥 Browse 🔥
           </Link>
         </div>
       </div>
