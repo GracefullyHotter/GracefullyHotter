@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import ReactLoading from "react-loading";
+
 import {
   fetchSauces,
   filterBySpecificPepper,
@@ -22,7 +24,12 @@ export class AllSauces extends React.Component {
 
   componentDidMount() {
     this.props.getSauces();
-    this.setState({ loading: false });
+    setTimeout(
+      function () {
+        this.setState({ loading: false });
+      }.bind(this),
+      1000
+    );
   }
 
   filterProducts(e) {
@@ -51,7 +58,16 @@ export class AllSauces extends React.Component {
     const { filterProducts, filterByPepper, enterSearch } = this;
 
     if (loading) {
-      return <div>Loading...</div>;
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <ReactLoading type={"bars"} color={"red"} width={"40%"} />
+        </div>
+      );
     }
 
     return (
