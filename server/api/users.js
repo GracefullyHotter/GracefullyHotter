@@ -17,11 +17,27 @@ router.get("/", adminMiddleware, async (req, res, next) => {
   }
 });
 
-router.get("/:id", adminMiddleware, async (req, res, next) => {
+//GET /api/users/:id
+router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const users = await User.findByPk(id);
     res.send(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//GET /api/users/profile
+router.get("/profile", async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    if (token) {
+      const user = await User.findByPk(id);
+      res.send(user);
+    }
   } catch (err) {
     next(err);
   }
