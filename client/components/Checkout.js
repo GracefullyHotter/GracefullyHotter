@@ -28,6 +28,7 @@ const ProductDisplay = ({ handleClick }) => {
             <div className="description">
               <h3>{item.name}</h3>
               <h5>${((item.price / 100) * item.quantity).toFixed(2)}</h5>
+              <h5>Quantity: {item.quantity}</h5>
             </div>
           </div>
         </div>
