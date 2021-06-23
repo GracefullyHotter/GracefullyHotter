@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import { withRouter, Route, Switch } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import LandingPage from "./components/LandingPage";
 import AllSauces from "./components/AllSauces";
@@ -45,12 +45,27 @@ class Routes extends Component {
           <Route path="/checkout/failure" component={OrderFailure} />
           <Route path="/stripecomp" component={Checkout} />
 
+          {isAdmin ? (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/users" component={AllUsers} />
+              <Route exact path="/users/:id/edit" component={EditUser} />
+              <Route path="/editsauce/:id" component={EditSauce} />
+              <Route exact path="/sauces/create" component={CreateSauce} />
+            </>
+          ) : (
+            <>
+              <Route path="/editsauce/:id" component={LandingPage} />
+              <Route exact path="/sauces/create" component={LandingPage} />
+              <Route exact path="/profile" component={LandingPage} />
+            </>
+          )}
+
           {isLoggedIn ? (
             <>
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/orders" component={OrderHistory} />
               <Route path="/orders/:id" component={SingleOrder} />
-
               <Route
                 path="/users/profiles/edit/:id"
                 component={EditProfileInfo}
@@ -62,20 +77,7 @@ class Routes extends Component {
               <Route exact path="/orders" component={LandingPage} />
               <Route path="/orders/:id" component={LandingPage} />
               <Route path="/confirmation" component={LandingPage} />
-            </>
-          )}
-
-          {isAdmin ? (
-            <>
-              <Route exact path="/users" component={AllUsers} />
-              <Route exact path="/users/:id/edit" component={EditUser} />
-              <Route path="/editsauce/:id" component={EditSauce} />
-              <Route exact path="/sauces/create" component={CreateSauce} />
-            </>
-          ) : (
-            <>
-              <Route path="/editsauce/:id" component={LandingPage} />
-              <Route exact path="/sauces/create" component={LandingPage} />
+              <Route exact path="/profile" component={LandingPage} />
             </>
           )}
         </Switch>
