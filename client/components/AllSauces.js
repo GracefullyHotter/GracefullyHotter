@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
   fetchSauces,
   filterBySpecificPepper,
+  filterByUserSearchString,
   filterSauces,
 } from "../store/sauces";
 import SauceCard from "./SauceCard";
@@ -16,11 +17,12 @@ export class AllSauces extends React.Component {
     };
     this.filterProducts = this.filterProducts.bind(this);
     this.filterByPepper = this.filterByPepper.bind(this);
+    this.enterSearch = this.enterSearch.bind(this);
   }
 
   componentDidMount() {
     this.props.getSauces();
-    this.setState({ loading: false });
+    this.setState({ loading: false});
   }
 
   filterProducts(e) {
@@ -37,10 +39,16 @@ export class AllSauces extends React.Component {
     document.getElementById("filterpepperspan").innerHTML = innerString;
   }
 
+  enterSearch(e){
+    e.preventDefault();
+    const input = document.getElementById('inputSearchField').value;
+    this.props.filterByInput(input)
+  }
+
   render() {
     const { sauces, isAdmin } = this.props;
     const { loading } = this.state;
-    const { filterProducts, filterByPepper } = this;
+    const { filterProducts, filterByPepper, enterSearch } = this;
 
     if (loading) {
       return <div>Loading...</div>;
@@ -60,6 +68,8 @@ export class AllSauces extends React.Component {
         ) : (
           <div />
         )}
+
+<div style={{ display: "flex", alignItems: "center" }}>
         <div className="dropdown is-hoverable">
           <div className="dropdown-trigger">
             <button
@@ -126,6 +136,26 @@ export class AllSauces extends React.Component {
             </div>
           </div>
         </div>
+        <div
+            className="control has-icons-left"
+            style={{ marginLeft: "20px" }}
+          >
+            <input
+              className="input is-danger"
+              id='inputSearchField'
+              type="text"
+              name='searchString'
+              placeholder="Search Sauce Name"
+            />
+            <span className="icon is-small is-left">
+              <i className="fas fa-search"></i>
+            </span>
+          </div>
+
+          <button className='button is-danger' style={{marginLeft: '10px'}} onClick={enterSearch}>
+              Search
+          </button>
+        </div>
 
         {sauces.length > 0 ? (
           <div
@@ -161,6 +191,7 @@ const mapDispatch = (dispatch) => {
     filterByAPepper: (pepperString) =>
       dispatch(filterBySpecificPepper(pepperString)),
     filterBy: (filterTypeString) => dispatch(filterSauces(filterTypeString)),
+    filterByInput: (input) => dispatch(filterByUserSearchString(input))
   };
 };
 

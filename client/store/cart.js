@@ -15,10 +15,12 @@ const _removeCartItem = (id) => ({ type: REMOVE_CARTITEM, id });
 const checkout = () => ({ type: CHECKOUT });
 
 // THUNK CREATORS
-export const fetchCart = () => {
+export const loginCart = () => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem("token");
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+
       const { data: activeCart } = await axios.get("/api/carts/active", {
         headers: {
           authorization: token,
@@ -26,25 +28,69 @@ export const fetchCart = () => {
       });
 
       if (activeCart) {
+        // if there's a cart in the DB
         console.log("active cart -->", activeCart);
 
-        const storeCart = activeCart.sauces.map((sauce) => {
-          return {
-            id: sauce.id,
-            price: sauce.price,
-          };
-        });
+        if (localCart.length > 0) {
+          await axios.put("/api/carts/merge", localCart, {
+            headers: {
+              authorization: token,
+            },
+          });
 
-        console.log("storecart", storeCart);
+          const { data: newCart } = await axios.get("/api/carts/active", {
+            headers: {
+              authorization: token,
+            },
+          });
 
-        window.localStorage.setItem("cart", JSON.stringify(storeCart));
-        dispatch(setCart(storeCart));
+          const storeCart = newCart.sauces.map((sauce) => {
+            return {
+              id: sauce.id,
+              price: sauce.price,
+              quantity: sauce.cartItem.quantity,
+              name: sauce.name,
+              imageURL: sauce.imageURL,
+            };
+          });
+
+          console.log("MERGED CART --->", storeCart);
+
+          window.localStorage.setItem("cart", JSON.stringify(storeCart));
+          dispatch(setCart(newCart.sauces));
+        } else {
+          const storeCart = activeCart.sauces.map((sauce) => {
+            return {
+              id: sauce.id,
+              price: sauce.price,
+              quantity: sauce.cartItem.quantity,
+              name: sauce.name,
+              imageURL: sauce.imageURL,
+            };
+          });
+
+          console.log("adding DB cart to local storage --->", storeCart);
+
+          window.localStorage.setItem("cart", JSON.stringify(storeCart));
+          dispatch(setCart(storeCart));
+        }
       } else {
-        // Later: store cart to DB here
-        console.log("no active cart for this user in the DB");
+        //no cart in DB
+        if (localCart.length > 0) {
+          //POST localStorage to DB
+          const { data } = await axios.post("/api/carts", localCart, {
+            headers: {
+              authorization: token,
+            },
+          });
+
+          console.log("Posted local cart to DB")
+        } else {
+          console.log("no cart in db or localStorage");
+        }
       }
     } catch (error) {
-      console.error("Uh oh! error in fetchCart thunk.");
+      console.error("error in loginCart thunk");
     }
   };
 };
@@ -88,7 +134,8 @@ export const addToCart = (item) => {
           //if active cart, put request to update cart in db
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
         } else {
-          const { data } = await axios.post("/api/carts", item, {
+          console.log("post request new cart");
+          const { data } = await axios.post("/api/carts", [item], {
             headers: {
               authorization: token,
             },
@@ -172,28 +219,6 @@ export const deleteCartItem = (id) => {
   };
 };
 
-// export const cartLoginOrSignup = (userId, storeCart) => {
-//   return async (dispatch) => {
-//     try {
-//       const { data: cart } = await axios.get(`/api/carts/active/${userId}`);
-
-//       if (cart) {
-//         if (storeCart) {
-//           // REPLACE CART IN DB WITH REDUX STORE CART
-//         } else {
-//           // PUT DB CART IN THE STORE
-//         }
-//       } else {
-//         if (storeCart) {
-//           // POST STORE CART IN DB AS NEW CART
-//         }
-//       }
-//     } catch (error) {
-//       console.error("error in cartLogin thunk");
-//     }
-//   };
-// };
-
 export const checkoutCart = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -212,6 +237,9 @@ export const checkoutCart = () => {
       dispatch(checkout());
     } else {
       console.log("A GUEST USER IS CHECKING OUT");
+
+      const { data } = await axios.post("/api/carts", cart);
+
       window.localStorage.setItem("cart", JSON.stringify([]));
       dispatch(checkout());
     }
@@ -226,6 +254,10 @@ export default function (state = [], action) {
       return action.cart;
     case ADD_TO_CART:
       return state.concat([action.item]);
+    case UPDATE_CART:
+      return state.map((cartItem) => {
+        return cartItem.id === action.item.id ? action.item : cartItem;
+      });
     case REMOVE_CARTITEM:
       return state.filter((cartItem) => cartItem.id !== action.id);
     case CHECKOUT:

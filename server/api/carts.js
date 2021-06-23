@@ -18,6 +18,67 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// PUT /api/carts/merge
+router.put("/merge", async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
+    const cart = await Cart.findOne({
+      where: {
+        userId: id,
+        isCompleted: false,
+      },
+      include: {
+        model: Sauce,
+      },
+    });
+
+    const cartSauceIds = cart.sauces.map((sauce) => {
+      return sauce.id;
+    });
+
+    let cartSauces = cart.sauces;
+
+    req.body.forEach(async (item) => {
+      if (cartSauceIds.includes(item.id)) {
+        const cartIdx = cartSauceIds.indexOf(item.id);
+        const dbQuantity = cartSauces[cartIdx].cartItem.quantity;
+        const newQuantity = dbQuantity + item.quantity;
+
+        await CartItem.update(
+          { quantity: newQuantity },
+          {
+            where: {
+              cartId: cart.id,
+              sauceId: item.id,
+            },
+          }
+        );
+      } else {
+        await CartItem.create({
+          cartId: cart.id,
+          sauceId: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          name: item.name,
+          imageURL: item.imageURL,
+        });
+      }
+    });
+
+    const updatedCartItems = await CartItem.findAll({
+      where: {
+        cartId: cart.id,
+      },
+    });
+
+    res.send(updatedCartItems);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // GET /api/carts/completed
 router.get("/completed", async (req, res, next) => {
   try {
@@ -54,13 +115,15 @@ router.get("/active", async (req, res, next) => {
   }
 });
 
-// GET /api/carts/orders/:userId
-router.get("/orders/:userId", async (req, res, next) => {
+// GET /api/carts/orders
+router.get("/orders", async (req, res, next) => {
   try {
-    const userId = req.params.userId;
+    const token = req.headers.authorization;
+    const { id } = await jwt.verify(token, process.env.JWT);
+
     const carts = await Cart.findAll({
       where: {
-        userId: userId,
+        userId: id,
         isCompleted: true,
       },
       include: {
@@ -77,19 +140,40 @@ router.get("/orders/:userId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const { id } = await jwt.verify(token, process.env.JWT);
+    let id;
+
+    if (token) {
+      console.log("TOKEN --->", token)
+      const data = await jwt.verify(token, process.env.JWT);
+      id = data.id;
+    } else {
+      console.log("NO TOKEN ADDING TO CART AS GUEST");
+      id = null;
+    }
+
+    console.log("USER ID", id)
 
     const cart = await Cart.create({
       userId: id,
     });
 
-    await CartItem.create({
-      cartId: cart.id,
-      sauceId: req.body.id,
-      quantity: req.body.quantity,
-      price: req.body.price,
-      name: req.body.name,
-      imageURL: req.body.imageURL,
+    if (!id) {
+      cart.isCompleted = true;
+      await cart.save();
+      console.log("GUEST CART --->", cart);
+    }
+
+    console.log(req.body);
+
+    req.body.forEach(async (item) => {
+      await CartItem.create({
+        cartId: cart.id,
+        sauceId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        name: item.name,
+        imageURL: item.imageURL,
+      });
     });
 
     // items.forEach(async (sauce) => {

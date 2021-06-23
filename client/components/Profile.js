@@ -24,7 +24,8 @@ class Profile extends React.Component {
           </Link>
         </div>
 
-        <a className="button is-medium is-danger">Order History</a>
+
+        <Link className="button is-medium is-danger" to="/orders">Order History</Link>
 
         <br></br>
         <br></br>
