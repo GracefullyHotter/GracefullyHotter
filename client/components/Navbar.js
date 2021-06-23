@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../store";
+import { logout, loginCart } from "../store";
 
 class Navbar extends React.Component {
   constructor() {
@@ -9,7 +9,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { handleClick, isLoggedIn, id } = this.props;
+    const { handleClick, isLoggedIn, cart } = this.props;
 
     return (
       <React.Fragment>
@@ -36,7 +36,7 @@ class Navbar extends React.Component {
                   <div className="navbar-item has-dropdown is-hoverable">
                     <a className="navbar-link">User</a>
                     <div className="navbar-dropdown">
-                      <Link to="/profile/" className="navbar-item">
+                      <Link to="/profile" className="navbar-item">
                         Profile
                       </Link>
                       <a to="#" className="navbar-item" onClick={handleClick}>
@@ -45,7 +45,13 @@ class Navbar extends React.Component {
                     </div>
                   </div>
                   <Link to="/cart" className="navbar-item">
-                    Cart
+                    <span
+                      className="fa-stack fa-2x has-badge"
+                      data-count={cart.length}
+                    >
+                      <i className="fa fa-circle fa-stack-1x fa-inverse"></i>
+                      <i className="fa fa-shopping-cart fa-stack-1x red-cart"></i>
+                    </span>
                   </Link>
                 </div>
               </React.Fragment>
@@ -59,7 +65,6 @@ class Navbar extends React.Component {
                     Shop
                   </Link>
                 </div>
-
                 <div className="column is-half is-centered is-6">
                   <h1 className="column title font-test is-size-1 has-text-centered">
                     Gracefully Hotter
@@ -97,15 +102,14 @@ class Navbar extends React.Component {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
-    id: state.auth.id,
+    cart: state.cart,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick() {
-      dispatch(logout());
-    },
+    handleClick: () => dispatch(logout()),
+    fetchCart: () => dispatch(loginCart()),
   };
 };
 
