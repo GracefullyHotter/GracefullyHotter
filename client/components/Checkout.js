@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import { checkoutCart } from "../store/cart";
+import { useDispatch } from "react-redux";
+
 // import "./App.css";
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -46,7 +49,7 @@ const Message = ({ message }) => (
   </section>
 );
 
-export default function App() {
+export default function App(props) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -66,6 +69,8 @@ export default function App() {
 
   const handleClick = async (event) => {
     const stripe = await stripePromise;
+    console.log(props);
+    console.log("HELLLOOOO");
 
     const response = await axios.post("/create-checkout-session", cart);
     console.log(response);
@@ -89,3 +94,9 @@ export default function App() {
     <ProductDisplay handleClick={handleClick} />
   );
 }
+
+// const mapDispatch = (dispatch) => ({
+//   checkoutCart: () => dispatch(checkoutCart()),
+// });
+
+// export default connect(null, mapDispatch)(App);
