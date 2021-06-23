@@ -29,6 +29,7 @@ class Cart extends React.Component {
 
 		const updatedCart = this.state.cart.map((item) => {
 			if (item.id === cartItem.id) {
+
 				increment
 					? (++item.quantity,
 					  toast.success("Sauces Increased!", {
@@ -133,10 +134,9 @@ class Cart extends React.Component {
 					</article>
 				))}
 
-				<Link to={"/confirmation"}>
+				<Link to={"/checkout"}>
 					<button
-						className="button is-large is-danger"
-						onClick={this.handleCheckout}
+						className="button is-large is-danger"				
 					>
 						Checkout
 					</button>

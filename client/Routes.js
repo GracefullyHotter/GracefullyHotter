@@ -5,13 +5,13 @@ import { Login, Signup } from "./components/AuthForm";
 import LandingPage from "./components/LandingPage";
 import AllSauces from "./components/AllSauces";
 import Cart from "./components/Cart";
-import Confirmation from "./components/Confirmation";
 import Checkout from "./components/Checkout";
+import OrderSuccess from "./components/OrderSuccess";
+import OrderFailure from "./components/OrderFailure";
 import SingleSauce from "./components/SingleSauce";
 import { me } from "./store";
 import EditSauce from "./components/EditSauce";
 import CreateSauce from "./components/CreateSauce";
-
 import Profile from "./components/Profile";
 import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
@@ -40,6 +40,9 @@ class Routes extends Component {
           <Route path="/shop/:id" component={SingleSauce} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
+          <Route exact path="/checkout" component={Checkout} />
+          <Route path="/checkout/success" component={OrderSuccess} />
+          <Route path="/checkout/failure" component={OrderFailure} />
           <Route path="/stripecomp" component={Checkout} />
 
 

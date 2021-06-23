@@ -24,26 +24,28 @@ app.get("/", (req, res) =>
 )
 
 app.post("/create-checkout-session", async (req, res) => {
+	console.log(req.body)
+	const cart = req.body.map((item) => {
+		return {
+			price_data: {
+				currency: "usd",
+				product_data: {
+					name: item.name,
+					images: [item.imageURL],
+				},
+				unit_amount: item.price,
+			},
+			quantity: item.quantity,
+		}
+	})
 	const session = await stripe.checkout.sessions.create({
 		payment_method_types: ["card"],
-		line_items: [
-			{
-				price_data: {
-					currency: "usd",
-					product_data: {
-						name: "Stubborn Attachments",
-						images: ["https://i.imgur.com/EHyR2nP.png"],
-					},
-					unit_amount: 2000,
-				},
-				quantity: 1,
-			},
-		],
+		line_items: cart,
 		mode: "payment",
-		success_url: `${YOUR_DOMAIN}?success=true`,
-		cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+		success_url: `${YOUR_DOMAIN}checkout/success`,
+		cancel_url: `${YOUR_DOMAIN}checkout/failure`,
 	})
-	res.json({ id: session.id })
+	res.send({ id: session.id })
 })
 
 // static file-serving middleware
