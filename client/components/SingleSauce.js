@@ -6,6 +6,7 @@ import { addToCart } from "../store/cart"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import { injectStyle } from "react-toastify/dist/inject-style"
+import PageNotFound from "./NotFound"
 import SHUToolTip from "./SHUToolTip"
 
 
@@ -13,48 +14,47 @@ injectStyle();
 toast.configure();
 
 class SingleSauce extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      loading: true,
-    };
 
-    this.handleAddToCart = this.handleAddToCart.bind(this);
-  }
+	constructor() {
+		super()
+		this.state = {
+			loading: true,
+		}
 
-  componentDidMount() {
-    const id = +this.props.match.params.id;
-    this.props.getSauce(id);
-    this.setState({ loading: false });
-  }
+		this.handleAddToCart = this.handleAddToCart.bind(this)
+	}
 
-  componentWillUnmount() {
-    this.props.clear();
-  }
+	componentDidMount() {
+		const id = +this.props.match.params.id
+		this.props.getSauce(id)
+		this.setState({ loading: false })
+	}
 
-  handleAddToCart() {
-    toast.success("Sauce Added To Cart!", {
-      position: toast.POSITION.BOTTOM_RIGHT,
-    });
-    this.props.addToCart({
-      id: this.props.sauce.id,
-      price: this.props.sauce.price,
-      quantity: 1,
-      name: this.props.sauce.name,
-      imageURL: this.props.sauce.imageURL,
-    });
-  }
+	handleAddToCart() {
+		toast.success("Sauce Added To Cart!", {
+			position: toast.POSITION.BOTTOM_RIGHT,
+		})
+		this.props.addToCart({
+			id: this.props.sauce.id,
+			price: this.props.sauce.price,
+			quantity: 1,
+			name: this.props.sauce.name,
+			imageURL: this.props.sauce.imageURL,
+		})
+	}
 
-  render() {
-    const { name, imageURL, description, pepper, userRating, SHU, price, id } =
-      this.props.sauce;
-    const { isAdmin } = this.props;
+	render() {
+		const { name, imageURL, description, pepper, userRating, SHU, price, id } =
+			this.props.sauce
+		const { isAdmin } = this.props
 
-    const { loading } = this.state;
+		const { loading } = this.state
 
-
-    if (loading) {
+		if (loading) {
       return <div>Loading...</div>;
+    } else if (!name) {
+      return <PageNotFound />;
+
     }
 
 		return (
