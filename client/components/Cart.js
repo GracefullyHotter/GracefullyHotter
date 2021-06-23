@@ -3,6 +3,11 @@ import { connect } from "react-redux"
 import { fetchSauce } from "../store/sauce"
 import { Link } from "react-router-dom"
 import { checkoutCart, updateCart, deleteCartItem } from "../store/cart"
+import { toast } from "react-toastify"
+import { injectStyle } from "react-toastify/dist/inject-style"
+
+injectStyle()
+toast.configure()
 
 class Cart extends React.Component {
 	constructor(props) {
@@ -24,7 +29,16 @@ class Cart extends React.Component {
 
 		const updatedCart = this.state.cart.map((item) => {
 			if (item.id === cartItem.id) {
-				increment ? ++item.quantity : --item.quantity
+
+				increment
+					? (++item.quantity,
+					  toast.success("Sauces Increased!", {
+							position: toast.POSITION.BOTTOM_RIGHT,
+					  }))
+					: (--item.quantity,
+					  toast.success("Sauces Decreased!", {
+							position: toast.POSITION.BOTTOM_RIGHT,
+					  }))
 				updatedQuantity = item.quantity
 			}
 			return item
@@ -47,6 +61,9 @@ class Cart extends React.Component {
 	}
 
 	handleRemove(id) {
+		toast.success("Sauce Removed From Cart!", {
+			position: toast.POSITION.BOTTOM_RIGHT,
+		})
 		const newCart = this.state.cart.filter((item) => item.id !== id)
 		window.localStorage.setItem("cart", JSON.stringify(newCart))
 		this.setState({ cart: newCart })
@@ -119,8 +136,7 @@ class Cart extends React.Component {
 
 				<Link to={"/checkout"}>
 					<button
-						className="button is-large is-danger"
-						// onClick={this.handleCheckout}
+						className="button is-large is-danger"				
 					>
 						Checkout
 					</button>

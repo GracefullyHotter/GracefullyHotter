@@ -48,7 +48,6 @@ export const deleteUser = (id) => {
           },
         });
         dispatch(removeUser(data));
-        window.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -71,7 +70,7 @@ export const putUser = (user) => {
           }
         );
         dispatch(updateUser(updatedUser));
-        history.push("/users");
+        history.push("/profile");
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +86,10 @@ export default function (state = [], action) {
     case SET_USERS:
       return action.users;
     case REMOVE_USERS:
-      return state.filter((user) => user.id !== action.id);
+      return state.filter((user) => {
+        console.log("action", action.id);
+        user.id !== action.id;
+      });
     case UPDATE_USER:
       return state.map((user) => {
         return user.id === action.user.id ? action.user : user;

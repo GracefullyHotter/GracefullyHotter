@@ -12,11 +12,10 @@ import SingleSauce from "./components/SingleSauce";
 import { me } from "./store";
 import EditSauce from "./components/EditSauce";
 import CreateSauce from "./components/CreateSauce";
-
 import Profile from "./components/Profile";
 import AllUsers from "./components/AllUsers";
 import EditUser from "./components/EditUser";
-
+import EditProfileInfo from "./components/EditProfileInfo";
 import OrderHistory from "./components/OrderHistory";
 import SingleOrder from "./components/SingleOrder";
 
@@ -30,7 +29,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isAdmin } = this.props;
+    const { isAdmin, isLoggedIn } = this.props;
 
     return (
       <div>
@@ -38,15 +37,32 @@ class Routes extends Component {
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/orders" component={OrderHistory} />
-          <Route path="/orders/:id" component={SingleOrder} />
+          <Route path="/shop/:id" component={SingleSauce} />
           <Route exact path="/shop" component={AllSauces} />
           <Route path="/cart" component={Cart} />
           <Route exact path="/checkout" component={Checkout} />
           <Route path="/checkout/success" component={OrderSuccess} />
           <Route path="/checkout/failure" component={OrderFailure} />
-          <Route path="/shop/:id" component={SingleSauce} />
+          <Route path="/stripecomp" component={Checkout} />
+
+
+          {isLoggedIn ? (
+            <>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/orders" component={OrderHistory} />
+              <Route path="/orders/:id" component={SingleOrder} />
+              <Route path="/confirmation" component={Confirmation} />
+              <Route path="/users/profiles/edit/:id" component={EditProfileInfo} />
+            </>
+          ) : (
+            <>
+              <Route exact path="/profile" component={LandingPage} />
+              <Route exact path="/orders" component={LandingPage} />
+              <Route path="/orders/:id" component={LandingPage} />
+              <Route path="/confirmation" component={LandingPage} />
+            </>
+          )}
+
           {isAdmin ? (
             <>
               <Route exact path="/users" component={AllUsers} />
