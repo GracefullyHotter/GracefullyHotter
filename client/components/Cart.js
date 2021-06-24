@@ -14,7 +14,7 @@ class Cart extends React.Component {
     super(props);
 
     this.state = {
-      cart: JSON.parse(localStorage.getItem("cart")),
+      cart: JSON.parse(localStorage.getItem("cart")) || [],
     };
 
     this.handleCheckout = this.handleCheckout.bind(this);
