@@ -91,6 +91,7 @@ export default function (state = [], action) {
       });
     case UPDATE_USER:
       return state.map((user) => {
+        console.log(user);
         return user.id === action.user.id ? action.user : user;
       });
     default:
