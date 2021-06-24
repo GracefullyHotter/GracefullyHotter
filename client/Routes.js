@@ -69,8 +69,13 @@ class Routes extends Component {
                 path="/users/profiles/edit/:id"
                 component={EditProfileInfo}
               />
+              <Route exact path="/users" component={PageNotFound} />
+              <Route exact path="/users/:id/edit" component={PageNotFound} />
+              <Route path="/editsauce/:id" component={PageNotFound} />
+              <Route exact path="/sauces/create" component={PageNotFound} />
             </>
           )}
+
           <Route path="/" component={PageNotFound} />
         </Switch>
       </div>
