@@ -28,7 +28,7 @@ export class AllSauces extends React.Component {
       function () {
         this.setState({ loading: false });
       }.bind(this),
-      1000
+      500
     );
   }
 
@@ -73,14 +73,14 @@ export class AllSauces extends React.Component {
     return (
       <React.Fragment>
         {isAdmin ? (
-          <Link to="/sauces/create" className="buttons is-right">
-            <button
-              className="button is-link is-right"
-              style={{ marginRight: "20px" }}
+          <div>
+            <Link
+              to="/sauces/create"
+              className="button is-link is-pulled-right add-sauce"
             >
               Add Hot Sauce
-            </button>
-          </Link>
+            </Link>
+          </div>
         ) : (
           <div />
         )}
