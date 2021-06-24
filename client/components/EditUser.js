@@ -51,6 +51,7 @@ class EditUser extends React.Component {
 
   render() {
     const { name, email, isAdmin } = this.state;
+    console.log(name);
     return (
       <React.Fragment>
         <h1 className="title ml-6">EDIT USER FORM</h1>

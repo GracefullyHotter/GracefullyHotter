@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const app = express();
 module.exports = app;
 
-const YOUR_DOMAIN = "http://localhost:8080/";
+const YOUR_DOMAIN = "https://gracefully-hotter.herokuapp.com/";
 
 // logging middleware
 app.use(morgan("dev"));
