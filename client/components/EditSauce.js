@@ -14,7 +14,6 @@ class EditSauce extends React.Component {
   }
 
   componentDidMount() {
-    console.log("entered edit sauce!!!");
     const id = +this.props.match.params.id;
     this.props.getSauce(id);
     this.setState(this.props.sauce);

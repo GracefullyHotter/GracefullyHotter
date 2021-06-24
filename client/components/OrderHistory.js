@@ -9,7 +9,7 @@ class OrderHistory extends React.Component {
     super(props);
     this.state = {
       loading: true,
-    }
+    };
   }
 
   componentDidMount() {
@@ -19,18 +19,14 @@ class OrderHistory extends React.Component {
 
   render() {
     const orders = this.props.orders;
-    console.log(orders);
+
     return (
       <div>
-        {
-          orders.map((order) => {
-            return (
-              <SingleOrder order={order} key={order.id} />
-            )
-          })
-        }
+        {orders.map((order) => {
+          return <SingleOrder order={order} key={order.id} />;
+        })}
       </div>
-    )
+    );
   }
 }
 
@@ -40,6 +36,6 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   loadOrders: () => dispatch(fetchOrders()),
-})
+});
 
 export default connect(mapState, mapDispatch)(OrderHistory);

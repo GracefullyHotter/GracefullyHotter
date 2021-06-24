@@ -30,9 +30,6 @@ export const loginCart = () => {
       });
 
       if (activeCart) {
-        // if there's a cart in the DB
-        // console.log("active cart -->", activeCart);
-
         if (localCart.length > 0) {
           await axios.put("/api/carts/merge", localCart, {
             headers: {
@@ -56,8 +53,6 @@ export const loginCart = () => {
             };
           });
 
-          console.log("MERGED CART --->", storeCart);
-
           window.localStorage.setItem("cart", JSON.stringify(storeCart));
           dispatch(setCart(newCart.sauces));
         } else {
@@ -71,22 +66,16 @@ export const loginCart = () => {
             };
           });
 
-          console.log("adding DB cart to local storage --->", storeCart);
-
           window.localStorage.setItem("cart", JSON.stringify(storeCart));
           dispatch(setCart(storeCart));
         }
       } else {
-        //no cart in DB
         if (localCart.length > 0) {
-          //POST localStorage to DB
           const { data } = await axios.post("/api/carts", localCart, {
             headers: {
               authorization: token,
             },
           });
-
-          console.log("Posted local cart to DB");
         } else {
           console.log("no cart in db or localStorage");
         }
@@ -116,13 +105,10 @@ export const addToCart = (item) => {
         }
       });
       if (!itemExists) {
-        console.log("item does not exist");
         cart.push(item);
       } else {
-        console.log("item does  exist");
         item.quantity = newQuantity;
       }
-      console.log("new cart", cart);
       localStorage.setItem("cart", JSON.stringify(cart));
 
       if (token) {
@@ -134,11 +120,9 @@ export const addToCart = (item) => {
 
         //check is user has active cart in db
         if (activeCart) {
-          console.log("activecart", activeCart);
           //if active cart, put request to update cart in db
           const { data } = await axios.put(`/api/carts/${activeCart.id}`, item);
         } else {
-          console.log("post request new cart");
           const { data } = await axios.post("/api/carts", [item], {
             headers: {
               authorization: token,
@@ -196,7 +180,6 @@ export const deleteCartItem = (id) => {
       }
 
       const newCart = cart.filter((cartItem) => cartItem.id !== id);
-      // const removedItem = cart.filter((cartItem) => cartItem.id === id);
 
       localStorage.setItem("cart", JSON.stringify(newCart));
 
@@ -240,8 +223,6 @@ export const checkoutCart = () => {
       window.localStorage.setItem("cart", JSON.stringify([]));
       dispatch(checkout());
     } else {
-      console.log("A GUEST USER IS CHECKING OUT");
-
       const { data } = await axios.post("/api/carts", cart);
 
       window.localStorage.setItem("cart", JSON.stringify([]));
