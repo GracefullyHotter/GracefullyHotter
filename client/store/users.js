@@ -87,7 +87,6 @@ export default function (state = [], action) {
       return action.users;
     case REMOVE_USERS:
       return state.filter((user) => {
-        console.log("action", action.id);
         user.id !== action.id;
       });
     case UPDATE_USER:

@@ -143,15 +143,11 @@ router.post("/", async (req, res, next) => {
     let id;
 
     if (token) {
-      console.log("TOKEN --->", token)
       const data = await jwt.verify(token, process.env.JWT);
       id = data.id;
     } else {
-      console.log("NO TOKEN ADDING TO CART AS GUEST");
       id = null;
     }
-
-    console.log("USER ID", id)
 
     const cart = await Cart.create({
       userId: id,
@@ -160,10 +156,7 @@ router.post("/", async (req, res, next) => {
     if (!id) {
       cart.isCompleted = true;
       await cart.save();
-      console.log("GUEST CART --->", cart);
     }
-
-    console.log(req.body);
 
     req.body.forEach(async (item) => {
       await CartItem.create({
@@ -207,7 +200,6 @@ router.put("/checkout", async (req, res, next) => {
     cart.isCompleted = true;
 
     await cart.save();
-    console.log(cart);
     res.send(cart);
   } catch (error) {
     next(error);
@@ -263,7 +255,6 @@ router.delete("/active/:cartItemId", async (req, res, next) => {
     });
 
     cart.dataValues.sauces.forEach(async (sauce) => {
-      console.log(sauce.dataValues.id, req.params.cartItemId);
       if (sauce.dataValues.id === Number(req.params.cartItemId)) {
         await sauce.destroy();
       }
