@@ -32,7 +32,7 @@ const LandingPage = () => {
         <div>
           <p id="landingtitle">Welcome to Gracefully Hotter</p>
           <p id="landingsubtitle" className="subtitle">
-            Continually Matching Hot Sauces With Individuals
+            In the frontend, out the backend
           </p>
           <Link
             to="/shop"
