@@ -18,7 +18,13 @@ class Navbar extends React.Component {
 
   render() {
     const { isLoggedIn } = this.props;
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    if (!cart) {
+      localStorage.setItem("cart", JSON.stringify([]));
+      cart = [];
+    }
+
     let cartQuantity = cart.reduce((accum, val) => {
       return accum + val.quantity;
     }, 0);
