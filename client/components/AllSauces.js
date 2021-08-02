@@ -85,7 +85,10 @@ export class AllSauces extends React.Component {
           <div />
         )}
 
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          data-cy="filter-pepper"
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <div className="dropdown is-hoverable">
             <div className="dropdown-trigger">
               <button
@@ -118,7 +121,7 @@ export class AllSauces extends React.Component {
             </div>
           </div>
 
-          <div className="dropdown is-hoverable">
+          <div className="dropdown is-hoverable" data-cy-filter-pepper>
             <div className="dropdown-trigger">
               <button
                 style={{ marginLeft: "20px" }}
@@ -168,11 +171,7 @@ export class AllSauces extends React.Component {
             </span>
           </div>
 
-          <button
-            className="button is-danger"
-            style={{ marginLeft: "10px" }}
-            onClick={enterSearch}
-          >
+          <button className="button is-danger ml-1" onClick={enterSearch}>
             Search
           </button>
         </div>

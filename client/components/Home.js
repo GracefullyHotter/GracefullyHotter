@@ -14,8 +14,6 @@ export const Home = (props) => {
   );
 };
 
-styles = {};
-
 /**
  * CONTAINER
  */
