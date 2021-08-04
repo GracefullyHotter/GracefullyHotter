@@ -1,5 +1,8 @@
 {
   "baseUrl": "http://localhost:8080",
+  "fixturesFolder": "test/cypress/fixtures",
+  "integrationFolder": "test/cypress/integration",
+  "pluginsFile": "test/cypress/plugins/index.js",
   "component": {
     "componentFolder": "client/components",
     "testFiles": "**/*spec.{js,jsx,ts,tsx}"
