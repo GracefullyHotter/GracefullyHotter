@@ -147,7 +147,7 @@ export class AllSauces extends React.Component {
                   <p>Pepper</p>
                 </div>
                 <div className="dropdown-item" onClick={filterByPepper}>
-                  <p>Jalapeno</p>
+                  <p>Jalapeno {!loading ? "hey" : null}</p>
                 </div>
               </div>
             </div>
